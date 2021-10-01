@@ -85,11 +85,11 @@ If you are looking for the whole data structure you can just pass an empty array
 
 #### What does the "Your ship needs an OS update" error mean?
 
-This typically happens when you have spawned a brand new comet which has not gone through any OTA updates and as such is running on an old version that makes it incompatible with Urbit Visor. Simply OTA via one of Tlon's stars using the following command in dojo:
+This typically happens when you have spawned a brand new comet which has not gone through any OTA updates and as such is running on an old version that makes it incompatible with Urbit Visor. Simply OTA using the following command in dojo:
 
 ```
 
-|ota ~marzod %kids
+|ota (sein:title our now our) %kids
 
 ```
 
