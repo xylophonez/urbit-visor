@@ -1,6 +1,6 @@
 {
   "name": "Urbit Visor",
-  "description": "Enable Urbit Web Apps to connect to your Urbit ship.",
+  "description": "Transforms your web browser into a first class Urbit client.",
   "manifest_version": 2,
   "version": "0.1.0",
   "icons": {
