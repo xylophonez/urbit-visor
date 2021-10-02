@@ -20,3 +20,8 @@
   margin: 0 !important;
   width: 100% !important;
 }
+
+button:disabled{
+  background-color: rgb(122, 174, 211);
+  pointer-events: none;
+}
