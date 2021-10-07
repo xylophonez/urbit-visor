@@ -23,8 +23,10 @@ interface WebsiteSubscription {
 }
 
 interface UrbitVisorConsumer{
-  tabID: number,
-  url: URL
+  tabID?: number,
+  url?: URL,
+  extensionID?: string,
+  extensionName?: string
 }
 
 
@@ -66,6 +68,7 @@ export type PopupPreference = "modal" | "window";
 
 export interface PermissionRequest {
   website: string,
+  name?: string,
   permissions: Permission[],
   existing?: Permission[]
 }

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { validate } from "../../storage";
 import "./perms.css";
-import { PermissionRequest, Permission } from "../../types/types";
+import { PermissionRequest, Permission } from "uv-extension-lib/types";
 import { Messaging } from "../../messaging";
 import { motion } from "framer-motion";
 
@@ -18,13 +18,22 @@ export default function PermissionsPrompt(props: PermissionsPromptProps) {
     const [pw, setPw] = useState("");
     const [error, setError] = useState("");
 
+    const [requesterType, setRequesterType] = useState("");
+    const [requester, setRequester] = useState("");
+
+
     useEffect(() => {
         if (!perms.permissions.length) deny();
     }, [perms]);
 
+    useEffect(()=>{
+      if(perms.name) setRequesterType("Extension: "), setRequester(`${perms.name} (id: ${(perms.key)})`)
+      else setRequesterType("Website: "), setRequester(`${perms.key}`)
+    },[])
+
     function removePerm(perm: Permission) {
         const new_perms = {
-            website: perms.website,
+            key: perms.key,
             permissions: perms.permissions.filter(p => p != perm),
             existing: perms.existing
         };
@@ -59,7 +68,8 @@ export default function PermissionsPrompt(props: PermissionsPromptProps) {
             className="permissions padding flex-grow-wrapper">
             <h3>Permissions Requested</h3>
             <div className="flex-grow">
-                <a href={perms.website} title={perms.website} rel="noopener noreferrer" target="_blank" className="requesting-domain">{perms.website}</a>
+                <p className="align-center">{requesterType}</p>
+                <a href={perms.key} title={perms.key} rel="noopener noreferrer" target="_blank" className="requesting-domain">{requester}</a>
                 <p className="align-center">requested the following permissions: </p>
                 <div className="permission-request-list">
                     <ul>

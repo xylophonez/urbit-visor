@@ -1,6 +1,6 @@
 import Urbit from "@urbit/http-api";
 import {useStore} from "./store";
-import { EncryptedShipCredentials, PermissionRequest } from "./types/types";
+import { EncryptedShipCredentials, PermissionRequest } from "uv-extension-lib/types";
 
 
 
@@ -73,7 +73,7 @@ export async function setPerms(airlock: Urbit) {
 
 export async function grantPerms(airlock: Urbit, perms: PermissionRequest) {
   let value;
-  const existing = await checkPerms(airlock.url, perms.website);
+  const existing = await checkPerms(airlock.url, perms.key);
   const set = new Set(existing);
   if (existing) {
     for (let p of perms.permissions) set.add(p);
@@ -85,7 +85,7 @@ export async function grantPerms(airlock: Urbit, perms: PermissionRequest) {
     "put-entry": {
       "desk": "landscape",
       "bucket-key": "urbit-visor-permissions",
-      "entry-key": perms.website,
+      "entry-key": perms.key,
       "value": value
     }
   }
@@ -96,7 +96,7 @@ export async function revokePerms(url: string, shipName: string, perms: Permissi
   const airlock = new Urbit(url, "");
   airlock.ship = shipName;
   let value;
-  const existing = await checkPerms(url, perms.website);
+  const existing = await checkPerms(url, perms.key);
   const set = new Set(existing)
   if (existing) {
     for (let p of perms.permissions) set.delete(p);
@@ -108,7 +108,7 @@ export async function revokePerms(url: string, shipName: string, perms: Permissi
     "put-entry": {
       "desk": "landscape",
       "bucket-key": "urbit-visor-permissions",
-      "entry-key": perms.website,
+      "entry-key": perms.key,
       "value": value
     }
   }

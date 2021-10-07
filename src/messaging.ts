@@ -1,8 +1,4 @@
-import { UrbitVisorAction, UrbitVisorRequest, UrbitVisorEvent, UrbitVisorResponse, UrbitVisorState, UrbitVisorInternalComms } from "./types/types";
-import { Scry, Thread, Poke, SubscriptionRequestInterface } from "@urbit/http-api/src/types";
-
-
-
+import { Scry, Thread, Poke, SubscriptionRequestInterface, UrbitVisorAction, UrbitVisorRequest, UrbitVisorEvent, UrbitVisorResponse, UrbitVisorState, UrbitVisorInternalComms } from "uv-extension-lib/types";
 
 export const Messaging = {
     sendToPopup: async function (message: { state: UrbitVisorState }): Promise<void> {
@@ -22,8 +18,11 @@ export const Messaging = {
             chrome.runtime.sendMessage(request, (response) => res(response))
         );
     },
-    pushEvent: function (event: UrbitVisorEvent, recipients: Set<number>) {
-      for (let tab_id of recipients) chrome.tabs.sendMessage(tab_id, { app: "urbitVisorEvent", event: event})
+    pushEvent: function (event: UrbitVisorEvent, recipients: Set<any>) {
+      for (let id of recipients) {
+          if (typeof id == "number") chrome.tabs.sendMessage(id, { app: "urbitVisorEvent", event: event})
+          if (typeof id == "string") chrome.runtime.sendMessage(id, { app: "urbitVisorEvent", event: event})
+      }
     },
     callVisor: function ({ app, action, data }: UrbitVisorRequest): Promise<UrbitVisorResponse> {
         return new Promise((res, rej) => {
