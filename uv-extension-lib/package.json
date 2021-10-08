@@ -1,0 +1,23 @@
+{
+  "name": "uv-extension-lib",
+  "version": "0.1.0",
+  "description": "Library with utility functions to create browser extensions compatible with Urbit Visor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "urbit",
+    "urbit-visor"
+  ],
+  "author": "dcSpark",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chrome": "0.0.158",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "@urbit/http-api": "^1.3.1",
+    "rxjs": "^7.3.1"
+  }
+}
