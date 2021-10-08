@@ -2,11 +2,12 @@ name: Continuous Audit Check
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
   schedule:
-    - cron: "0 5 ? * 0" # Weekly every Sunday 05:00 UTC
+    - cron: '0 5 ? * 0' # Weekly every Sunday 05:00 UTC
+
 
   workflow_dispatch:
 
@@ -22,7 +23,6 @@ jobs:
         # must use login shell (-l) to have nvm preinstalled, -e exits shell on nonzero exit codes
         shell: bash -e -l {0}
         run: |
-          cd urbit-visor
           NODE=$(jq -r .engines.node ./package.json)
           NPM=$(jq -r .engines.npm ./package.json)
           echo "Node/npm version: ${NODE}/${NPM} - found on package.json"

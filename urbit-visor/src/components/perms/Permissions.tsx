@@ -7,7 +7,7 @@ import Sigil from "../ui/svg/Sigil";
 import { Chip } from "./PermissionsPrompt";
 import { whatShip, processName } from "../../utils";
 import { motion } from "framer-motion";
-import { EncryptedShipCredentials, PermissionsGraph, Permission } from "uv-extension-lib/types"
+import { EncryptedShipCredentials, PermissionsGraph, Permission } from "uv-types/types"
 interface PermissionsProps {
     ship: EncryptedShipCredentials,
     shipURL: string,

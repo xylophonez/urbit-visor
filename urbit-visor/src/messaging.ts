@@ -1,4 +1,4 @@
-import { Scry, Thread, Poke, SubscriptionRequestInterface, UrbitVisorAction, UrbitVisorRequest, UrbitVisorEvent, UrbitVisorResponse, UrbitVisorState, UrbitVisorInternalComms } from "uv-extension-lib/types";
+import { Scry, Thread, Poke, SubscriptionRequestInterface, UrbitVisorAction, UrbitVisorRequest, UrbitVisorEvent, UrbitVisorResponse, UrbitVisorState, UrbitVisorInternalComms } from "uv-types/types";
 
 export const Messaging = {
     sendToPopup: async function (message: { state: UrbitVisorState }): Promise<void> {

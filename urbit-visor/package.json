@@ -45,7 +45,7 @@
     "rxjs": "^7.3.0",
     "stream-http": "^3.2.0",
     "zustand": "^3.5.10",
-    "uv-extension-lib": "file:../library"
+    "uv-types": "file:../uv-types"
   },
   "engines": {
     "node": "14.17.6",

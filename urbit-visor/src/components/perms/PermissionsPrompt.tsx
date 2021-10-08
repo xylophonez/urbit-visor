@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { validate } from "../../storage";
 import "./perms.css";
-import { PermissionRequest, Permission } from "uv-extension-lib/types";
+import { PermissionRequest, Permission } from "uv-types/types";
 import { Messaging } from "../../messaging";
 import { motion } from "framer-motion";
 
