@@ -5,4 +5,4 @@ This is a library which exposes relevant Urbit Visor types for external web apps
 ## Getting Started
 
 Add it to your node application:
-`npm i uv-types``
+`npm i uv-types`
