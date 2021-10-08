@@ -7,7 +7,7 @@ import Sigil from "../ui/svg/Sigil";
 import { Chip } from "./PermissionsPrompt";
 import { whatShip, processName } from "../../utils";
 import { motion } from "framer-motion";
-import { EncryptedShipCredentials, PermissionsGraph, Permission } from "../../types/types"
+import { EncryptedShipCredentials, PermissionsGraph, Permission } from "uv-extension-lib/types"
 interface PermissionsProps {
     ship: EncryptedShipCredentials,
     shipURL: string,
@@ -35,13 +35,11 @@ export default function Permissions({ ship, shipURL, ...props }: PermissionsProp
 
     function doDeleteDomain(domain: string) {
         Messaging.sendToBackground({ action: "remove_whole_domain", data: {url: shipURL, ship: ship.shipName, domain: domain}})
-            .then(res => {
-                fetchAllPerms(shipURL).then(res => setPerms(res.bucket));
-            })
+            .then(res => fetchAllPerms(shipURL).then(res => setPerms(res.bucket)))
             .catch(err => console.log(err, "error"))
     };
     function revokePerm(domain: string, perm: Permission) {
-        Messaging.sendToBackground({ action: "revoke_perm", data: {url: shipURL, ship: ship.shipName, request: { website: domain, permissions: [perm] }}})
+        Messaging.sendToBackground({ action: "revoke_perm", data: {url: shipURL, ship: ship.shipName, request: { key: domain, permissions: [perm] }}})
             .then(res => {
                 fetchAllPerms(shipURL).then(res => {
                     setPerms(res.bucket)

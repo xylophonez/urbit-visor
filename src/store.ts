@@ -1,4 +1,4 @@
-import { UrbitVisorState } from "./types/types";
+import { UrbitVisorState } from "uv-extension-lib/types";
 import { getStorage, initStorage, storeCredentials, removeShip, setPopupPreference, reEncryptAll, savePassword, resetApp } from "./storage";
 import { connectToShip, grantPerms, deleteDomain, revokePerms } from "./urbit";
 import create from 'zustand';
@@ -43,8 +43,8 @@ export const useStore = create<UrbitVisorState>((set, get) => ({
         airlock.reset();
         set(state => ({ activeShip: null, airlock: null, activeSubscriptions: [] }))
     },
-    requestPerms: (website, permissions, existing) => 
-        set(state => ({requestedPerms: {website: website, permissions: permissions, existing: existing}})),
+    requestPerms: (request) => 
+        set(state => ({requestedPerms: request})),
     grantPerms: async (perms) => {
         const airlock = (get() as any).airlock;
         await grantPerms(airlock, perms);
@@ -69,7 +69,10 @@ export const useStore = create<UrbitVisorState>((set, get) => ({
         await savePassword(password);
     },
     resetApp: async () => await resetApp(),
-    addConsumer: (consumer) => set(state => ({consumers: [...state.consumers, consumer]})),
+    addConsumer: (newConsumer) => {
+        if (!get().consumers.find(consumer => newConsumer.id === consumer.id))
+        set(state => ({consumers: [...state.consumers, newConsumer]}))
+    },
     addSubscription: (sub) => set(state => ({activeSubscriptions: [...state.activeSubscriptions, sub]})),
     removeSubscription: (subToDelete) => {
         const filtered = get().activeSubscriptions.filter(sub => {
