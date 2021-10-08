@@ -1,4 +1,4 @@
-import { UrbitVisorState } from "uv-extension-lib/types";
+import { UrbitVisorState } from "uv-types/types";
 import { getStorage, initStorage, storeCredentials, removeShip, setPopupPreference, reEncryptAll, savePassword, resetApp } from "./storage";
 import { connectToShip, grantPerms, deleteDomain, revokePerms } from "./urbit";
 import create from 'zustand';

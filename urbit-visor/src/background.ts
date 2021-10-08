@@ -1,4 +1,4 @@
-import { SubscriptionRequestInterface, EncryptedShipCredentials, UrbitVisorAction, UrbitVisorInternalAction, UrbitVisorInternalComms, UrbitVisorState } from "uv-extension-lib/types";
+import { SubscriptionRequestInterface, EncryptedShipCredentials, UrbitVisorAction, UrbitVisorInternalAction, UrbitVisorInternalComms, UrbitVisorState } from "uv-types/types";
 
 import { fetchAllPerms } from "./urbit"
 import { useStore } from "./store";
