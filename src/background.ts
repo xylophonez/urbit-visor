@@ -97,13 +97,13 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
     case "connect_ship":
       if (state.activeShip) {
         state.disconnectShip();
-        const recipients = new Set(state.consumers.map(consumer => consumer.tabID));
+        const recipients = new Set(state.consumers.map(consumer => consumer.id));
         Messaging.pushEvent({ action: "disconnected", data: { ship: state.activeShip.shipName } }, recipients)
       }
       state.connectShip(request.data.url, request.data.ship)
         .then(res => {
           chrome.browserAction.setBadgeText({ text: "" });
-          const recipients = new Set(state.consumers.map(consumer => consumer.tabID));
+          const recipients = new Set(state.consumers.map(consumer => consumer.id));
           Messaging.pushEvent({ action: "connected" }, recipients)
           sendResponse("ok")
         })
@@ -111,7 +111,7 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
       break;
     case "disconnect_ship":
       state.disconnectShip();
-      const recipients = new Set(state.consumers.map(consumer => consumer.tabID));
+      const recipients = new Set(state.consumers.map(consumer => consumer.id));
       Messaging.pushEvent({ action: "disconnected" }, recipients)
       sendResponse("ok");
       break;
@@ -120,9 +120,15 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
         .then(res => {
           chrome.browserAction.setBadgeText({ text: "" });
           const recipients = new Set(state.consumers
-            .filter(consumer => consumer.url.origin === request.data.request.website)
-            .map(consumer => consumer.tabID)
+            .filter(consumer => {
+              if ("url" in consumer) return consumer.url.origin === request.data.request.key
+              return consumer.id === request.data.domain
+            })
+            .map(consumer => consumer.id)
           );
+          console.log(request.data, "data")
+          console.log(state.consumers, "sumers")
+          console.log(recipients, "Recipients")
           Messaging.pushEvent({ action: "permissions_granted", data: request.data.request }, recipients)
           sendResponse("ok")
         })
@@ -136,8 +142,11 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
       state.removeWholeDomain(request.data.url, request.data.ship, request.data.domain)
         .then(res => {
           const recipients = new Set(state.consumers
-            .filter(consumer => consumer.url.origin === request.data.domain)
-            .map(consumer => consumer.tabID)
+            .filter(consumer => {
+              if ("url" in consumer) return consumer.url.origin === request.data.domain
+              return consumer.id === request.data.domain
+            })
+            .map(consumer => consumer.id)
           );
           Messaging.pushEvent({ action: "permissions_revoked", data: request.data }, recipients)
           sendResponse("ok")
@@ -147,9 +156,15 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
       state.revokePerm(request.data.url, request.data.ship, request.data.request)
         .then(res => {
           const recipients = new Set(state.consumers
-            .filter(consumer => consumer.url.origin === request.data.request.website)
-            .map(consumer => consumer.tabID)
+            .filter(consumer => {
+              if ("url" in consumer) return consumer.url.origin === request.data.request.key
+              return consumer.id === request.data.domain
+            })
+            .map(consumer => consumer.id)
           );
+          console.log(request.data, "data")
+          console.log(state.consumers, "sumers")
+          console.log(recipients, "Recipients")
           Messaging.pushEvent({ action: "permissions_revoked", data: request.data.request }, recipients)
           sendResponse("ok")
         })
@@ -183,7 +198,10 @@ type visorCallType = "website" | "extension"
 
 function handleVisorCall(request: any, sender: any, sendResponse: any, callType: visorCallType) {
   const state = useStore.getState();
-  state.addConsumer({ tabID: sender.tab.id, url: new URL(sender.tab.url) });
+  console.log(state.consumers, "consumers")
+  if (callType == "website") state.addConsumer({ id: sender.tab.id, url: new URL(sender.tab.url) });
+  else state.addConsumer({ id: sender.id, name: "need a way to pass this" });
+  console.log(state.consumers, "consumers")
   if (request.action == "check_connection") sendResponse({ status: "ok", response: !!state.activeShip })
   else if (request.action == "unsubscribe") unsubscribe(state, request, sender, sendResponse)
   else if (!state.activeShip) notifyUser(state, "locked", sendResponse)
