@@ -1,5 +1,5 @@
 import { fromEvent, Subscription } from "rxjs";
-import {VISOR_ID, Scry, Poke, Thread, SubscriptionRequestInterface, UrbitVisorAction, UrbitVisorRequest, UrbitVisorResponse} from "./types"
+import {VISOR_ID, Scry, Poke, Thread, SubscriptionRequestInterface, UrbitVisorAction, UrbitVisorRequest, UrbitVisorResponse} from "uv-types";
 
 function callVisor(action, data = null): Promise<any>{
     return new Promise((resolve, reject) => {
