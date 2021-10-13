@@ -1,0 +1,95 @@
+.App-navbar {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 10px;
+    position: relative;
+  }
+
+.Nav-logo {
+    height: 40px;
+    margin-left: 0.2rem;
+    cursor: pointer;
+    z-index: 2;
+    /* pointer-events: none; */
+}
+
+.navbar-title {
+    /* margin-left: auto;
+    margin-right: auto;
+    width: 357px !important;
+    position: fixed;
+    left: 0;
+    z-index: 1; */
+    position: inherit;
+    margin-left: -5px;
+}
+
+.navbar-sigil-wrapper{
+    margin-right: 0.24em;
+    /* padding: 2px; */
+    z-index: 2;
+}
+
+.navbar-sigil{
+    /* padding: 2px; */
+}
+.navbar-sigil:hover{
+    cursor:pointer;
+    border-color: transparent; /* remove the border's colour */
+    box-shadow: 0 0 0 1px white; /* emulate the border */
+    /* border: 1px solid white; */
+}
+
+.navbar-modal{
+    /* opacity: 0.7; */
+    box-shadow: 1px 3px 3px #888888;
+    border: 1px solid var(--foreground);
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    width: 200px;
+    /* height: 150px; */
+    z-index: 999;
+}
+.modal-link:hover{
+    background-color: darkgrey;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.modal-link{
+    background-color: var(--background);
+    opacity: 0.95;
+    padding: 1rem;
+    display: flex;
+}
+.modal-link svg{
+    margin: auto 1rem auto 0;
+}
+.modal-link p{
+  font-size: 1rem;
+  font-family: Euclid, Roboto, Helvetica, Arial, sans-serif;
+  line-height: 140%;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.dummy-sigil{
+    height: 46px;
+    width: 46px;
+    background-color: var(--background);
+}
+.blurry-sigil{
+    box-sizing: content-box;
+    filter: blur(2px);
+  }
+  .active-navbar-sigil{
+    /* border: 2px solid green; */
+  }
+  .inactive-navbar-sigil{
+    box-sizing: content-box;
+    border: 2px solid rgb(109, 0, 0);
+  }
+  

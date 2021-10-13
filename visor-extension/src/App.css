@@ -1,0 +1,422 @@
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: rgb(26, 26, 26);
+    --foreground: rgb(255, 255, 255);
+  }
+} */
+
+/* @media (prefers-color-scheme: light) {
+  :root {
+    --background: rgb(255, 255, 255);
+    --foreground: rgb(0, 0, 0);
+  }
+} */
+
+:root {
+  --background: rgb(26, 26, 26);
+  --foreground: rgb(255, 255, 255);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+div#popup {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  width: 357px;
+  height: 600px;
+  overflow-y: hidden;
+  font-size: 16px;
+  font-family: Inter, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.App-navbar {
+  background-color: rgb(10, 10, 10);
+}
+
+.App {
+  text-align: center;
+  color: white;
+  height: 100%;
+}
+
+h4 {
+  font-size: 1.4rem;
+}
+
+.App-content {
+  background-color: var(--background);
+  color: var(--foreground);
+  width: 100%;
+  height: 530px;
+  max-height: 530px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 600px) {
+  body {
+    margin: 20px auto;
+    width: 500px;
+    height: 840px;
+    box-shadow: 5px 3px 8px 0px rgb(150, 150, 150, 0.5);
+    background-color: var(--background);
+    font-family: Inter, sans-serif;
+    /* box-shadow: 0 0 7px 0 rgb(0 0 0 / 8%); */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .App-content {
+    background-color: var(--background);
+    color: var(--foreground);
+    height: 770px;
+    max-height: 770px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.welcome {
+  margin: auto;
+  position: relative;
+}
+
+.App-logo {
+  height: 200px;
+  pointer-events: none;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 100px;
+  right: 0;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.successMessage {
+  font-size: 1rem;
+  height: 1rem;
+  color: rgb(3, 125, 214);
+  text-align: center;
+  margin: 0;
+}
+
+.spinner {
+  text-align: center;
+}
+
+.errorMessage {
+  font-size: 1rem;
+  color: red;
+  text-align: center;
+  margin: 0;
+}
+
+.succesMessage {
+  color: var(--foreground);
+}
+
+.setup .errorMessage {
+  margin-bottom: 0.5rem;
+}
+
+.tooltip-trigger {
+  vertical-align: super;
+  margin: 0.1rem 0 0.1rem 0.1rem;
+}
+
+.setup .tooltip {
+  position: fixed;
+  top: 180px;
+  left: 200px;
+  height: 100px;
+  width: 150px;
+  font-size: 0.9rem;
+  border: 1px solid var(--foreground);
+  background-color: var(--background);
+  z-index: 900;
+}
+
+.setup {
+  padding: 1rem;
+  margin: auto;
+}
+
+.red-bg {
+  background-color: rgba(200, 0, 0, 1) !important;
+  /* border: 1px solid rgba(100,0,0,1) !important; */
+}
+
+/* forms */
+
+label {
+  line-height: 1.5;
+}
+
+input {
+  width: 100%;
+  margin: 12px 0;
+  border: 1px solid grey;
+  padding: 10px;
+  text-align: left;
+  border-radius: 4px;
+  font-size: 12px;
+  box-shadow: none;
+  display: block;
+  font-family: 'Source Code Pro', monospace;
+  outline: none;
+}
+
+.flex-grow-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-height: 100%;
+  height: 100%;
+}
+
+.flex-grow {
+  flex: 1 1 0%;
+}
+
+.form {
+  margin: auto;
+  text-align: left;
+  width: 100%;
+}
+
+.inputs {
+  margin-top: 50px;
+}
+
+.modal-background {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(0, 0, 0, 0.7);
+}
+
+.modal-foreground {
+  padding: 0.5rem;
+  background-color: grey;
+  margin: 40% auto;
+  width: 70%;
+}
+
+.modal-foreground img {
+  width: 120px;
+}
+
+.shipname {
+  font-family: monospace;
+}
+
+.moonname span {
+  display: block;
+  text-align: left;
+  width: 14ch;
+}
+
+/* buttons */
+
+button {
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  display: flex;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 14px 0px;
+  width: 100%;
+  border-radius: 6px;
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 600;
+  color: white;
+  pointer-events: auto;
+  border: none;
+  outline-color: transparent;
+  outline-style: none;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+button:hover {
+  opacity: 0.5;
+}
+
+.button {
+  border: 0;
+  margin: 0.2rem auto;
+  display: inline-flex;
+  outline: 0;
+  position: relative;
+  align-items: center;
+  user-select: none;
+  vertical-align: middle;
+  justify-content: center;
+  text-decoration: none;
+  min-width: 64px;
+  box-sizing: border-box;
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  line-height: 1.75;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  padding: 8px 22px;
+  font-size: 0.9375rem;
+  width: 60%;
+  opacity: 0.5;
+  cursor: pointer;
+  background-color: rgb(3, 125, 214);
+  color: white;
+  margin-top: 15px;
+  height: 50px;
+  font-weight: 400;
+  box-shadow: none;
+  border-radius: 4px;
+}
+
+.submit-setup-button {
+  margin: auto;
+  width: 100%;
+}
+
+.small-button {
+  display: block;
+  width: 100%;
+  background-color: rgb(3, 125, 214, 0.5);
+  cursor: pointer;
+}
+
+.buttonContainer {
+  display: flex;
+  background-color: #282c34;
+  color: white;
+  min-width: 150px;
+  padding: 10px;
+}
+
+.loginButton {
+  border: 0;
+  background-color: #1a1d22;
+  color: white;
+  padding: 5px 10px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.small-button:disabled {
+  border-color: currentColor;
+  background-color: rgb(3, 125, 214, 0.3);
+  pointer-events: none;
+  cursor: not-allowed
+}
+
+.single-button {
+  width: 100%;
+  background-color: rgb(3, 125, 214, 0.5);
+  color: white;
+}
+
+.two-buttons {
+  display: flex;
+  width: 100%;
+}
+
+.two-buttons button {
+  width: 100%;
+}
+
+.flex-end {
+  align-self: flex-end;
+}
+
+.blue-button {
+  background-color: rgb(3, 125, 214, 0.5);
+}
+
+.two-buttons .right {
+  margin-left: 10px;
+}
+
+.connect-button {
+  margin-top: 3.6rem;
+}
+
+.cancel-button {
+  background-color: rgb(45, 45, 45);
+}
+
+.multiple-buttons {
+  margin: 0.5rem 0;
+}
+
+.padding {
+  width: 100%;
+  padding: 10%;
+}
+
+.small-padding {
+  width: 100%;
+  padding: 1rem;
+}
+
+/* about page */
+.about-version {
+  font-weight: bolder;
+}
+
+.about div {
+  margin-top: 2rem;
+}
+
+img.about-visor-logo {
+    background: none;
+    height: 5.8rem;
+    width: 8rem;
+    margin-top: 1.25rem;
+}
+
+img.about-dcspark-logo {
+  padding: 0.5rem;
+  width: 180px;
+  background-color: white;
+  border-radius: 5px;
+  margin-top: 0.6rem;
+}
+
+.about-description {
+    line-height: 1.4rem;
+}
+
+.full-size{
+  height: 100%;
+  width: 100%;
+}

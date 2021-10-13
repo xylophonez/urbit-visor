@@ -1,0 +1,27 @@
+.form-prompt{
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.confirm{
+  margin: auto;
+}
+
+.spinner{
+  text-align: center;
+  height: 20px;
+}
+
+.confirm-shipname{
+  font-size: 1.2rem;
+}
+.confirm-form{
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+button:disabled{
+  background-color: rgb(122, 174, 211);
+  pointer-events: none;
+}
