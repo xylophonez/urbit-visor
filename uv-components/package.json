@@ -1,0 +1,35 @@
+{
+  "name": "uv-components",
+  "version": "0.1.1",
+  "description": "Urbit Visor Component Library",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "urbit",
+    "urbit-visor"
+  ],
+  "author": "dcSpark",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chrome": "0.0.158",
+    "@types/react": "^17.0.28",
+    "@types/react-dom": "^17.0.9",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "@urbit/http-api": "^1.3.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rxjs": "^7.3.1",
+    "uv-core": "file:../uv-core"
+  }
+}

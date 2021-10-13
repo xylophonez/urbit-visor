@@ -1,1 +1,0 @@
-export { urbitVisor } from "./visor";
