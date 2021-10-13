@@ -40,7 +40,7 @@ This will install all of the dependencies and build the extension. Now that the 
 
 ## ⚙️ Urbit Visor API
 
-After a user installs the Urbit Visor extension into their web browser, the Urbit Visor API is injected into each web page that they visit. This allows the website (or other extensions) to interact with Urbit Visor and thereby perform actions on the user's Urbit ship.
+After a user installs the Urbit Visor extension into their web browser, the extension will inject a listener into each webpage that they visit. This allows both Urbit Web Apps and UV Extensions to import the `uv-core` library to use the exposed `urbitVisor` API object which seamlessly handles interacting directly with Urbit Visor, and thus the user's ship, without having to do any extra setup at all. (Note: Originally Urbit Visor injected the API directly into each web page, however in order to unify the Urbit Web App and UV Extension development experience and enable a unified `uv-components` library to be built, this approach was reworked into the current solution)
 
 Below you will find the API which the current version of Urbit Visor supports. If a given method requires permission, this means that the user must grant the website permission to have access to use this method. If this authorization has not yet been given, Urbit Visor will automatically ask the user to authorize said permission upon attempt to use said method.
 
