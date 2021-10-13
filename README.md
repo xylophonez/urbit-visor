@@ -25,7 +25,7 @@ $ git clone https://github.com/dcSpark/urbit-visor
 Once you have done that simply use `npm` to compile it yourself:
 
 ```
-$ cd urbit-visor
+$ cd visor-extension
 $ npm install
 $ npm start
 ```
@@ -57,7 +57,7 @@ Below you will find the API which the current version of Urbit Visor supports. I
 | `requestPermissions`    | Requests permissions from a given URL to Urbit Visor.                        | No                  | `Array<Permission>`                                                        | `void`                |
 | `authorizedPermissions` | Returns the permissions that the user has authorized for the current domain. | No                  | `()`                                                                       | `Array<Permission>`   |
 | `on`                    | Adds an event listener for a subscription to Urbit Visor Events.             | No                  | `(eventType: string, keys: Array<string>, callback: Function)`             | `Subscription`        |
-| `off`                   | Removes an event listener set up by `on()`.                                  | No                  | `Subscription` (returned by `.on()`)                | undefined             |
+| `off`                   | Removes an event listener set up by `on()`.                                  | No                  | `Subscription` (returned by `.on()`)                                       | undefined             |
 
 ### .on()
 
