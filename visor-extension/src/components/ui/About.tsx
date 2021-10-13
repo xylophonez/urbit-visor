@@ -12,7 +12,7 @@ export default function About() {
       className="about padding">
       <a href ="https://urbitvisor.com"><img src={visorLogo} className="about-visor-logo" /></a>
       <div className="about-version">
-        <p>Version: 0.1.0</p>
+        <p>Version: 0.2.0</p>
       </div>
       <div className="about-description">
         <p>Urbit Visor is an extension which transforms your web browser into a first class Urbit client. Its goal is to allow existing web tech to seamlessly integrate together with the novel functionality of Urbit.</p>
