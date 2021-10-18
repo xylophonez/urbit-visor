@@ -9,8 +9,19 @@ function shouldInject(): boolean {
   const docTypeCheck = doctype ? doctype.name === 'html' : true;
   return docElemCheck && docTypeCheck;
 }
+
+function proofOfVisor() {
+  (window as any).urbitVisor = true;
+}
+
+function embed(fn: Function) {
+  const script = document.createElement("script");
+  script.text = `(${fn.toString()})();`;
+  document.documentElement.appendChild(script);
+}
+
 if (shouldInject()) {
-  // injectScript();
-  // injectModal();
+  embed(proofOfVisor)
   Messaging.createProxyController();
 }
+
