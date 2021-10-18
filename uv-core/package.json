@@ -1,6 +1,6 @@
 {
   "name": "uv-core",
-  "version": "0.1.0",
+  "version": "0.1.9",
   "description": "Urbit Visor core library, exposing types and core functions",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
