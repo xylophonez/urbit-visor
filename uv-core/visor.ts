@@ -1,15 +1,15 @@
 import { fromEvent, Subscription } from "rxjs";
-import {VISOR_ID, Scry, Poke, Thread, SubscriptionRequestInterface, UrbitVisorAction, UrbitVisorRequest, UrbitVisorResponse} from "./types";
+import { VISOR_ID, Scry, Poke, Thread, SubscriptionRequestInterface, UrbitVisorAction, UrbitVisorRequest, UrbitVisorResponse } from "./types";
 import { Messaging } from "./messaging";
-import {inject, visorPromptModal, showPopup, promptUnlock, promptPerms} from "./modals"
+import { inject, visorPromptModal, showPopup, promptUnlock, promptPerms } from "./modals"
 
 const modal = visorPromptModal();
 inject(modal);
 
 export const urbitVisor = {
-    isConnected: () => checkConnection(),
+    isConnected: () => requestData("check_connection"),
     promptConnection: () => promptUnlock(),
-    authorizedPermissions: () => checkPermissions(),
+    authorizedPermissions: () => requestData("check_perms"),
     getShip: () => requestData("shipName"),
     getURL: () => requestData("shipURL"),
     requestPermissions: (permissions: UrbitVisorAction[]) => requestData("perms", permissions),
@@ -41,36 +41,34 @@ function addListener(eventType: string, keys: string[], callback: Function) {
     });
 }
 
-function callVisor(action, data = null): Promise<any>{
+function callVisor(action, data = null): Promise<any> {
     return new Promise((resolve, reject) => {
-        const request = { app: "urbitVisor", action: action, data: data}; 
-        chrome.runtime.sendMessage(VISOR_ID, request, response =>  resolve(response));
+        const request = { app: "urbitVisor", action: action, data: data };
+        chrome.runtime.sendMessage(VISOR_ID, request, response => resolve(response));
     });
 }
+
+const cleared = "check_connection" || "check_perms"
 
 
 async function requestData(action: UrbitVisorAction, data: any = null): Promise<any> {
     return new Promise(async (resolve, reject) => {
-        let response;
-        if (chrome.runtime) response = await callVisor(action, data);
-        else response = await Messaging.callVisor({ app: "urbitVisor", action: action, data: data });
-        if (response.status === "locked") promptUnlock(), resolve(response);
-        else if (response.status == "noperms") promptPerms(), resolve(response);
+        const response = await branchRequest(action, data);
+        if (response.status === "locked" && action !== cleared) promptUnlock()
+        if (response.status == "noperms" && action !== cleared) promptPerms()
         if (response.error) reject(response)
         else resolve(response)
     })
 };
 
-async function checkConnection(): Promise<UrbitVisorResponse> {
-    let response;
-    if (chrome.runtime) response = await callVisor("check_connection");
-    else response = await Messaging.callVisor({ app: "urbitVisor", action: "check_connection"});
-    return response
-}
+async function branchRequest(action: UrbitVisorAction, data: any, count = 0): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+        if (chrome.runtime) resolve(callVisor(action, data));
+        else {
+            if ((window as any).urbitVisor) resolve(Messaging.callVisor({ app: "urbitVisor", action: action, data: data }));
+            else if (count < 10) setTimeout(() => resolve(branchRequest(action, data, count++)), 1000);
+            else reject("error")
+        }
+    });
 
-async function checkPermissions(): Promise<any> {
-    let response;
-    if (chrome.runtime) response = await callVisor("check_perms");
-    else response = await Messaging.callVisor({ app: "urbitVisor", action: "check_perms"});
-    return response
 }
