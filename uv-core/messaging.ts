@@ -42,7 +42,8 @@ const Messaging = {
             window.postMessage({ action, data, app, id: requestId }, window.origin);
         });
     },
-    createProxyController: () => {          
+    createProxyController: () => {
+        console.log("Urbit Visor present")
         //listen to function calls from webpage
         window.addEventListener('message', async function (e) {
             const request = e.data;
