@@ -68,9 +68,7 @@ export default function PermissionsPrompt(props: PermissionsPromptProps) {
             className="permissions padding flex-grow-wrapper">
             <h3>Permissions Requested</h3>
             <div className="flex-grow">
-                <p className="align-center">{requesterType}</p>
                 <a href={perms.key} title={perms.key} rel="noopener noreferrer" target="_blank" className="requesting-domain">{requester}</a>
-                <p className="align-center">requested the following permissions: </p>
                 <div className="permission-request-list">
                     <ul>
                         {perms.permissions.map(perm => {
@@ -79,9 +77,11 @@ export default function PermissionsPrompt(props: PermissionsPromptProps) {
                     </ul>
                 </div>
                 {/* {perms.existing && <Existing {...props}/>} */}
-                <p>Enter your master password to grant them.</p>
-                <input onChange={(e) => setPw(e.currentTarget.value)} type="password" />
-                <p className="errorMessage">{error}</p>
+                <div className="perm-req-password-box">
+                    <p>Enter your master password to grant them.</p>
+                    <input onChange={(e) => setPw(e.currentTarget.value)} type="password" />
+                    <p className="errorMessage">{error}</p>
+                </div>
             </div>
             <div className="two-buttons">
                 <button className="red-bg" onClick={deny} type="submit">Deny</button>
