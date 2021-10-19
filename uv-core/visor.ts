@@ -7,6 +7,7 @@ const modal = visorPromptModal();
 inject(modal);
 
 export const urbitVisor = {
+    registerName: (name: string) => callVisor("register_name", {consumerName: name}),
     isConnected: () => requestData("check_connection"),
     promptConnection: () => promptUnlock(),
     authorizedPermissions: () => requestData("check_perms"),
@@ -41,7 +42,7 @@ function addListener(eventType: string, keys: string[], callback: Function) {
     });
 }
 
-function callVisor(action, data = null): Promise<any> {
+function callVisor(action, data: any): Promise<any> {
     return new Promise((resolve, reject) => {
         const request = { app: "urbitVisor", action: action, data: data };
         chrome.runtime.sendMessage(VISOR_ID, request, response => resolve(response));
@@ -70,5 +71,4 @@ async function branchRequest(action: UrbitVisorAction, data: any, count = 0): Pr
             else reject("error")
         }
     });
-
 }
