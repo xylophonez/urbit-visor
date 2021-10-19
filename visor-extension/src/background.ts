@@ -200,9 +200,10 @@ function handleVisorCall(request: any, sender: any, sendResponse: any, callType:
   const state = useStore.getState();
   console.log(state.consumers, "consumers")
   if (callType == "website") state.addConsumer({ id: sender.tab.id, url: new URL(sender.tab.url) });
-  else state.addConsumer({ id: sender.id, name: "need a way to pass this" });
+  else state.addConsumer({ id: sender.id, name: request?.data?.consumerName || "" });
   console.log(state.consumers, "consumers")
-  if (request.action == "check_connection") sendResponse({ status: "ok", response: !!state.activeShip })
+  if (request.action == "register_name") sendResponse({ status: "ok"})
+  else if (request.action == "check_connection") sendResponse({ status: "ok", response: !!state.activeShip })
   else if (request.action == "unsubscribe") unsubscribe(state, request, sender, sendResponse)
   else if (!state.activeShip) notifyUser(state, "locked", sendResponse)
   else checkPerms(state, callType, request, sender, sendResponse);
@@ -245,7 +246,9 @@ function checkPerms(state: UrbitVisorState, callType: visorCallType, request: an
         console.log(request, "checkperm")
         console.log(sender, "sender")
         console.log(callType, "calltype")
-        state.requestPerms({key: id, name: "", permissions: [request.action], existing: existingPerms})
+        const consumer = state.consumers.find(sumer => sumer.id === id);
+        const name = ("name" in consumer) ? consumer.name : "";
+        state.requestPerms({key: id, name: name, permissions: [request.action], existing: existingPerms})
         notifyUser(state, "noperms", sendResponse);
       }
       else {
