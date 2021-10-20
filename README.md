@@ -26,6 +26,7 @@ Once you have done that simply use `npm` to compile it yourself:
 
 ```
 $ cd visor-extension
+$ nvm use
 $ npm install
 $ npm start
 ```
