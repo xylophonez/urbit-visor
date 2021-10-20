@@ -1,8 +1,8 @@
-# UV Types
+# Urbit Visor Core
 
-This is a library which exposes relevant Urbit Visor types for external web apps, UV extensions, and libraries to use.
+Core library holding the basic functionality of [Urbit Visor](https://urbitvisor.com).
 
 ## Getting Started
 
 Add it to your node application:
-`npm i uv-types`
+`npm i uv-core`
