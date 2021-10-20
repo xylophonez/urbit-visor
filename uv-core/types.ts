@@ -2,7 +2,7 @@ import Urbit from "@urbit/http-api";
 import { Scry, Thread, Poke, SubscriptionRequestInterface } from "@urbit/http-api/src/types"
 
 export { Scry, Thread, Poke, SubscriptionRequestInterface };
-export const VISOR_ID = "hfeolfjbieiccblbpimflclfomimcpbe";
+export const VISOR_ID = "gebdankfdnaihbffjhgenabgbdfmjmff";
 
 export type DecryptedShipCredentials = {
     shipName: string;
