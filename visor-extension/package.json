@@ -7,7 +7,8 @@
     "build": "webpack",
     "start": "webpack --watch",
     "prod:compress": "ts-node scripts/compress",
-    "prod:stable": "npm run prod:compress -- --env 'mainnet' --app-id 'urbit-visor' --zip-only --codebase 'https://dcspark.io/dw/urbitvisor.crx' --key ./UrbitVisor.pem"
+    "prod:stable": "npm run prod:compress -- --env 'mainnet' --app-id 'urbit-visor' --zip-only --codebase 'https://dcspark.io/dw/urbitvisor.crx' --key ./UrbitVisor.pem",
+    "prod:crx": "npm run prod:compress -- --env 'mainnet' --app-id 'urbit-visor' --codebase 'https://dcspark.io/dw/urbitvisor.crx' --key ./UrbitVisor.pem"
   },
   "keywords": [],
   "license": "ISC",
