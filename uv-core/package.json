@@ -1,6 +1,6 @@
 {
-  "name": "uv-core",
-  "version": "0.2.3",
+  "name": "@dcspark/uv-core",
+  "version": "0.2.8",
   "description": "Urbit Visor core library, exposing types and core functions",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
