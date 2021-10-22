@@ -64,7 +64,7 @@ async function requestData(action: UrbitVisorAction, data: any = null): Promise<
 
 async function branchRequest(action: UrbitVisorAction, data: any, count = 0): Promise<any> {
     return new Promise(async (resolve, reject) => {
-        if (chrome.runtime) resolve(callVisor(action, data));
+        if (chrome.runtime?.id) resolve(callVisor(action, data));
         else {
             if ((window as any).urbitVisor) resolve(Messaging.callVisor({ app: "urbitVisor", action: action, data: data }));
             else if (count < 10) setTimeout(() => resolve(branchRequest(action, data, count++)), 1000);
