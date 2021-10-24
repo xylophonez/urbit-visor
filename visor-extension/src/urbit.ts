@@ -15,6 +15,23 @@ export async function fetchShipname(url: string): Promise<string>{
     }
   })
 }
+
+export async function scrapeShipname(url: string): Promise <string>{
+  return new Promise(async (resolve, reject) => {
+    try{
+      console.log(url, "url")
+      const res = await fetch(url.replace(/\/$/g, '') + "/~/login");
+      const html = await res.text();
+      console.log(html, "html")
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+      const ship = doc.querySelector('input').value
+      resolve(ship)
+    } catch{
+      reject("OTA outdated")
+    }
+  })
+}
 // todo
 export async function connectToShip(url: string, ship: EncryptedShipCredentials): Promise<any>{
   const {connectShip, activeSubscriptions} = useStore.getState();

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import Spinner from "../ui/svg/Spinner";
-import { fetchShipname } from "../../urbit";
+import { fetchShipname, scrapeShipname } from "../../urbit";
 import { Messaging } from "uv-core";
 import "./adding.css";
 import { motion } from "framer-motion";
@@ -35,7 +35,7 @@ export default function AddShipForm({ url, code, setUrl, setCode, setShipName }:
           case 204:
             Messaging.sendToBackground({ action: "cache_form_url", data: { url: "" } });
             setLoading(false);
-            fetchShipname(url)
+            scrapeShipname(url)
               .then(shipName => setShipName(shipName))
               .catch(err => setError("Your ship needs an OS update"))
             break;
