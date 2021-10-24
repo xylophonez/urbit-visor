@@ -9,7 +9,22 @@ export async function fetchShipname(url: string): Promise<string>{
     try{
       const res = await fetch(url.replace(/\/$/g, '') + "/who.json");
       const json = await res.json();
-      resolve(json.who)
+      resolve("~" + json.who)
+    } catch{
+      reject("OTA outdated")
+    }
+  })
+}
+
+export async function scrapeShipname(url: string): Promise <string>{
+  return new Promise(async (resolve, reject) => {
+    try{
+      const res = await fetch(url.replace(/\/$/g, '') + "/~/login");
+      const html = await res.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+      const ship = doc.querySelector('input').value
+      resolve(ship)
     } catch{
       reject("OTA outdated")
     }
