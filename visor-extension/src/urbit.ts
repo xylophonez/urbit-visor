@@ -9,7 +9,7 @@ export async function fetchShipname(url: string): Promise<string>{
     try{
       const res = await fetch(url.replace(/\/$/g, '') + "/who.json");
       const json = await res.json();
-      resolve(json.who)
+      resolve("~" + json.who)
     } catch{
       reject("OTA outdated")
     }
