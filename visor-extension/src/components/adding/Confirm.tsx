@@ -54,7 +54,7 @@ export default function Confirm(props: ConfirmProps) {
     exit={{opacity: 0}}
     className="confirm padding flex-grow-wrapper">
       <p>Connection successful to:</p>
-      <p className="confirm-shipname">{props.ship} </p>
+      <p className="confirm-shipname">~{props.ship} </p>
       <p>Please confirm your master password.</p>
       <form onSubmit={addShip} className="form confirm-form flex-grow-wrapper">
       <input type="submit" style={hidden}/>
