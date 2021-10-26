@@ -304,9 +304,10 @@ function reqres(state: UrbitVisorState, request: any, sendResponse: any): void {
 }
 
 function pubsub(state: UrbitVisorState, callType: visorCallType, request: any, sender: any, sendResponse: any): void {
-  let eventRecipient : number | string;
-  if (callType == "extension") eventRecipient = sender.id;
-  else if (callType == "website") eventRecipient = sender.tab.id;
+  // let eventRecipient : number | string;
+  // if (callType == "extension") eventRecipient = sender.id;
+  // else if (callType == "website") eventRecipient = sender.tab.id;
+  const eventRecipient = sender.tab.id;
   switch (request.action) {
     case "poke":
       const pokePayload = Object.assign(request.data, {
