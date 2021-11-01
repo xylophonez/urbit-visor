@@ -229,19 +229,18 @@ function checkPerms(state: UrbitVisorState, callType: visorCallType, request: an
   let id: string;
   if (callType === "extension") id = sender.id;
   else if (callType === "website") id = sender.origin;
+  const extension = state.consumer_extensions.find(sumer => sumer.id === id);
+  const name = extension ? extension.name : "";
   fetchAllPerms(state.airlock.url)
     .then(res => {
       const existingPerms = res.bucket[id] || [];
       if (request.action === "check_perms") sendResponse({ status: "ok", response: existingPerms });
-      else if (request.action === "perms") bulkRequest(state, id, existingPerms, request, sender, sendResponse)
+      else if (request.action === "perms") bulkRequest(state, id, name, existingPerms, request, sender, sendResponse)
       else if (!existingPerms || !existingPerms.includes(request.action)) {
         console.log(request, "checkperm")
         console.log(sender, "sender")
         console.log(callType, "calltype")
-        let extensionName: string;
-        const consumer = state.consumer_extensions.find(sumer => sumer.id === id);
-        const name = consumer ? consumer.name : "";
-        console.log(consumer, "consumer")
+       
         state.requestPerms({key: id, name: name, permissions: [request.action], existing: existingPerms})
         notifyUser(state, "noperms", sendResponse);
       }
@@ -252,10 +251,10 @@ function checkPerms(state: UrbitVisorState, callType: visorCallType, request: an
     })
 };
 
-function bulkRequest(state: UrbitVisorState, requester: string, existingPerms: any, request: any, sender: any, sendResponse: any) {
-  if (existingPerms && request.data.every((el: UrbitVisorAction) => existingPerms.includes(el))) sendResponse("perms_exist")
+function bulkRequest(state: UrbitVisorState, requester: string, name: string, existingPerms: any, request: any, sender: any, sendResponse: any) {
+  if (existingPerms && request.data.every((el: UrbitVisorAction) => existingPerms.includes(el))) sendResponse("perms_exist");
   else {
-    state.requestPerms({key: requester, permissions: request.data, existing: existingPerms});
+    state.requestPerms({key: requester, name: name, permissions: request.data, existing: existingPerms});
     notifyUser(state, "noperms", sendResponse);
   }
 }
