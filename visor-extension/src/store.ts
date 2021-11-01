@@ -14,7 +14,8 @@ export const useStore = create<UrbitVisorState>((set, get) => ({
     selectedShip: null,
     activeShip: null,
     permissions: {},
-    consumers: [],
+    consumer_tabs: [],
+    consumer_extensions: [],
     activeSubscriptions: [],
     init: async () => {
         const res = await getStorage(["popup", "ships", "password", "permissions"]);
@@ -69,9 +70,18 @@ export const useStore = create<UrbitVisorState>((set, get) => ({
         await savePassword(password);
     },
     resetApp: async () => await resetApp(),
-    addConsumer: (newConsumer) => {
-        if (!get().consumers.find(consumer => newConsumer.id === consumer.id))
-        set(state => ({consumers: [...state.consumers, newConsumer]}))
+    addConsumerTab: (newConsumer) => {
+        const match = get().consumer_tabs.find(consumer => newConsumer.tab == consumer.tab);
+        if (!match) set(state => ({consumer_tabs: [...state.consumer_tabs, newConsumer]}))
+    },
+    addConsumerExtension: (newConsumer) => {
+        const match = get().consumer_extensions.find(consumer => newConsumer.id == consumer.id);
+        if (!match) set(state => ({consumer_extensions: [...state.consumer_extensions, newConsumer]}));
+        else {
+            const rest = get().consumer_extensions.filter(ext => ext.id !== match.id);
+            const updated = {id: match.id, name: match.name, tabs: [...match.tabs, ...newConsumer.tabs]}
+            set(state => ({consumer_extensions: [...rest, updated]}))
+        }
     },
     addSubscription: (sub) => set(state => ({activeSubscriptions: [...state.activeSubscriptions, sub]})),
     removeSubscription: (subToDelete) => {

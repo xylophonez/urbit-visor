@@ -59,6 +59,12 @@ function extensionListener() {
 
 function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, sendResponse: any) {
   const state = useStore.getState();
+  let recipients: Set<number | string>;
+  const tabs = new Set(state.consumer_tabs.map(consumer => consumer.tab));
+  const extensions = new Set(state.consumer_extensions.map(consumer => consumer.id));
+  const extension_tabs = new Set(state.consumer_extensions.map(consumer => consumer.tabs).flat())
+  recipients = new Set([...tabs, ...extensions, ...extension_tabs]);
+
   switch (request.action) {
     case "get_initial_state":
       sendResponse({ first: state.first, ships: state.ships, activeShip: state.activeShip, cachedURL: state.cached_url, requestedPerms: state.requestedPerms })
@@ -97,38 +103,31 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
     case "connect_ship":
       if (state.activeShip) {
         state.disconnectShip();
-        const recipients = new Set(state.consumers.map(consumer => consumer.id));
         Messaging.pushEvent({ action: "disconnected", data: { ship: state.activeShip.shipName } }, recipients)
-      }
+      };
       state.connectShip(request.data.url, request.data.ship)
         .then(res => {
           chrome.browserAction.setBadgeText({ text: "" });
-          const recipients = new Set(state.consumers.map(consumer => consumer.id));
-          Messaging.pushEvent({ action: "connected" }, recipients)
-          sendResponse("ok")
+          Messaging.pushEvent({ action: "connected" }, recipients);
+          sendResponse("ok");
         })
         .catch(err => sendResponse(null));
       break;
     case "disconnect_ship":
       state.disconnectShip();
-      const recipients = new Set(state.consumers.map(consumer => consumer.id));
       Messaging.pushEvent({ action: "disconnected" }, recipients)
       sendResponse("ok");
       break;
     case "grant_perms":
       state.grantPerms(request.data.request)
         .then(res => {
+          console.log(request, "granting perm request")
           chrome.browserAction.setBadgeText({ text: "" });
-          const recipients = new Set(state.consumers
-            .filter(consumer => {
-              if ("url" in consumer) return consumer.url.origin === request.data.request.key
-              return consumer.id === request.data.domain
-            })
-            .map(consumer => consumer.id)
-          );
-          console.log(request.data, "data")
-          console.log(state.consumers, "sumers")
-          console.log(recipients, "Recipients")
+          const tbs = new Set(state.consumer_tabs.filter(tab => tab.url.origin === request.data.request.key).map(tab => tab.tab));
+          const xtns = new Set(state.consumer_extensions.filter(ext => ext.id === request.data.request.key).map(ext => ext.id));
+          const xtns_tabs = new Set(state.consumer_extensions.filter(ext => ext.id === request.data.request.key).map(ext => ext.tabs).flat());
+          recipients = new Set([...tbs, ...xtns, ...xtns_tabs]);
+          console.log(recipients, "recipients")
           Messaging.pushEvent({ action: "permissions_granted", data: request.data.request }, recipients)
           sendResponse("ok")
         })
@@ -139,32 +138,25 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
       sendResponse("ok");
       break;
     case "remove_whole_domain":
+      console.log(request, "request")
       state.removeWholeDomain(request.data.url, request.data.ship, request.data.domain)
         .then(res => {
-          const recipients = new Set(state.consumers
-            .filter(consumer => {
-              if ("url" in consumer) return consumer.url.origin === request.data.domain
-              return consumer.id === request.data.domain
-            })
-            .map(consumer => consumer.id)
-          );
+          const tbs = new Set(state.consumer_tabs.filter(tab => tab.url.origin === request.data.domain).map(tab => tab.tab));
+          const xtns = new Set(state.consumer_extensions.filter(ext => ext.id === request.data.domain).map(ext => ext.id));
+          const xtns_tabs = new Set(state.consumer_extensions.filter(ext => ext.id === request.data.request.key).map(ext => ext.tabs).flat());
+          recipients = new Set([...tbs, ...xtns, ...xtns_tabs]);
           Messaging.pushEvent({ action: "permissions_revoked", data: request.data }, recipients)
           sendResponse("ok")
         })
       break;
     case "revoke_perm":
+      console.log(request, "request")
       state.revokePerm(request.data.url, request.data.ship, request.data.request)
         .then(res => {
-          const recipients = new Set(state.consumers
-            .filter(consumer => {
-              if ("url" in consumer) return consumer.url.origin === request.data.request.key
-              return consumer.id === request.data.domain
-            })
-            .map(consumer => consumer.id)
-          );
-          console.log(request.data, "data")
-          console.log(state.consumers, "sumers")
-          console.log(recipients, "Recipients")
+          const tbs = new Set(state.consumer_tabs.filter(tab => tab.url.origin === request.data.request.key).map(tab => tab.tab));
+          const xtns = new Set(state.consumer_extensions.filter(ext => ext.id === request.data.request.key).map(ext => ext.id));
+          const xtns_tabs = new Set(state.consumer_extensions.filter(ext => ext.id === request.data.request.key).map(ext => ext.tabs).flat());
+          recipients = new Set([...tbs, ...xtns, ...xtns_tabs]);
           Messaging.pushEvent({ action: "permissions_revoked", data: request.data.request }, recipients)
           sendResponse("ok")
         })
@@ -198,10 +190,10 @@ type visorCallType = "website" | "extension"
 
 function handleVisorCall(request: any, sender: any, sendResponse: any, callType: visorCallType) {
   const state = useStore.getState();
-  console.log(state.consumers, "consumers")
-  if (callType == "website") state.addConsumer({ id: sender.tab.id, url: new URL(sender.tab.url) });
-  else state.addConsumer({ id: sender.id, name: request?.data?.consumerName || "" });
-  console.log(state.consumers, "consumers")
+  if (callType !== "website") state.addConsumerExtension ({ tabs: [sender.tab.id], id: sender.id, name: request?.data?.consumerName || "" });
+  else state.addConsumerTab({ tab: sender.tab.id, url: new URL(sender.tab.url) });
+  console.log(useStore.getState().consumer_tabs, "consumer tabs as of now")
+  console.log(useStore.getState().consumer_extensions, "consumer exts as of now")
   if (request.action == "register_name") sendResponse({ status: "ok"})
   else if (request.action == "check_connection") sendResponse({ status: "ok", response: !!state.activeShip })
   else if (request.action == "unsubscribe") unsubscribe(state, request, sender, sendResponse)
@@ -246,8 +238,10 @@ function checkPerms(state: UrbitVisorState, callType: visorCallType, request: an
         console.log(request, "checkperm")
         console.log(sender, "sender")
         console.log(callType, "calltype")
-        const consumer = state.consumers.find(sumer => sumer.id === id);
-        const name = ("name" in consumer) ? consumer.name : "";
+        let extensionName: string;
+        const consumer = state.consumer_extensions.find(sumer => sumer.id === id);
+        const name = consumer ? consumer.name : "";
+        console.log(consumer, "consumer")
         state.requestPerms({key: id, name: name, permissions: [request.action], existing: existingPerms})
         notifyUser(state, "noperms", sendResponse);
       }
