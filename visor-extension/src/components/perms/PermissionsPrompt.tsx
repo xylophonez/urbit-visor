@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { validate } from "../../storage";
 import "./perms.css";
-import { PermissionRequest, Permission } from "uv-core";
-import { Messaging } from "uv-core";
+import { PermissionRequest, Permission, Messaging } from "@dcspark/uv-core";
 import { motion } from "framer-motion";
 
 

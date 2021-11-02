@@ -7,8 +7,7 @@ import RocketIcon from "../../icons/rocket";
 import SettingsIcon from "../../icons/settings";
 import AboutIcon from "../../icons/info";
 import { useHistory } from "react-router-dom";
-import { EncryptedShipCredentials } from "uv-core";
-import { Messaging } from "uv-core";
+import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
 interface NavbarProps{
   active: EncryptedShipCredentials
   interacting: boolean

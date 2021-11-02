@@ -1,9 +1,8 @@
-import { SubscriptionRequestInterface, EncryptedShipCredentials, UrbitVisorAction, UrbitVisorInternalAction, UrbitVisorInternalComms, UrbitVisorState } from "uv-core";
+import { Messaging, SubscriptionRequestInterface, EncryptedShipCredentials, UrbitVisorAction, UrbitVisorInternalAction, UrbitVisorInternalComms, UrbitVisorState } from "@dcspark/uv-core";
 
 import { fetchAllPerms } from "./urbit"
 import { useStore } from "./store";
 import { EventEmitter } from 'events';
-import { Messaging } from "uv-core";
 
 export const Pusher = new EventEmitter();
 

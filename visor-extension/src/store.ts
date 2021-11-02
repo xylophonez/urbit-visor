@@ -1,4 +1,4 @@
-import { UrbitVisorState } from "uv-core";
+import { UrbitVisorState } from "@dcspark/uv-core";
 import { getStorage, initStorage, storeCredentials, removeShip, setPopupPreference, reEncryptAll, savePassword, resetApp } from "./storage";
 import { connectToShip, grantPerms, deleteDomain, revokePerms } from "./urbit";
 import create from 'zustand';

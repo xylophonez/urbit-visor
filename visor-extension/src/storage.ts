@@ -1,5 +1,5 @@
 import * as CryptoJS from "crypto-js";
-import { EncryptedShipCredentials, PopupPreference, PermissionsGraph } from "uv-core";
+import { EncryptedShipCredentials, PopupPreference, PermissionsGraph } from "@dcspark/uv-core";
 
 
 interface Storage{

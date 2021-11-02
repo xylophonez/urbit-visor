@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useStore } from "../../store";
 import Sigil from "../../components/ui/svg/Sigil"
 import { validate } from "../../storage";
-import { EncryptedShipCredentials } from "uv-core";
+import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
 import ConfirmRemove from "./ConfirmRemove";
 import { whatShip, processName } from "../../utils";
-import { Messaging } from "uv-core";
 import { motion } from "framer-motion";
 import "./settings.css";
 import {

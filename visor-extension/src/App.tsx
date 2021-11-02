@@ -10,8 +10,8 @@ import PermissionsPrompt from "./components/perms/PermissionsPrompt";
 import Settings from "./components/settings/Settings";
 import About from "./components/ui/About";
 import { AnimatePresence } from "framer-motion";
-import { EncryptedShipCredentials } from "uv-core";
-import { Messaging } from "uv-core";
+import { EncryptedShipCredentials } from "@dcspark/uv-core";
+import { Messaging } from "@dcspark/uv-core";
 import {
   MemoryRouter as Router,
   Switch,
