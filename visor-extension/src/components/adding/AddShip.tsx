@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Form from "./Form";
 import Confirm from "./Confirm"
 import { useHistory } from "react-router";
-import { Messaging } from "uv-core";
+import { Messaging } from "@dcspark/uv-core";
 import { motion } from "framer-motion";
 
 

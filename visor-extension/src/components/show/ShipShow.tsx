@@ -3,12 +3,11 @@ import { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router";
 import Sigil from "../ui/svg/Sigil"
 import Spinner from "../ui/svg/Spinner";
-import { EncryptedShipCredentials } from "uv-core";
+import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
 import { loginToShip } from "../../urbit";
 import { decrypt } from "../../storage";
 import "./show.css";
 import { whatShip, processName } from "../../utils"
-import { Messaging } from "uv-core";
 import Permissions from "../perms/Permissions";
 import { motion } from "framer-motion";
 declare const window: any;

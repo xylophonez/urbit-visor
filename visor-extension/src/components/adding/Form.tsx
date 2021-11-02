@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import Spinner from "../ui/svg/Spinner";
 import { fetchShipname, scrapeShipname } from "../../urbit";
-import { Messaging } from "uv-core";
+import { Messaging } from "@dcspark/uv-core";
 import "./adding.css";
 import { motion } from "framer-motion";
 

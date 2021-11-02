@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { useHistory } from "react-router";
-import { Messaging } from "uv-core";
+import { Messaging } from "@dcspark/uv-core";
 import { motion } from "framer-motion";
 
 

@@ -1,13 +1,12 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { fetchAllPerms } from "../../urbit";
-import { Messaging } from "uv-core";
 import "./perms.css";
 import Sigil from "../ui/svg/Sigil";
 import { Chip } from "./PermissionsPrompt";
 import { whatShip, processName } from "../../utils";
 import { motion } from "framer-motion";
-import { EncryptedShipCredentials, PermissionsGraph, Permission } from "uv-core"
+import { EncryptedShipCredentials, PermissionsGraph, Permission, Messaging } from "@dcspark/uv-core";
 interface PermissionsProps {
     ship: EncryptedShipCredentials,
     shipURL: string,

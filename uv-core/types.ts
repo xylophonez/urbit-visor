@@ -27,14 +27,15 @@ interface VisorSubscription {
 }
 
 
-interface UrbitVisorConsumerWebsite {
-    id: TabID,
+ interface UrbitVisorConsumerTab {
+    tab: TabID,
     url: URL
 }
 
-interface UrbitVisorConsumerExtension {
+ interface UrbitVisorConsumerExtension {
     id: ExtensionID,
-    name: string
+    name: string,
+    tabs?: TabID[]
 }
 
 export interface UrbitVisorState {
@@ -47,7 +48,8 @@ export interface UrbitVisorState {
     selectedShip: EncryptedShipCredentials,
     activeShip: EncryptedShipCredentials,
     permissions: PermissionsGraph,
-    consumers: Array<UrbitVisorConsumerWebsite | UrbitVisorConsumerExtension>,
+    consumer_tabs: Array<UrbitVisorConsumerTab>,
+    consumer_extensions: UrbitVisorConsumerExtension[],
     activeSubscriptions: VisorSubscription[],
     init: () => Promise<void>,
     setMasterPassword: (password: string) => Promise<void>,
@@ -66,7 +68,8 @@ export interface UrbitVisorState {
     changePopupPreference: (preference: PopupPreference) => Promise<void>,
     changeMasterPassword: (oldPassword: string, newPassword: string) => Promise<void>
     resetApp: () => Promise<void>,
-    addConsumer: (consumer: UrbitVisorConsumerWebsite | UrbitVisorConsumerExtension) => void
+    addConsumerTab: (consumer: UrbitVisorConsumerTab) => void,
+    addConsumerExtension: (consumer: UrbitVisorConsumerExtension) => void,
     addSubscription: (sub: VisorSubscription) => void,
     removeSubscription: (sub: VisorSubscription) => void
 }
