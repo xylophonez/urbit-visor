@@ -13,4 +13,6 @@ Thanks to this, any open source projects which use Urbit Visor going forward wil
 `uv-core` is available on [NPM](https://www.npmjs.com/package/@dcspark/uv-core).
 
 Add it to your node application:
-`npm i @dcspark/uv-core`
+```bash
+npm i @dcspark/uv-core
+```
