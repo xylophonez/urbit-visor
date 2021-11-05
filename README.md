@@ -8,11 +8,9 @@
 
 ## Getting Started
 
-The fastest way to get started using Urbit Visor will be via the Chrome Web Store.
+The fastest way to get started using Urbit Visor is via the [Chrome Web Store](https://chrome.google.com/webstore/detail/urbit-visor/oadimaacghcacmfipakhadejgalcaepg).
 
-This will provide you with a seamless install process and allow you to get up and running instantly, however the extension is currently waiting to be accepted.
-
-Until then, simply follow the instructions below to compile it yourself in a few easy steps.
+This will provide you with a seamless install process and allow you to get up and running instantly. Alternatively the instructions below allow you to compile Urbit Visor locally.
 
 ## Compile It Yourself
 
