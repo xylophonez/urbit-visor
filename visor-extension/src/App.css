@@ -1,3 +1,5 @@
+@import "./variables.css";
+
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: rgb(26, 26, 26);
@@ -12,10 +14,6 @@
   }
 } */
 
-:root {
-  --background: rgb(26, 26, 26);
-  --foreground: rgb(255, 255, 255);
-}
 
 * {
   box-sizing: border-box;
@@ -37,14 +35,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.App-navbar {
-  background-color: rgb(10, 10, 10);
-}
+
 
 .App {
   text-align: center;
   color: white;
   height: 100%;
+  background-color: var(--background-color);
 }
 
 h4 {
@@ -52,8 +49,8 @@ h4 {
 }
 
 .App-content {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: inherit;
+  color: var(--background-color-contrast);
   width: 100%;
   height: 530px;
   max-height: 530px;
@@ -68,14 +65,12 @@ h4 {
     width: 500px;
     height: 840px;
     box-shadow: 5px 3px 8px 0px rgb(150, 150, 150, 0.5);
-    background-color: var(--background);
     font-family: Inter, sans-serif;
     /* box-shadow: 0 0 7px 0 rgb(0 0 0 / 8%); */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   .App-content {
-    background-color: var(--background);
     color: var(--foreground);
     height: 770px;
     max-height: 770px;
@@ -188,7 +183,7 @@ input {
   font-size: 12px;
   box-shadow: none;
   display: block;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   outline: none;
 }
 
@@ -244,19 +239,19 @@ input {
 /* buttons */
 
 button {
+  width: 100%;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 12px;
   display: flex;
   flex-direction: row;
   -webkit-box-pack: center;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   padding: 14px 0px;
-  width: 100%;
-  border-radius: 6px;
   font-size: 16px;
   line-height: 19px;
-  font-weight: 600;
-  color: white;
+  font-weight: 500;
+  color: #fff;
   pointer-events: auto;
   border: none;
   outline-color: transparent;
@@ -284,7 +279,8 @@ button:hover {
   text-decoration: none;
   min-width: 64px;
   box-sizing: border-box;
-  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   line-height: 1.75;
   letter-spacing: 0.02857em;
@@ -336,13 +332,13 @@ button:hover {
   border-color: currentColor;
   background-color: rgb(3, 125, 214, 0.3);
   pointer-events: none;
-  cursor: not-allowed
+  cursor: not-allowed;
 }
 
 .single-button {
   width: 100%;
-  background-color: rgb(3, 125, 214, 0.5);
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--background-color-contrast);
 }
 
 .two-buttons {
@@ -398,10 +394,10 @@ button:hover {
 }
 
 img.about-visor-logo {
-    background: none;
-    height: 5.8rem;
-    width: 8rem;
-    margin-top: 1.25rem;
+  background: none;
+  height: 5.8rem;
+  width: 8rem;
+  margin-top: 1.25rem;
 }
 
 img.about-dcspark-logo {
@@ -413,10 +409,10 @@ img.about-dcspark-logo {
 }
 
 .about-description {
-    line-height: 1.4rem;
+  line-height: 1.4rem;
 }
 
-.full-size{
+.full-size {
   height: 100%;
   width: 100%;
 }
