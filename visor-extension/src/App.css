@@ -161,6 +161,14 @@ a {
   align-items: center;
   color: var(--background-color-contrast);
 }
+.description {
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.02em;
+  color: var(--light-gray);
+  margin-top: -1.5em;
+}
 .red-bg {
   background-color: var(--alert-color) !important;
   /* border: 1px solid rgba(100,0,0,1) !important; */
@@ -195,7 +203,7 @@ input {
   color: var(--background-color-contrast);
   box-sizing: border-box;
   border-radius: 12px;
-  margin: 5px 0 20px;
+  margin: 5px 0 15px;
   padding: 10px;
   text-align: left;
   font-size: 14px;
@@ -203,7 +211,13 @@ input {
   display: block;
   outline: none;
 }
-
+.separator {
+  margin: 5px;
+}
+.flex {
+  display: flex;
+  align-items: center;
+}
 .flex-grow-wrapper {
   display: flex;
   flex-direction: column;
@@ -229,10 +243,6 @@ input {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-.inputs {
-  margin-top: 50px;
 }
 
 .modal-background {
@@ -376,6 +386,32 @@ button:hover {
   border: 1px solid var(--primary-color);
   color: var(--primary-color);
 }
+.surface-button {
+  background: var(--background-color-tint-contrast);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  height: 65px;
+  margin-top: 10px;
+}
+.surface-button .button-icon {
+  width: 16px;
+  margin-bottom: 5px;
+}
+
+.block-footer {
+  margin: -1.5em;
+  padding: 1.5em;
+  border-radius: 20px 20px 0 0;
+  background: var(--background-color-tint);
+}
+.row-buttons {
+  display: flex;
+  align-items: center;
+}
 
 .two-buttons {
   display: flex;
@@ -400,9 +436,6 @@ button:hover {
 
 .two-buttons .left {
   margin-right: 5px;
-}
-.connect-button {
-  margin-top: 3.6rem;
 }
 
 .cancel-button {

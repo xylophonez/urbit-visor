@@ -1,62 +1,75 @@
 import React, { useState, useRef } from "react";
-import { useOnClickOutside } from '../../hooks/hooks';
+import { useOnClickOutside } from "../../hooks/hooks";
 import "./navbar.css";
-import Sigil from "./svg/Sigil"
-import visorLogo from "../../icons/visor.png"
+import Sigil from "./svg/Sigil";
+import visorLogo from "../../icons/visor.png";
 import RocketIcon from "../../icons/rocket";
 import SettingsIcon from "../../icons/settings";
+import MenuIcon from "../../icons/menu-icon.svg";
+import CloseIcon from "../../icons/close-icon.svg";
+import BackIcon from "../../icons/back-icon.svg";
 import AboutIcon from "../../icons/info";
 import { useHistory } from "react-router-dom";
 import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
-interface NavbarProps{
-  active: EncryptedShipCredentials
-  interacting: boolean
+interface NavbarProps {
+  active: EncryptedShipCredentials;
+  interacting: boolean;
 }
-export default function NavBar({interacting, active}: NavbarProps) {
+export default function NavBar({ interacting, active }: NavbarProps) {
   const history = useHistory();
   const urbitlogo = useRef(null);
   const [modalOpen, toggleModal] = useState(false);
-  const wrapperClass = active ? "navbar-sigil-wrapper active-navbar-sigil" : "navbar-sigil-wrapper inactive-navbar-sigil";
-  const className = active ? "navbar-sigil" : "navbar-sigil blurry-sigil"
-  const dummy =
-    <div className="dummy-sigil">
-    </div>
-  const sigil =
+  const wrapperClass = active
+    ? "navbar-sigil-wrapper active-navbar-sigil"
+    : "navbar-sigil-wrapper inactive-navbar-sigil";
+  const className = active ? "navbar-sigil" : "navbar-sigil blurry-sigil";
+  const dummy = <div className="dummy-sigil"></div>;
+  const sigil = (
     <div onClick={gotoSigil} className={className}>
       <Sigil size={50} patp={active?.shipName} />
     </div>
-  function openMenu(){
-    if (!interacting) toggleModal(!modalOpen)
-  };
-  function gotoSigil(){
+  );
+  function openMenu() {
+    if (!interacting) toggleModal(!modalOpen);
+  }
+  function gotoSigil() {
     if (!interacting) {
-      Messaging.sendToBackground({ action: "select_ship", data: { ship: active } })
-            .then(res => history.push(`/ship/${active.shipName}`))
+      Messaging.sendToBackground({
+        action: "select_ship",
+        data: { ship: active },
+      }).then((res) => history.push(`/ship/${active.shipName}`));
     }
-  };
+  }
   const displaySigil = active ? sigil : dummy;
 
-  return (<nav className="App-navbar">
-    <div>back</div>
-    <img ref={urbitlogo} onClick={openMenu} src={visorLogo} className="Nav-logo" />
-    <div className={wrapperClass}>
-      {displaySigil}
-    </div>
-    {modalOpen &&
-      <Modal
-        parent={urbitlogo}
-        hide={() => toggleModal(!modalOpen)}
+  return (
+    <nav className="App-navbar">
+      {/* TODO: ADD BACK LINK */}
+      <img src={BackIcon} />
+      <img src={visorLogo} className="Nav-logo" />
+      <img
+        ref={urbitlogo}
+        onClick={openMenu}
+        src={modalOpen ? CloseIcon : MenuIcon}
+        alt="menu-icon"
+        className="menu-icon"
       />
-    }
-  </nav>);
+      {/* <div className={wrapperClass}>
+      {displaySigil}
+    </div> */}
+      {modalOpen && (
+        <Modal parent={urbitlogo} hide={() => toggleModal(!modalOpen)} />
+      )}
+    </nav>
+  );
 }
 
-interface ModalProps{
-  parent: any,
-  hide: () => void,
+interface ModalProps {
+  parent: any;
+  hide: () => void;
 }
 
-function Modal({parent, hide}: ModalProps) {
+function Modal({ parent, hide }: ModalProps) {
   const history = useHistory();
   const ref = useRef(null);
   const refs = [ref, parent];
@@ -64,7 +77,7 @@ function Modal({parent, hide}: ModalProps) {
   function gotoShips() {
     hide();
     history.push("/ship_list");
-  };
+  }
   function gotoSettings() {
     hide();
     history.push("/settings/menu");
@@ -81,14 +94,13 @@ function Modal({parent, hide}: ModalProps) {
         <p>My Ships</p>
       </div>
       <div onClick={gotoSettings} className="modal-link">
-       <SettingsIcon />
-        <p>        Settings
-        </p>
+        <SettingsIcon />
+        <p> Settings</p>
       </div>
       <div onClick={gotoAbout} className="modal-link">
         <AboutIcon />
         <p>About</p>
       </div>
     </div>
-  )
+  );
 }
