@@ -14,7 +14,6 @@
   }
 } */
 
-
 * {
   box-sizing: border-box;
 }
@@ -35,11 +34,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-
 .App {
-  text-align: center;
-  color: white;
+  color: var(--background-color-contrast);
   height: 100%;
   background-color: var(--background-color);
 }
@@ -52,8 +48,7 @@ h4 {
   background-color: inherit;
   color: var(--background-color-contrast);
   width: 100%;
-  height: 530px;
-  max-height: 530px;
+  height: calc(100% - 62px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -98,14 +93,9 @@ h4 {
 }
 
 .App-logo {
-  height: 200px;
-  pointer-events: none;
-  position: absolute;
-  margin: auto;
-  top: 0;
-  left: 0;
-  bottom: 100px;
-  right: 0;
+  height: 150px;
+  display: flex;
+  margin: 3em auto;
 }
 
 a {
@@ -163,8 +153,13 @@ a {
 }
 
 .red-bg {
-  background-color: rgba(200, 0, 0, 1) !important;
+  background-color: var(--alert-color) !important;
   /* border: 1px solid rgba(100,0,0,1) !important; */
+}
+.linear-red-bg {
+  border: 1px solid var(--alert-color);
+  background: transparent !important;
+  color: var(--alert-color);
 }
 
 /* forms */
@@ -172,27 +167,42 @@ a {
 label {
   line-height: 1.5;
 }
+.label-input {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--medium-gray);
+  margin: 0;
+}
 
 input {
   width: 100%;
-  margin: 12px 0;
-  border: 1px solid grey;
+  height: 48px;
+  background: transparent;
+  border: 1px solid var(--medium-gray);
+  color: var(--background-color-contrast);
+  box-sizing: border-box;
+  border-radius: 12px;
+  margin: 5px 0 20px;
   padding: 10px;
   text-align: left;
-  border-radius: 4px;
-  font-size: 12px;
+  font-size: 14px;
   box-shadow: none;
   display: block;
-  font-family: "Source Code Pro", monospace;
   outline: none;
 }
 
 .flex-grow-wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   flex-grow: 1;
   max-height: 100%;
   height: 100%;
+  padding: 2.5em 1.5em 1.5em;
 }
 
 .flex-grow {
@@ -200,9 +210,11 @@ input {
 }
 
 .form {
-  margin: auto;
   text-align: left;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .inputs {
@@ -330,15 +342,20 @@ button:hover {
 
 .small-button:disabled {
   border-color: currentColor;
-  background-color: rgb(3, 125, 214, 0.3);
   pointer-events: none;
   cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .single-button {
   width: 100%;
   background-color: var(--primary-color);
   color: var(--background-color-contrast);
+}
+.linear-button {
+  background: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
 }
 
 .two-buttons {
@@ -359,9 +376,12 @@ button:hover {
 }
 
 .two-buttons .right {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
+.two-buttons .left {
+  margin-right: 5px;
+}
 .connect-button {
   margin-top: 3.6rem;
 }
@@ -372,11 +392,6 @@ button:hover {
 
 .multiple-buttons {
   margin: 0.5rem 0;
-}
-
-.padding {
-  width: 100%;
-  padding: 10%;
 }
 
 .small-padding {
