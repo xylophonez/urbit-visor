@@ -160,6 +160,10 @@ a {
   display: flex;
   align-items: center;
   color: var(--background-color-contrast);
+  margin: 0 0 1em;
+}
+.centered {
+  justify-content: center;
 }
 .description {
   font-weight: normal;

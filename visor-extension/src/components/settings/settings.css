@@ -61,7 +61,10 @@
 .ship-to-remove {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 10px 1em;
+  background: var(--background-color-tint);
+  border-radius: 12px;
+  margin-bottom: 0.5em;
 }
 .ship-to-remove p span {
   width: 100%;
@@ -73,14 +76,22 @@
 }
 .mini-sigil-wrapper {
   margin: auto 0;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-right: 1em;
 }
 .ship-to-delete {
-  font-weight: 700;
-  font-family: "Courier New", Courier, monospace;
-  margin-bottom: 2rem;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: var(--light-gray);
+  margin-bottom: 2em;
 }
 .sigil-wrap {
-  margin: 1rem auto;
+  margin: 0 auto;
+  width: fit-content;
+  overflow: hidden;
+  border-radius: 6px;
 }
 
 /* toggle */
@@ -149,8 +160,39 @@
 
 /* //containers */
 
-.permission-container {
+.permission-container,
+.ship-removal-confirmation,
+.change-password-container,
+.reset-app-container {
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+.ship-removal-confirmation,
+.change-password-container,
+.reset-app-container {
+  justify-content: space-between;
+}
+.change-password-container .form-password-container {
+  margin-bottom: 6em;
+}
+
+.reset-app-container .alert-container {
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+.reset-app-container .alert-container p,
+.reset-app-container .alert-container h5 {
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: var(--light-gray);
+  margin: 0;
+}
+.reset-app-container .alert-container h5{
+  font-weight: 600;
+  color: var(--background-color-contrast);
 }

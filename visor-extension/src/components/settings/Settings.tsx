@@ -9,6 +9,8 @@ import { motion } from "framer-motion";
 import "./settings.css";
 import { Route, Link, useHistory } from "react-router-dom";
 import arrowRightIcon from "../../icons/arrow-right-icon.svg";
+import deleteIcon from "../../icons/delete-icon.svg";
+import alertIcon from "../../icons/alert-icon.svg";
 
 export default function Settings() {
   useEffect(() => {
@@ -214,7 +216,7 @@ function SettingsRemoveShips({ setShip }: RemoveShipsProps) {
       exit={{ opacity: 0 }}
       className="remove-ships-list"
     >
-      <h3>Remove Ships</h3>
+      <h3 className="title-page">Remove Ships</h3>
       {ships.map((ship) => (
         <ShipToRemove key={ship.shipName} confirm={confirm} ship={ship} />
       ))}
@@ -240,11 +242,15 @@ function ShipToRemove({ ship, confirm }: ShipToRemoveProps) {
 
   return (
     <div key={ship.shipName} className="ship-to-remove">
-      <div className="mini-sigil-wrapper">
-        <Sigil patp={ship.shipName} size={48} />
+      <div className="flex">
+        <div className="mini-sigil-wrapper">
+          <Sigil patp={ship.shipName} size={48} />
+        </div>
+        {shipname}
       </div>
-      {shipname}
-      <button className="minibutton red-bg" onClick={() => confirm(ship)} />
+      <button className="minibutton" onClick={() => confirm(ship)}>
+        <img src={deleteIcon} alt="trash" />
+      </button>
     </div>
   );
 }
@@ -290,32 +296,26 @@ function SettingsChangePw() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="full-size"
+      className="full-size change-password-container"
     >
-      <form onSubmit={checkOld} className="form padding flex-grow-wrapper">
-        <h3>Change Master Password</h3>
-        <div className="flex-grow">
-          <label>
-            Old Password
-            <input
-              onChange={(e) => setOldpw(e.currentTarget.value)}
-              type="password"
-            />
-          </label>
-          <label>
-            New Password
-            <input
-              onChange={(e) => setPw(e.currentTarget.value)}
-              type="password"
-            />
-          </label>
-          <label>
-            Confirm New Password
-            <input
-              onChange={(e) => setConfirmation(e.currentTarget.value)}
-              type="password"
-            />
-          </label>
+      <h3 className="title-page">Change Master Password</h3>
+      <form onSubmit={checkOld} className="">
+        <div className="form-password-container">
+          <label className="label-input">Old Password</label>
+          <input
+            onChange={(e) => setOldpw(e.currentTarget.value)}
+            type="password"
+          />
+          <label className="label-input">New Password</label>
+          <input
+            onChange={(e) => setPw(e.currentTarget.value)}
+            type="password"
+          />
+          <label className="label-input">Confirm New Password</label>
+          <input
+            onChange={(e) => setConfirmation(e.currentTarget.value)}
+            type="password"
+          />
           {displayMessage}
         </div>
         <button className="single-button" type="submit">
@@ -339,18 +339,24 @@ function SettingsReset() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="reset-app-setting padding flex-grow-wrapper"
+      className="reset-app-container"
     >
-      <div className="flex-grow">
-        <h3>Reset Urbit Visor</h3>
-        <p>
+      <div>
+        <h3 className="title-page">Reset Urbit Visor</h3>
+        <p className="description">
           Click on the button below to reset the extension to factory settings.
         </p>
-        <p>This will delete all ships and your master password.</p>
       </div>
-      <button className="single-button red-bg" onClick={doReset}>
-        Reset
-      </button>
+      <div>
+        <div className="alert-container vertical">
+          <img src={alertIcon} alt="alert" />
+          <h5>Important information</h5>
+          <p>This will delete all ships and your master password.</p>
+        </div>
+        <button className="single-button red-bg" onClick={doReset}>
+          Reset
+        </button>
+      </div>
     </motion.div>
   );
 }
