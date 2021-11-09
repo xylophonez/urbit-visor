@@ -170,7 +170,7 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
     chrome.tabs.create({ url: "https://urbitdashboard.com" });
   }
 
-  if (!true) //remove this
+  if (!showPerms)
     return (
       <motion.div
         initial={{ opacity: 0 }}

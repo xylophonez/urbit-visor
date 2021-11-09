@@ -1,5 +1,10 @@
 @import "./variables.css";
 
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/Inter-Regular.ttf");
+}
+
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: rgb(26, 26, 26);
@@ -24,12 +29,12 @@ div#popup {
 }
 
 body {
+  font-family: "Inter", sans-serif;
   margin: 0;
   width: 357px;
   height: 600px;
   overflow-y: hidden;
   font-size: 16px;
-  font-family: Inter, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -60,7 +65,7 @@ h4 {
     width: 500px;
     height: 840px;
     box-shadow: 5px 3px 8px 0px rgb(150, 150, 150, 0.5);
-    font-family: Inter, sans-serif;
+    font-family: "Inter", sans-serif;
     /* box-shadow: 0 0 7px 0 rgb(0 0 0 / 8%); */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -266,10 +271,6 @@ input {
   width: 120px;
 }
 
-.shipname {
-  font-family: monospace;
-}
-
 .moonname span {
   font-weight: 600;
   font-size: 13px;
@@ -284,6 +285,7 @@ input {
 /* buttons */
 
 button {
+  font-family: "Inter", sans-serif;
   width: 100%;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   border-radius: 12px;
@@ -326,7 +328,6 @@ button:hover {
   box-sizing: border-box;
   transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   line-height: 1.75;
   letter-spacing: 0.02857em;
   text-transform: uppercase;
@@ -453,34 +454,6 @@ button:hover {
 .small-padding {
   width: 100%;
   padding: 1rem;
-}
-
-/* about page */
-.about-version {
-  font-weight: bolder;
-}
-
-.about div {
-  margin-top: 2rem;
-}
-
-img.about-visor-logo {
-  background: none;
-  height: 5.8rem;
-  width: 8rem;
-  margin-top: 1.25rem;
-}
-
-img.about-dcspark-logo {
-  padding: 0.5rem;
-  width: 180px;
-  background-color: white;
-  border-radius: 5px;
-  margin-top: 0.6rem;
-}
-
-.about-description {
-  line-height: 1.4rem;
 }
 
 .full-size {

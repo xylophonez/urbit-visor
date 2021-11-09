@@ -23,7 +23,7 @@
   overflow: hidden;
   width: 256px;
   color: var(--foreground);
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Inter", sans-serif;
 }
 
 .permission-request-list {

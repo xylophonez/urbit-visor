@@ -1,7 +1,6 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import visorLogo from "../../icons/visor.png"
-
+import "./about.css";
 
 export default function About() {
   return (
@@ -9,13 +8,18 @@ export default function About() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="about padding">
-      <a href ="https://urbitvisor.com"><img src={visorLogo} className="about-visor-logo" /></a>
+      className="about-container"
+    >
+      <h1 className="urbit-name"> Urbit Visor</h1>
       <div className="about-version">
         <p>Version: 0.2.2</p>
       </div>
       <div className="about-description">
-        <p>Urbit Visor is an extension which transforms your web browser into a first class Urbit client. Its goal is to allow existing web tech to seamlessly integrate together with the novel functionality of Urbit.</p>
+        <p>
+          Urbit Visor is an extension which transforms your web browser into a
+          first class Urbit client. Its goal is to allow existing web tech to
+          seamlessly integrate together with the novel functionality of Urbit.
+        </p>
       </div>
       <div className="about-created-by">
         <a href="https://dcspark.io" rel="noopener noreferrer" target="_blank">
@@ -23,5 +27,5 @@ export default function About() {
         </a>
       </div>
     </motion.div>
-  )
+  );
 }

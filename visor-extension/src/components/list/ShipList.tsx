@@ -51,7 +51,7 @@ export default function ShipList({ active }: ShipListProps) {
           className="linear-button"
           onClick={() => history.push("/add_ship")}
         >
-          Add Ship
+          + Add Ship
         </button>
       </div>
     </motion.div>
