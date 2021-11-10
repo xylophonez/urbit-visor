@@ -1,27 +1,43 @@
-.form-prompt{
+.form-prompt {
   font-size: 1.4rem;
   font-weight: 600;
   text-align: center;
 }
-
-.confirm{
-  margin: auto;
+.confirm-container {
+  align-items: center;
+}
+.center-title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: var(--background-color-contrast);
+  margin: 0;
 }
 
-.spinner{
+.spinner {
   text-align: center;
   height: 20px;
 }
 
-.confirm-shipname{
-  font-size: 1.2rem;
+.image-container {
+  display: flex;
 }
-.confirm-form{
-  margin: 0 !important;
-  width: 100% !important;
+.image-success {
+  width: 150px;
+  margin: 0 auto;
 }
 
-button:disabled{
-  background-color: rgb(122, 174, 211);
-  pointer-events: none;
+.container-shipname {
+  background: var(--background-color-tint);
+  border-radius: 6px;
+  padding: 0.5em 1em;
+  text-align: center;
+  margin-top: 1em;
+}
+.container-shipname .confirm-shipname {
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: var(--light-gray);
 }

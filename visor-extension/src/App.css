@@ -1,3 +1,5 @@
+@import "./variables.css";
+
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: rgb(26, 26, 26);
@@ -11,11 +13,6 @@
     --foreground: rgb(0, 0, 0);
   }
 } */
-
-:root {
-  --background: rgb(26, 26, 26);
-  --foreground: rgb(255, 255, 255);
-}
 
 * {
   box-sizing: border-box;
@@ -37,14 +34,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.App-navbar {
-  background-color: rgb(10, 10, 10);
-}
-
 .App {
-  text-align: center;
-  color: white;
+  color: var(--background-color-contrast);
   height: 100%;
+  background-color: var(--background-color);
 }
 
 h4 {
@@ -52,11 +45,10 @@ h4 {
 }
 
 .App-content {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: inherit;
+  color: var(--background-color-contrast);
   width: 100%;
-  height: 530px;
-  max-height: 530px;
+  height: calc(100% - 62px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -68,14 +60,12 @@ h4 {
     width: 500px;
     height: 840px;
     box-shadow: 5px 3px 8px 0px rgb(150, 150, 150, 0.5);
-    background-color: var(--background);
     font-family: Inter, sans-serif;
     /* box-shadow: 0 0 7px 0 rgb(0 0 0 / 8%); */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   .App-content {
-    background-color: var(--background);
     color: var(--foreground);
     height: 770px;
     max-height: 770px;
@@ -103,14 +93,9 @@ h4 {
 }
 
 .App-logo {
-  height: 200px;
-  pointer-events: none;
-  position: absolute;
-  margin: auto;
-  top: 0;
-  left: 0;
-  bottom: 100px;
-  right: 0;
+  height: 150px;
+  display: flex;
+  margin: 3em auto;
 }
 
 a {
@@ -168,8 +153,13 @@ a {
 }
 
 .red-bg {
-  background-color: rgba(200, 0, 0, 1) !important;
+  background-color: var(--alert-color) !important;
   /* border: 1px solid rgba(100,0,0,1) !important; */
+}
+.linear-red-bg {
+  border: 1px solid var(--alert-color);
+  background: transparent !important;
+  color: var(--alert-color);
 }
 
 /* forms */
@@ -177,27 +167,42 @@ a {
 label {
   line-height: 1.5;
 }
+.label-input {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--medium-gray);
+  margin: 0;
+}
 
 input {
   width: 100%;
-  margin: 12px 0;
-  border: 1px solid grey;
+  height: 48px;
+  background: transparent;
+  border: 1px solid var(--medium-gray);
+  color: var(--background-color-contrast);
+  box-sizing: border-box;
+  border-radius: 12px;
+  margin: 5px 0 20px;
   padding: 10px;
   text-align: left;
-  border-radius: 4px;
-  font-size: 12px;
+  font-size: 14px;
   box-shadow: none;
   display: block;
-  font-family: 'Source Code Pro', monospace;
   outline: none;
 }
 
 .flex-grow-wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   flex-grow: 1;
   max-height: 100%;
   height: 100%;
+  padding: 2.5em 1.5em 1.5em;
 }
 
 .flex-grow {
@@ -205,9 +210,11 @@ input {
 }
 
 .form {
-  margin: auto;
   text-align: left;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .inputs {
@@ -244,19 +251,19 @@ input {
 /* buttons */
 
 button {
+  width: 100%;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 12px;
   display: flex;
   flex-direction: row;
   -webkit-box-pack: center;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   padding: 14px 0px;
-  width: 100%;
-  border-radius: 6px;
   font-size: 16px;
   line-height: 19px;
-  font-weight: 600;
-  color: white;
+  font-weight: 500;
+  color: #fff;
   pointer-events: auto;
   border: none;
   outline-color: transparent;
@@ -284,7 +291,8 @@ button:hover {
   text-decoration: none;
   min-width: 64px;
   box-sizing: border-box;
-  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   line-height: 1.75;
   letter-spacing: 0.02857em;
@@ -334,15 +342,20 @@ button:hover {
 
 .small-button:disabled {
   border-color: currentColor;
-  background-color: rgb(3, 125, 214, 0.3);
   pointer-events: none;
-  cursor: not-allowed
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .single-button {
   width: 100%;
-  background-color: rgb(3, 125, 214, 0.5);
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--background-color-contrast);
+}
+.linear-button {
+  background: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
 }
 
 .two-buttons {
@@ -363,9 +376,12 @@ button:hover {
 }
 
 .two-buttons .right {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
+.two-buttons .left {
+  margin-right: 5px;
+}
 .connect-button {
   margin-top: 3.6rem;
 }
@@ -376,11 +392,6 @@ button:hover {
 
 .multiple-buttons {
   margin: 0.5rem 0;
-}
-
-.padding {
-  width: 100%;
-  padding: 10%;
 }
 
 .small-padding {
@@ -398,10 +409,10 @@ button:hover {
 }
 
 img.about-visor-logo {
-    background: none;
-    height: 5.8rem;
-    width: 8rem;
-    margin-top: 1.25rem;
+  background: none;
+  height: 5.8rem;
+  width: 8rem;
+  margin-top: 1.25rem;
 }
 
 img.about-dcspark-logo {
@@ -413,10 +424,10 @@ img.about-dcspark-logo {
 }
 
 .about-description {
-    line-height: 1.4rem;
+  line-height: 1.4rem;
 }
 
-.full-size{
+.full-size {
   height: 100%;
   width: 100%;
 }

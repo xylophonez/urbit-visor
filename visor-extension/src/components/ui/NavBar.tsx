@@ -37,10 +37,8 @@ export default function NavBar({interacting, active}: NavbarProps) {
   const displaySigil = active ? sigil : dummy;
 
   return (<nav className="App-navbar">
+    <div>back</div>
     <img ref={urbitlogo} onClick={openMenu} src={visorLogo} className="Nav-logo" />
-      <div className="navbar-title">
-        <h4>Urbit Visor</h4>
-      </div>
     <div className={wrapperClass}>
       {displaySigil}
     </div>
