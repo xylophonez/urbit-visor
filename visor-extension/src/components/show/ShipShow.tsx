@@ -36,10 +36,13 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
   const [shipURL, setURL] = useState("");
   const [showPerms, setShowPerms] = useState(false);
   const { patp }: any = useParams();
-  const [showConnectionButtons, setShowConnectionButtons] = useState(false);
+  const [showPasswordInput, setShowPasswordInput] = useState(false);
   const [pw, setPw] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [confirmString, setConfirmString] = useState("");
+  const [confirmAction, setConfirmAction] = useState("connect");
+
 
   console.log(showPerms, "showing perms")
 
@@ -118,7 +121,7 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
   function disconnect(): void {
     Messaging.sendToBackground({ action: "disconnect_ship" }).then((res) => {
       setActive(null);
-      setShowConnectionButtons(false);
+      setShowPasswordInput(false);
       history.push("/ship_list");
     });
   }
@@ -126,7 +129,7 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
   const connectButton = (
     <button
       className="single-button"
-      onClick={() => setShowConnectionButtons(true)}
+      onClick={confirmConnect}
     >
       Connect
     </button>
@@ -140,18 +143,27 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
     </button>
   );
 
-  const confirmPasswordButton = (
-    <button onClick={connect} className="single-button">
-      Confirm
-    </button>
-  );
-
-  console.log(pw, "pw")
-
   const connectionButton =
     ship?.shipName == active?.shipName ? disconnectButton : connectButton;
 
-  function gotoHome() {
+  function confirmConnect(){
+    setShowPasswordInput(true);
+    setConfirmString("Connect to Your Ship");
+    setConfirmAction("connect");
+  }
+  function confirmPerms(){
+    setShowPasswordInput(true);
+    setConfirmString("Show granted permissions");
+    setConfirmAction("perms");
+  }
+  function confirmHome(){
+    setShowPasswordInput(true);
+    setConfirmString("Go to your Urbit Home");
+    setConfirmAction("home");
+  }
+
+
+   function gotoHome() {
     setError("");
     const url = decrypt(ship.encryptedShipURL, pw);
     if (url.length) {
@@ -160,7 +172,7 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
       setError("Wrong password.");
     }
   }
-  function gotoPerms() {
+   function gotoPerms() {
     setError("");
     const url = decrypt(ship.encryptedShipURL, pw);
     console.log(url, "url")
@@ -223,15 +235,17 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
           </div>
         </div>
         <div className="block-footer">
-          {showConnectionButtons ? (
-            <ConnectFooter loading={loading} error={error} setPw={setPw}>
-              {confirmPasswordButton}
+          {showPasswordInput ? (
+            <ConnectFooter loading={loading} error={error} setPw={setPw} confirmString={confirmString}>
+              {confirmAction === "connect" && <button onClick={connect} className="single-button">Confirm</button>}
+              {confirmAction === "perms" && <button onClick={gotoPerms} className="single-button">Confirm</button>}
+              {confirmAction === "home" && <button onClick={gotoHome} className="single-button">Confirm</button>}
             </ConnectFooter>
           ) : (
             <ManagerFooter
-              gotoPerms={gotoPerms}
+              confirmPerms={confirmPerms}
               gotoDashboard={gotoDashboard}
-              gotoHome={gotoHome}
+              confirmHome={confirmHome}
             >
               {connectionButton}
             </ManagerFooter>

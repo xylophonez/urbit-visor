@@ -5,21 +5,21 @@ import homeIcon from "../../icons/home-icon.svg";
 
 interface ManagerFooterProps {
   children: React.ReactNode;
-  gotoPerms: () => void;
+  confirmPerms: () => void;
   gotoDashboard: () => void;
-  gotoHome: () => void;
+  confirmHome: () => void;
 }
 
 const ManagerFooter = ({
   children,
-  gotoPerms,
+  confirmPerms,
   gotoDashboard,
-  gotoHome,
+  confirmHome,
 }: ManagerFooterProps) => (
   <>
     {children}
     <div className="row-buttons">
-      <button onClick={gotoPerms} className="surface-button vertical">
+      <button onClick={confirmPerms} className="surface-button vertical">
         <img src={permissionIcon} className="button-icon" />
         Permissions
       </button>
@@ -29,7 +29,7 @@ const ManagerFooter = ({
         Dashboard
       </button>
       <div className="separator" />
-      <button onClick={gotoHome} className="surface-button vertical">
+      <button onClick={confirmHome} className="surface-button vertical">
         <img src={homeIcon} className="button-icon" />
         Home
       </button>
