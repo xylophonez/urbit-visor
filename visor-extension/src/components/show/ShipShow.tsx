@@ -41,6 +41,8 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  console.log(showPerms, "showing perms")
+
   const displayName = processName(ship.shipName);
   const shipname =
     whatShip(ship.shipName) === "moon" ? (
@@ -132,17 +134,19 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
   const disconnectButton = (
     <button
       onClick={disconnect}
-      className="single-button  connect-button red-bg"
+      className="single-button connect-button red-bg"
     >
       Disconnect
     </button>
   );
 
-  const confirmPassowordButton = (
+  const confirmPasswordButton = (
     <button onClick={connect} className="single-button">
-      Connect
+      Confirm
     </button>
   );
+
+  console.log(pw, "pw")
 
   const connectionButton =
     ship?.shipName == active?.shipName ? disconnectButton : connectButton;
@@ -159,6 +163,9 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
   function gotoPerms() {
     setError("");
     const url = decrypt(ship.encryptedShipURL, pw);
+    console.log(url, "url")
+    console.log(ship, "ship")
+    console.log(pw, "pw")
     if (url.length) {
       setURL(url);
       setShowPerms(true);
@@ -218,7 +225,7 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
         <div className="block-footer">
           {showConnectionButtons ? (
             <ConnectFooter loading={loading} error={error} setPw={setPw}>
-              {confirmPassowordButton}
+              {confirmPasswordButton}
             </ConnectFooter>
           ) : (
             <ManagerFooter
