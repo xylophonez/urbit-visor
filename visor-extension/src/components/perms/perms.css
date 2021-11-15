@@ -8,33 +8,26 @@
 .permissions .ship-data p.shipname {
   margin: 0;
   display: flex;
+  margin-top: -5px;
 }
 
 .requesting-domain {
-  display: block;
-  font-size: 1rem;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  margin-top: 30px !important;
-  margin-top: 19px !important;
-  margin-bottom: 50px;
+  font-size: 12px;
+  line-height: 15px;
+  display: flex;
+  align-items: center;
   text-align: center;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 256px;
-  color: var(--foreground);
-  font-family: "Inter", sans-serif;
+  color: var(--primary-color);
+  justify-content: center;
+  margin-top: -1.5em;
 }
 
 .permission-request-list {
-  margin-top: 48px;
-  height: 144px;
 }
 
 .permission-request-list ul {
   margin-left: auto;
   margin-right: auto;
-  width: 269px;
 }
 
 .align-left {
@@ -57,19 +50,23 @@
   display: flex;
   justify-content: space-between;
   padding: 0.5rem;
-  border-top: 1px solid var(--background-color-tint);
+  border-bottom: 1px solid var(--background-color-tint);
+}
+.domain:last-child {
+  border: none;
 }
 .domain-text {
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
-  line-height: 26px;
+  font-size: 12px;
+  line-height: 16px;
   display: flex;
   align-items: center;
   color: #ffffff;
   width: 90%;
   word-wrap: break-word;
   margin: 0;
+  margin-left: -5px;
 }
 .domain-text:hover {
   cursor: pointer;
@@ -77,44 +74,49 @@
 }
 
 .permission-string {
-  margin: 0.3rem;
-  margin-left: 1.25rem;
 }
 .permission-string:hover {
-  color: red;
+  color: var(--background-color-tint);
   font-weight: 500;
   cursor: pointer !important;
 }
 .permission-string .chip:hover {
-  background-color: red;
+  background-color: var(--alert-color);
   cursor: pointer !important;
 }
+.permission-string .chip:hover .revoke{
+  color: white;
+}
 ul {
-  margin: 2rem 0;
   list-style: none;
-  /* padding-left: 1rem; */
   padding-left: 0;
-  text-align: left;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .chip {
-  display: inline-block;
-  height: 32px;
-  font-size: 13px;
-  font-weight: bolder;
-  color: black;
-  line-height: 32px;
-  padding: 0 12px;
-  border-radius: 5px;
-  background-color: #a9a9a9;
+  background: var(--background-color-tint);
+  border-radius: 10px;
+  padding: 10px 15px;
   margin-bottom: 5px;
-  width: 129px;
-  margin-right: 5px;
+  width: 100%;
   cursor: auto !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.chip p {
+.chip .perm-label {
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  margin: 0;
+}
+.chip .perm-description {
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.02em;
+  color: var(--light-gray);
   margin: 0;
 }
 .chip .close {
@@ -123,6 +125,15 @@ ul {
   font-size: 16px;
   line-height: 32px;
   padding-left: 8px;
+}
+.chip .revoke {
+  font-weight: 600;
+  margin: 0;
+  margin-left: 0.5em;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--light-gray);
 }
 .minibutton {
   margin: auto 0;
@@ -135,8 +146,17 @@ ul {
 }
 .perm-deletion-confirmation-prompt {
   margin-bottom: 10px;
+  background: #252d29;
+  padding: 1em;
+  border-radius: 10px;
+}
+.perm-deletion-confirmation-prompt .title {
+  margin: 0 0 0.5em;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: bolder;
 }
 
 .permission-search {
-  margin-top: 1.5rem;
+  margin-top: 1em;
 }

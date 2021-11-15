@@ -25,17 +25,17 @@ const ConnectFooter = ({
         type="password"
         placeholder="Master Password"
       />
-      <div className="spinner">
-        {loading && (
+      {loading && (
+        <div className="spinner">
           <Spinner
             width="24"
             height="24"
             innerColor="white"
             outerColor="black"
           />
-        )}
-        <p className="errorMessage">{error}</p>
-      </div>
+        </div>
+      )}
+      <p className="errorMessage">{error}</p>
     </div>
     {children}
   </>

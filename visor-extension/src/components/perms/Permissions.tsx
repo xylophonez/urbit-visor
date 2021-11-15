@@ -247,7 +247,7 @@ interface ConfirmationProps {
 function ConfirmationPrompt({ message, cancel, confirm }: ConfirmationProps) {
   return (
     <div className="perm-deletion-confirmation-prompt">
-      <p>{message}</p>
+      <p className="title">{message}</p>
       <div className="two-buttons">
         <button className="small-button red-bg" onClick={cancel}>
           No

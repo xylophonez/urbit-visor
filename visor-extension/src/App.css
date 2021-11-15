@@ -121,8 +121,8 @@ a {
 }
 
 .errorMessage {
-  font-size: 1rem;
-  color: red;
+  font-size: 12px;
+  color: var(--alert-color);
   text-align: center;
   margin: 0;
 }
@@ -167,8 +167,10 @@ a {
   color: var(--background-color-contrast);
   margin: 0 0 1em;
 }
+
 .centered {
   justify-content: center;
+  text-align: center;
 }
 .description {
   font-weight: normal;
@@ -177,6 +179,9 @@ a {
   letter-spacing: 0.02em;
   color: var(--light-gray);
   margin-top: -1.5em;
+}
+.margin-0 {
+  margin-top: 0 !important;
 }
 .red-bg {
   background-color: var(--alert-color) !important;
@@ -212,7 +217,7 @@ input {
   color: var(--background-color-contrast);
   box-sizing: border-box;
   border-radius: 12px;
-  margin: 5px 0 15px;
+  margin: 5px 0 10px;
   padding: 10px;
   text-align: left;
   font-size: 14px;
@@ -236,6 +241,7 @@ input {
   height: 100%;
   width: 100%;
   padding: 2.5em 1.5em 1.5em;
+  overflow-y: auto;
 }
 
 .flex-grow {
@@ -295,7 +301,7 @@ button {
   justify-content: center;
   align-items: center;
   padding: 14px 0px;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 19px;
   font-weight: 500;
   color: #fff;
@@ -313,38 +319,6 @@ button:hover {
   opacity: 0.5;
 }
 
-.button {
-  border: 0;
-  margin: 0.2rem auto;
-  display: inline-flex;
-  outline: 0;
-  position: relative;
-  align-items: center;
-  user-select: none;
-  vertical-align: middle;
-  justify-content: center;
-  text-decoration: none;
-  min-width: 64px;
-  box-sizing: border-box;
-  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
-    border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  line-height: 1.75;
-  letter-spacing: 0.02857em;
-  text-transform: uppercase;
-  padding: 8px 22px;
-  font-size: 0.9375rem;
-  width: 60%;
-  opacity: 0.5;
-  cursor: pointer;
-  background-color: rgb(3, 125, 214);
-  color: white;
-  margin-top: 15px;
-  height: 50px;
-  font-weight: 400;
-  box-shadow: none;
-  border-radius: 4px;
-}
-
 .submit-setup-button {
   margin: auto;
   width: 100%;
@@ -353,8 +327,9 @@ button:hover {
 .small-button {
   display: block;
   width: 100%;
-  background-color: rgb(3, 125, 214, 0.5);
+  background-color: var(--primary-color);
   cursor: pointer;
+  padding: 8px;
 }
 
 .buttonContainer {
@@ -408,10 +383,42 @@ button:hover {
 }
 
 .block-footer {
-  margin: -1.5em;
+  margin: 1em -1.5em -1.5em;
   padding: 1.5em;
   border-radius: 20px 20px 0 0;
   background: var(--background-color-tint);
+  position: relative;
+}
+.confirm-string {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #ffffff;
+  margin: 0;
+  position: absolute;
+  top: -10px;
+  transform: translate(0, -100%);
+}
+.confirm-string::after {
+  position: absolute;
+  content: "";
+  width: 30px;
+  height: 2px;
+  background-color: white;
+  bottom: -10px;
+  left: 0;
+}
+.title-footer {
+  position: relative;
+}
+.title-footer::after {
+  position: absolute;
+  content: "";
+  width: 30px;
+  height: 2px;
+  background-color: white;
+  bottom: -1em;
+  left: 0;
 }
 .row-buttons {
   display: flex;
