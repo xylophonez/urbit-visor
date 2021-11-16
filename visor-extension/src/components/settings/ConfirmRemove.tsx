@@ -56,13 +56,13 @@ export default function ConfirmRemove({ ship }: ConfirmRemoveProps) {
         <p className="errorMessage">{error}</p>
         <div className="two-buttons">
           <button
-            className="small-button linear-red-bg left"
+            className="linear-red-bg left"
             type="button"
             onClick={() => history.push("/settings/remove_ships")}
           >
             Cancel
           </button>
-          <button className="small-button single-button right" type="submit">
+          <button className="single-button right" type="submit">
             Remove
           </button>
         </div>

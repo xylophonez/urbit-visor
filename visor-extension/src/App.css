@@ -124,7 +124,6 @@ a {
   font-size: 12px;
   color: var(--alert-color);
   text-align: center;
-  margin: 0;
 }
 
 .succesMessage {
@@ -383,7 +382,7 @@ button:hover {
 }
 
 .block-footer {
-  margin: 1em -1.5em -1.5em;
+  margin: 0.5em -1.5em -1.5em;
   padding: 1.5em;
   border-radius: 20px 20px 0 0;
   background: var(--background-color-tint);
@@ -410,6 +409,7 @@ button:hover {
 }
 .title-footer {
   position: relative;
+  margin-bottom: 0;
 }
 .title-footer::after {
   position: absolute;
@@ -417,8 +417,9 @@ button:hover {
   width: 30px;
   height: 2px;
   background-color: white;
-  bottom: -1em;
+  bottom: -9px;
   left: 0;
+  z-index: 9999;
 }
 .row-buttons {
   display: flex;
