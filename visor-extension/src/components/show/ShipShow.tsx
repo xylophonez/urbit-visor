@@ -54,7 +54,9 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
         <span>{displayName.slice(-14)}</span>
       </h1>
     ) : (
-      <p className="shipname">~{displayName}</p>
+      <h1 className="ship-data-name">
+        <span>~{displayName}</span>
+      </h1>
     );
   useEffect(() => {
     let isMounted = true;
@@ -199,7 +201,7 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
       >
         <div>
           <div className="ship-data">
-            <Sigil size={65} patp={ship.shipName} />
+            <Sigil size={135} patp={ship.shipName} />
             {shipname}
           </div>
           <div className="ship-information">
