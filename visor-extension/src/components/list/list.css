@@ -24,13 +24,16 @@
 .ship p.shipname {
   margin: 0;
   width: 195px;
+  font-weight: 600;
 }
 
 .sigil-wrapper {
-  border-radius: 6px;
   overflow: hidden;
   width: 42px;
   height: 42px;
+}
+.sigil-wrapper svg {
+  border-radius: 4px;
 }
 .comet-sigil {
   padding: 3px !important;
