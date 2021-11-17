@@ -201,7 +201,7 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
       >
         <div>
           <div className="ship-data">
-            <Sigil size={105} patp={ship.shipName} />
+            <Sigil size={75} patp={ship.shipName} />
             {shipname}
           </div>
           <div className="ship-information">
