@@ -1,5 +1,10 @@
 @import "./variables.css";
 
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/Inter-Regular.ttf");
+}
+
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: rgb(26, 26, 26);
@@ -24,12 +29,12 @@ div#popup {
 }
 
 body {
+  font-family: "Inter", sans-serif;
   margin: 0;
   width: 357px;
   height: 600px;
   overflow-y: hidden;
   font-size: 16px;
-  font-family: Inter, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -60,7 +65,7 @@ h4 {
     width: 500px;
     height: 840px;
     box-shadow: 5px 3px 8px 0px rgb(150, 150, 150, 0.5);
-    font-family: Inter, sans-serif;
+    font-family: "Inter", sans-serif;
     /* box-shadow: 0 0 7px 0 rgb(0 0 0 / 8%); */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -116,10 +121,9 @@ a {
 }
 
 .errorMessage {
-  font-size: 1rem;
-  color: red;
+  font-size: 12px;
+  color: var(--alert-color);
   text-align: center;
-  margin: 0;
 }
 
 .succesMessage {
@@ -152,6 +156,32 @@ a {
   margin: auto;
 }
 
+/* titles */
+
+.title-page {
+  font-size: 20px;
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+  color: var(--background-color-contrast);
+  margin: 0 0 1em;
+}
+
+.centered {
+  justify-content: center;
+  text-align: center;
+}
+.description {
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: 0.02em;
+  color: var(--light-gray);
+  margin-top: -1.5em;
+}
+.margin-0 {
+  margin-top: 0 !important;
+}
 .red-bg {
   background-color: var(--alert-color) !important;
   /* border: 1px solid rgba(100,0,0,1) !important; */
@@ -186,7 +216,7 @@ input {
   color: var(--background-color-contrast);
   box-sizing: border-box;
   border-radius: 12px;
-  margin: 5px 0 20px;
+  margin: 5px 0 10px;
   padding: 10px;
   text-align: left;
   font-size: 14px;
@@ -194,7 +224,13 @@ input {
   display: block;
   outline: none;
 }
-
+.separator {
+  margin: 5px;
+}
+.flex {
+  display: flex;
+  align-items: center;
+}
 .flex-grow-wrapper {
   display: flex;
   flex-direction: column;
@@ -202,23 +238,25 @@ input {
   flex-grow: 1;
   max-height: 100%;
   height: 100%;
+  width: 100%;
   padding: 2.5em 1.5em 1.5em;
+  overflow-y: auto;
 }
 
 .flex-grow {
   flex: 1 1 0%;
 }
-
+.vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .form {
   text-align: left;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-.inputs {
-  margin-top: 50px;
 }
 
 .modal-background {
@@ -238,19 +276,21 @@ input {
   width: 120px;
 }
 
-.shipname {
-  font-family: monospace;
-}
-
 .moonname span {
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--background-color-contrast);
+  white-space: nowrap;
+  overflow: hidden;
   display: block;
-  text-align: left;
-  width: 14ch;
+  text-overflow: ellipsis;
 }
 
 /* buttons */
 
 button {
+  font-family: "Inter", sans-serif;
   width: 100%;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   border-radius: 12px;
@@ -260,7 +300,7 @@ button {
   justify-content: center;
   align-items: center;
   padding: 14px 0px;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 19px;
   font-weight: 500;
   color: #fff;
@@ -278,39 +318,6 @@ button:hover {
   opacity: 0.5;
 }
 
-.button {
-  border: 0;
-  margin: 0.2rem auto;
-  display: inline-flex;
-  outline: 0;
-  position: relative;
-  align-items: center;
-  user-select: none;
-  vertical-align: middle;
-  justify-content: center;
-  text-decoration: none;
-  min-width: 64px;
-  box-sizing: border-box;
-  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
-    border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  line-height: 1.75;
-  letter-spacing: 0.02857em;
-  text-transform: uppercase;
-  padding: 8px 22px;
-  font-size: 0.9375rem;
-  width: 60%;
-  opacity: 0.5;
-  cursor: pointer;
-  background-color: rgb(3, 125, 214);
-  color: white;
-  margin-top: 15px;
-  height: 50px;
-  font-weight: 400;
-  box-shadow: none;
-  border-radius: 4px;
-}
-
 .submit-setup-button {
   margin: auto;
   width: 100%;
@@ -319,8 +326,9 @@ button:hover {
 .small-button {
   display: block;
   width: 100%;
-  background-color: rgb(3, 125, 214, 0.5);
+  background-color: var(--primary-color);
   cursor: pointer;
+  padding: 8px;
 }
 
 .buttonContainer {
@@ -357,6 +365,66 @@ button:hover {
   border: 1px solid var(--primary-color);
   color: var(--primary-color);
 }
+.surface-button {
+  background: var(--background-color-tint-contrast);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  height: 65px;
+  margin-top: 10px;
+}
+.surface-button .button-icon {
+  width: 16px;
+  margin-bottom: 5px;
+}
+
+.block-footer {
+  margin: 0.5em -1.5em -1.5em;
+  padding: 1.5em;
+  border-radius: 20px 20px 0 0;
+  background: var(--background-color-tint);
+  position: relative;
+}
+.confirm-string {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #ffffff;
+  margin: 0;
+  position: absolute;
+  top: -10px;
+  transform: translate(0, -100%);
+}
+.confirm-string::after {
+  position: absolute;
+  content: "";
+  width: 30px;
+  height: 2px;
+  background-color: white;
+  bottom: -10px;
+  left: 0;
+}
+.title-footer {
+  position: relative;
+  margin-bottom: 0;
+}
+.title-footer::after {
+  position: absolute;
+  content: "";
+  width: 30px;
+  height: 2px;
+  background-color: white;
+  bottom: -9px;
+  left: 0;
+  z-index: 9999;
+}
+.row-buttons {
+  display: flex;
+  align-items: center;
+}
 
 .two-buttons {
   display: flex;
@@ -382,9 +450,6 @@ button:hover {
 .two-buttons .left {
   margin-right: 5px;
 }
-.connect-button {
-  margin-top: 3.6rem;
-}
 
 .cancel-button {
   background-color: rgb(45, 45, 45);
@@ -397,34 +462,6 @@ button:hover {
 .small-padding {
   width: 100%;
   padding: 1rem;
-}
-
-/* about page */
-.about-version {
-  font-weight: bolder;
-}
-
-.about div {
-  margin-top: 2rem;
-}
-
-img.about-visor-logo {
-  background: none;
-  height: 5.8rem;
-  width: 8rem;
-  margin-top: 1.25rem;
-}
-
-img.about-dcspark-logo {
-  padding: 0.5rem;
-  width: 180px;
-  background-color: white;
-  border-radius: 5px;
-  margin-top: 0.6rem;
-}
-
-.about-description {
-  line-height: 1.4rem;
 }
 
 .full-size {

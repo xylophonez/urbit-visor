@@ -5,118 +5,162 @@ import { validate } from "../../storage";
 import "./perms.css";
 import { PermissionRequest, Permission, Messaging } from "@dcspark/uv-core";
 import { motion } from "framer-motion";
-
+import cancelIcon from "../../icons/cancel-icon.svg";
 
 interface PermissionsPromptProps {
-    perms: PermissionRequest
+  perms: PermissionRequest;
 }
 
 export default function PermissionsPrompt(props: PermissionsPromptProps) {
-    const history = useHistory();
-    const [perms, setPerms] = useState(props.perms);
-    const [pw, setPw] = useState("");
-    const [error, setError] = useState("");
+  const history = useHistory();
+  const [perms, setPerms] = useState(props.perms);
+  const [pw, setPw] = useState("");
+  const [error, setError] = useState("");
 
-    const [requesterType, setRequesterType] = useState("");
-    const [requester, setRequester] = useState("");
+  const [requesterType, setRequesterType] = useState("");
+  const [requester, setRequester] = useState("");
 
+  useEffect(() => {
+    if (!perms.permissions.length) deny();
+  }, [perms]);
 
-    useEffect(() => {
-        if (!perms.permissions.length) deny();
-    }, [perms]);
+  useEffect(() => {
+    if (perms.name)
+      setRequesterType("Extension: "),
+        setRequester(`${perms.name} (id: ${perms.key})`);
+    else setRequesterType("Website: "), setRequester(`${perms.key}`);
+  }, []);
 
-    useEffect(()=>{
-      if(perms.name) setRequesterType("Extension: "), setRequester(`${perms.name} (id: ${(perms.key)})`)
-      else setRequesterType("Website: "), setRequester(`${perms.key}`)
-    },[])
+  function removePerm(perm: Permission) {
+    const new_perms = {
+      key: perms.key,
+      permissions: perms.permissions.filter((p) => p != perm),
+      existing: perms.existing,
+    };
+    setPerms(new_perms);
+  }
 
-    function removePerm(perm: Permission) {
-        const new_perms = {
-            key: perms.key,
-            permissions: perms.permissions.filter(p => p != perm),
-            existing: perms.existing
-        };
-        setPerms(new_perms);
-    }
-
-    async function grant() {
-        const valid = await validate(pw);
-        if (valid) {
-            setError("");
-            Messaging.sendToBackground({ action: "grant_perms", data: { request: perms } })
-                .then((res) => {
-                    history.push("/");
-                    window.close();
-                })
-                .catch(err => setError("Connection error"))
-        }
-        else setError("Wrong password");
-    }
-    function deny() {
-        Messaging.sendToBackground({ action: "deny_perms" })
-            .then(res => {
-                history.push("/");
-                window.close();
-            });
-    }
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="permissions padding flex-grow-wrapper">
-            <h3>Permissions Requested</h3>
-            <div className="flex-grow">
-                <a href={perms.key} title={perms.key} rel="noopener noreferrer" target="_blank" className="requesting-domain">{requester}</a>
-                <div className="permission-request-list">
-                    <ul>
-                        {perms.permissions.map(perm => {
-                            return <li key={perm}><Chip type={"new"} perm={perm} destroyPerm={removePerm} /></li>
-                        })}
-                    </ul>
-                </div>
-                {/* {perms.existing && <Existing {...props}/>} */}
-                <div className="perm-req-password-box">
-                    <p>Enter your master password to grant them.</p>
-                    <input onChange={(e) => setPw(e.currentTarget.value)} type="password" />
-                    <p className="errorMessage">{error}</p>
-                </div>
-            </div>
-            <div className="two-buttons">
-                <button className="red-bg" onClick={deny} type="submit">Deny</button>
-                <button className="blue-button right" onClick={grant} type="submit">Grant</button>
-            </div>
-        </motion.div>
-    )
+  async function grant() {
+    const valid = await validate(pw);
+    if (valid) {
+      setError("");
+      Messaging.sendToBackground({
+        action: "grant_perms",
+        data: { request: perms },
+      })
+        .then((res) => {
+          history.push("/");
+          window.close();
+        })
+        .catch((err) => setError("Connection error"));
+    } else setError("Wrong password");
+  }
+  function deny() {
+    Messaging.sendToBackground({ action: "deny_perms" }).then((res) => {
+      history.push("/");
+      window.close();
+    });
+  }
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="permissions padding flex-grow-wrapper"
+    >
+      <h3 className="title-page centered">Permissions Requested</h3>
+      <a
+        href={perms.key}
+        title={perms.key}
+        rel="noopener noreferrer"
+        target="_blank"
+        className="requesting-domain"
+      >
+        {requester}
+      </a>
+      <p className="description margin-0 centered">
+        requested the following permissions:
+      </p>
+      <div className="permission-request-list">
+        <ul>
+          {perms.permissions.map((perm) => {
+            return (
+              <li key={perm}>
+                <Chip type={"new"} perm={perm} destroyPerm={removePerm} />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+      {/* {perms.existing && <Existing {...props}/>} */}
+      <p className="title-footer">Give permission</p>
+      <div className="block-footer">
+        <div className="perm-req-password-box">
+          <input
+            onChange={(e) => setPw(e.currentTarget.value)}
+            type="password"
+          />
+          <p className="errorMessage">{error}</p>
+        </div>
+        <div className="two-buttons">
+          <button className="linear-red-bg" onClick={deny} type="submit">
+            Deny
+          </button>
+          <div className="separator" />
+          <button className="single-button" onClick={grant} type="submit">
+            Grant
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
 }
 interface ExistingProps {
-    perms: PermissionRequest
+  perms: PermissionRequest;
 }
 function Existing(props: ExistingProps) {
-    return (
-        <>
-            <p>Following permissions already granted:</p>
-            <ul>
-                {props.perms?.existing.map(perm => <li key={perm}><Chip type={"old"} perm={perm} /> </li>)}
-            </ul>
-        </>
-    )
+  return (
+    <>
+      <p>Following permissions already granted:</p>
+      <ul>
+        {props.perms?.existing.map((perm) => (
+          <li key={perm}>
+            <Chip type={"old"} perm={perm} />{" "}
+          </li>
+        ))}
+      </ul>
+    </>
+  );
 }
-type chipType = "new" | "old"
+type chipType = "new" | "old";
 interface ChipProps {
-    perm: Permission,
-    destroyPerm?: (perm: Permission) => void,
-    type: chipType
+  perm: Permission;
+  destroyPerm?: (perm: Permission) => void;
+  type: chipType;
 }
 export function Chip(props: ChipProps) {
-    function destroy() {
-        props.destroyPerm(props.perm);
-    }
-    return (
-        <div className="chip">
-            <p>{props.perm}
-                {props.type == "new" && <span className="close " onClick={destroy}>x</span>}
-            </p>
+  function destroy() {
+    props.destroyPerm(props.perm);
+  }
+  return (
+    <div className="chip">
+      <div className="vertical">
+        <label className="perm-label">{props.perm}</label>
+        {/* //TODO: add corresponding description to each permission */}
+        <p className="perm-description">description</p>
+      </div>
+      {/* This is not working as a checkbox, like the new mockups. */}
+      {props.type == "new" && (
+        <span className="close " onClick={destroy}>
+          <img src={cancelIcon} alt="alert" />
+        </span>
+      )}
+      {props.type == "old" && (
+        <div className="flex">
+          <img src={cancelIcon} alt="alert" />
+          <p className="revoke">Revoke</p>
         </div>
-    )
+      )}
+    </div>
+  );
 }

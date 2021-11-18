@@ -142,7 +142,7 @@ export default function AddShipForm({
           className="linear-button"
           type="submit"
         >
-          Add Ship
+          + Add Ship
         </button>
       </form>
     </motion.div>
