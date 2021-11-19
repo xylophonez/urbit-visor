@@ -99,6 +99,7 @@ export default function PermissionsPrompt(props: PermissionsPromptProps) {
           <input
             onChange={(e) => setPw(e.currentTarget.value)}
             type="password"
+            placeholder="Master Password"
           />
           <p className="errorMessage">{error}</p>
         </div>

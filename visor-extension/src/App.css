@@ -276,15 +276,17 @@ input {
   width: 120px;
 }
 
+.moonname p, 
 .moonname span {
   font-weight: 600;
-  font-size: 13px;
+  font-size: 12.5px;
   line-height: 16px;
   color: var(--background-color-contrast);
   white-space: nowrap;
   overflow: hidden;
   display: block;
   text-overflow: ellipsis;
+  margin: 0;
 }
 
 /* buttons */

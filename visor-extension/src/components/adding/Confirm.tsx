@@ -79,6 +79,7 @@ export default function Confirm(props: ConfirmProps) {
             value={pw}
             onChange={(e) => setPw(e.currentTarget.value)}
             type="password"
+            placeholder="Master Password"
           />
           {loading && spinner}
           <p className="errorMessage">{error}</p>

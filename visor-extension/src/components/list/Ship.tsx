@@ -15,10 +15,14 @@ export default function Ship(props: ShipProps) {
   const displayName = processName(props.ship.shipName);
   const shipname =
     whatShip(props.ship.shipName) === "moon" ? (
-      <p onClick={select} className="moonname shipname">
-        <span>~{displayName.slice(0, -14)}</span>
-        <span>{displayName.slice(-14)}</span>
-      </p>
+      <div onClick={select} className="moonname shipname">
+        <p>
+          ~{displayName.slice(0, -14)}
+          {displayName.slice(-14)}
+        </p>
+        {/* <p>~{displayName.slice(0, -14)}</p>
+        <p>{displayName.slice(-14)}</p> */}
+      </div>
     ) : (
       <p onClick={select} className="shipname">
         ~{displayName}
@@ -36,9 +40,20 @@ export default function Ship(props: ShipProps) {
     <div
       onClick={select}
       className={
-        props.active?.shipName == props.ship.shipName ? " ship active-ship" : "ship"
+        props.active?.shipName == props.ship.shipName
+          ? " ship active-ship"
+          : "ship"
       }
     >
+      <div
+        className={
+          props.active?.shipName == props.ship.shipName
+            ? "active-label"
+            : "inactive-label"
+        }
+      >
+        Connected
+      </div>
       <div className="sigil-wrapper">
         <Sigil
           size={props.active?.shipName == props.ship.shipName ? 40 : 40}

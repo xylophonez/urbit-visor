@@ -66,6 +66,9 @@
   border-radius: 12px;
   margin-bottom: 0.5em;
 }
+.ship-to-remove p.monname {
+  width: 170px;
+}
 .ship-to-remove p span {
   width: 100%;
   /* flex-grow: 1; */

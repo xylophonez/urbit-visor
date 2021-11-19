@@ -14,6 +14,7 @@ import {
 } from "@dcspark/uv-core";
 import deleteIcon from "../../icons/delete-icon.svg";
 import arrowIcon from "../../icons/arrow-down.svg";
+import illustrationEmpty from "../../icons/illustration-empty.svg";
 
 interface PermissionsProps {
   ship: EncryptedShipCredentials;
@@ -95,7 +96,10 @@ export default function Permissions({
       </div>
       <div className="permslist perms-flex-grow-wrapper">
         {!domains.length ? (
-          <p>No permissions granted</p>
+          <div className="centered empty-container">
+            <img src={illustrationEmpty} alt="" />
+            <p>No permissions granted</p>
+          </div>
         ) : !query.length ? (
           domains.map((domain) => (
             <Domain
@@ -181,7 +185,11 @@ function Domain({
   return (
     <div className="domain-wrapper perms-flex-grow-wrapper">
       <div className={toDisplay === domain ? "domain border-none" : "domain"}>
-        <div role="button" className="collapse-header" onClick={() => uncollapse(domain)}>
+        <div
+          role="button"
+          className="collapse-header"
+          onClick={() => uncollapse(domain)}
+        >
           <img
             className={toDisplay === domain ? "arrow-up" : "arrow-down"}
             src={arrowIcon}

@@ -1,5 +1,5 @@
 .dashboard .type-icon {
-  width: 12px;
+  width: 9px;
 }
 .ship-list {
   padding: 0;
@@ -12,7 +12,7 @@
   align-items: center;
   background: var(--background-color-tint);
   border-radius: 10px;
-  padding: 1em;
+  padding: 1.05em 1em;
   border: 1px solid transparent;
   margin-bottom: 0.5em;
   transition: 0.2s ease;
@@ -21,10 +21,14 @@
   box-shadow: 0px 4px 7px 8px rgba(0, 0, 0, 0.15);
 }
 
-.ship p.shipname {
+/* .ship .shipname {
   margin: 0;
   width: 195px;
   font-weight: 600;
+} */
+.ship .shipname {
+  display: flex;
+  width: 215px;
 }
 
 .sigil-wrapper {
@@ -42,7 +46,28 @@
 }
 
 .active-ship {
-  border: 1px solid var(--primary-color);
+  border: 1px solid #04C290 !important;
+  position: relative;
+}
+.active-label {
+  font-weight: 800;
+  font-size: 8px;
+  line-height: 10px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.75px;
+  text-transform: uppercase;
+  color: #47eaaf;
+  background: #2c5344;
+  padding: 2px 5px;
+  border-radius: 100px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.inactive-label {
+  display: none;
 }
 
 .ships-connected-msg {
@@ -51,7 +76,7 @@
   text-align: center;
 }
 .name-container {
-  margin-left: 0.8em;
+  margin-left: 0.5em;
 }
 .type-label {
   background: var(--background-color);
@@ -59,6 +84,7 @@
   padding: 2px 5px;
   display: flex;
   align-items: center;
+  margin-top: 5px;
 }
 .type-label p {
   font-weight: 500;

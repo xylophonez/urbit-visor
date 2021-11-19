@@ -86,11 +86,13 @@ export default function Setup() {
           <input
             onChange={(e) => setpw(e.currentTarget.value)}
             type="password"
+            placeholder="Master Password"
           />
           <label className="label-input">Confirm password</label>
           <input
             onChange={(e) => setconfirmation(e.currentTarget.value)}
             type="password"
+            placeholder="Master Password"
           />
           <p className="errorMessage">{error}</p>
         </div>

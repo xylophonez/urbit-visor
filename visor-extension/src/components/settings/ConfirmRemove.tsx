@@ -51,6 +51,7 @@ export default function ConfirmRemove({ ship }: ConfirmRemoveProps) {
           <input
             onChange={(e) => setPw(e.currentTarget.value)}
             type="password"
+            placeholder="Master Password"
           />
         </label>
         <p className="errorMessage">{error}</p>
