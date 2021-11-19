@@ -182,14 +182,14 @@ a {
 .margin-0 {
   margin-top: 0 !important;
 }
-.red-bg {
-  background-color: var(--alert-color) !important;
-  /* border: 1px solid rgba(100,0,0,1) !important; */
-}
 .linear-red-bg {
   border: 1px solid var(--alert-color);
   background: transparent !important;
   color: var(--alert-color);
+}
+.red-bg {
+  background-color: var(--alert-color) !important;
+  /* border: 1px solid rgba(100,0,0,1) !important; */
 }
 
 /* forms */

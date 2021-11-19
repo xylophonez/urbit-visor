@@ -33,14 +33,13 @@ export default function Ship(props: ShipProps) {
   }
 
   return (
-    <div onClick={select} className="ship">
-      <div
-        className={
-          props.active?.shipName == props.ship.shipName
-            ? "sigil-wrapper active-ship"
-            : "sigil-wrapper"
-        }
-      >
+    <div
+      onClick={select}
+      className={
+        props.active?.shipName == props.ship.shipName ? " ship active-ship" : "ship"
+      }
+    >
+      <div className="sigil-wrapper">
         <Sigil
           size={props.active?.shipName == props.ship.shipName ? 40 : 40}
           patp={props.ship.shipName}

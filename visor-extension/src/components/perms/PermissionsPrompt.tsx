@@ -86,7 +86,7 @@ export default function PermissionsPrompt(props: PermissionsPromptProps) {
           {perms.permissions.map((perm) => {
             return (
               <li key={perm}>
-                <Chip type={"new"} perm={perm} destroyPerm={removePerm} />
+                <Chip type={"new"} perm={perm} description="description" destroyPerm={removePerm} />
               </li>
             );
           })}
@@ -134,6 +134,7 @@ function Existing(props: ExistingProps) {
 }
 type chipType = "new" | "old";
 interface ChipProps {
+  description?: string;
   perm: Permission;
   destroyPerm?: (perm: Permission) => void;
   type: chipType;
@@ -147,7 +148,7 @@ export function Chip(props: ChipProps) {
       <div className="vertical">
         <label className="perm-label">{props.perm}</label>
         {/* //TODO: add corresponding description to each permission */}
-        <p className="perm-description">description</p>
+        <p className="perm-description">{props.description}</p>
       </div>
       {/* This is not working as a checkbox, like the new mockups. */}
       {props.type == "new" && (
