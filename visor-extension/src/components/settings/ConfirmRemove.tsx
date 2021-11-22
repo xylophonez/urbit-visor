@@ -38,7 +38,7 @@ export default function ConfirmRemove({ ship }: ConfirmRemoveProps) {
       <div>
         <h3 className="title-page centered">Confirm removal</h3>
         <div className="sigil-wrap">
-          <Sigil size={90} patp={ship.shipName} />
+          <Sigil size={180} patp={ship.shipName} />
         </div>
         <div className="text">
           <p className="ship-to-delete">~{ship.shipName}</p>

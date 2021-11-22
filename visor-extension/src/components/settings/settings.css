@@ -176,6 +176,11 @@
 .reset-app-container {
   justify-content: space-between;
 }
+.ship-removal-confirmation div div.text p {
+  font-size: large;
+  font-weight: 600;
+  color: white !important;
+}
 .change-password-container .form-password-container {
   margin-bottom: 6em;
 }
