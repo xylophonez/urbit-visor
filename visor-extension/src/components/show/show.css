@@ -11,7 +11,18 @@
   color: var(--background-color-contrast);
 }
 .ship-data svg {
-    border-radius: 5px;
+  border-radius: 5px;
+}
+.ship-data .shipname {
+  font-weight: 500;
+  font-size: 12.5px;
+  line-height: 16px;
+  color: var(--light-gray);
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+  margin: 0;
 }
 .ship-information {
   display: flex;
@@ -62,12 +73,11 @@
   align-items: center !important;
 }
 
-
 .ship-data p {
   font-size: 1.5rem;
   margin-left: 1.2rem;
 }
-.ship-data .moonname {
+.ship-data .shipname {
   margin: 0.5rem 0 0 1.2rem;
 }
 

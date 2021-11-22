@@ -29,6 +29,7 @@
 .ship .shipname {
   display: flex;
   width: 215px;
+  margin: 0;
 }
 
 .sigil-wrapper {
@@ -46,7 +47,7 @@
 }
 
 .active-ship {
-  border: 1px solid #04C290 !important;
+  border: 1px solid #04c290 !important;
   position: relative;
 }
 .active-label {
