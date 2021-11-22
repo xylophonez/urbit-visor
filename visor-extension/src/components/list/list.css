@@ -64,8 +64,8 @@
   padding: 2px 5px;
   border-radius: 100px;
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: 10px;
+  top: 55px;
 }
 .inactive-label {
   display: none;
