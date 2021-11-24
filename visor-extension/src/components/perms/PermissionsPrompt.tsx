@@ -93,7 +93,7 @@ export default function PermissionsPrompt(props: PermissionsPromptProps) {
         </ul>
       </div>
       {/* {perms.existing && <Existing {...props}/>} */}
-      <p className="title-footer">Give permission</p>
+      <p className="title-footer">Grant Permissions</p>
       <div className="block-footer">
         <div className="perm-req-password-box">
           <input
@@ -160,7 +160,7 @@ export function Chip(props: ChipProps) {
       {props.type == "old" && (
         <div className="flex">
           <img src={cancelIcon} alt="alert" />
-          <p className="revoke">Revoke</p>
+          {/* <p className="revoke">Revoke</p> */}
         </div>
       )}
     </div>
