@@ -66,6 +66,9 @@
   border-radius: 12px;
   margin-bottom: 0.5em;
 }
+.ship-to-remove p.monname {
+  width: 170px;
+}
 .ship-to-remove p span {
   width: 100%;
   /* flex-grow: 1; */
@@ -172,6 +175,11 @@
 .change-password-container,
 .reset-app-container {
   justify-content: space-between;
+}
+.ship-removal-confirmation div div.text p {
+  font-size: large;
+  font-weight: 600;
+  color: white !important;
 }
 .change-password-container .form-password-container {
   margin-bottom: 6em;

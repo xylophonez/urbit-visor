@@ -64,7 +64,7 @@ export default function Confirm(props: ConfirmProps) {
 
         <img src={icon} className="image-success" />
         </div>
-        <h1 className="center-title">Connection Success to</h1>
+        <h1 className="center-title">Connection Success To</h1>
         <div className="container-shipname">
           <p className="confirm-shipname">~{props.ship} </p>
         </div>
@@ -79,15 +79,16 @@ export default function Confirm(props: ConfirmProps) {
             value={pw}
             onChange={(e) => setPw(e.currentTarget.value)}
             type="password"
+            placeholder="Master Password"
           />
           {loading && spinner}
           <p className="errorMessage">{error}</p>
         </div>
         <div className="two-buttons">
-          <button className="small-button linear-red-bg left" onClick={props.goBack}>
+          <button className="red-bg left" onClick={props.goBack}>
             Cancel
           </button>
-          <button disabled={!pw} type="submit" className="small-button linear-button right">
+          <button disabled={!pw} type="submit" className="single-button right">
             Submit
           </button>
         </div>

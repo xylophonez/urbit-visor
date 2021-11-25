@@ -24,7 +24,21 @@
 
 .permission-request-list {
   height: 225px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.permission-request-list::-webkit-scrollbar {
+  width: 10px;
+}
+ 
+.permission-request-list::-webkit-scrollbar-thumb {
+  background: #3e3e3e;
+  border-radius: 20px;
+}
+
+.permission-request-list::-webkit-scrollbar-track {
+  background: #969494;
+  border-radius: 20px;
 }
 
 .permission-request-list ul {
@@ -43,17 +57,37 @@
   overflow-y: scroll;
   text-align: left;
 }
+.empty-container {
+  margin-top: 2em;
+}
+.empty-container p {
+  margin-top: 0;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--background-color-contrast);
+}
 .perms-flex-grow-wrapper {
   display: inline;
   overflow: auto;
   flex-direction: column;
   flex-grow: 1;
 }
+.collapse-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+}
 .domain {
   display: flex;
   justify-content: space-between;
   padding: 0.5rem;
   border-bottom: 1px solid var(--background-color-tint);
+}
+.border-none {
+  border: none;
 }
 .domain:last-child {
   border: none;
@@ -71,11 +105,19 @@
   margin: 0;
   margin-left: -5px;
 }
-.domain-text:hover {
-  cursor: pointer;
-  text-decoration: underline;
-}
 
+.arrow-up,
+.arrow-down {
+  margin-right: 1em;
+  width: 10px;
+  transition: 0.07s ease;
+}
+.arrow-up {
+  transform: rotate(0deg);
+}
+.arrow-down {
+  transform: rotate(-90deg);
+}
 .permission-string {
 }
 .permission-string:hover {
@@ -87,7 +129,7 @@
   background-color: var(--alert-color);
   cursor: pointer !important;
 }
-.permission-string .chip:hover .revoke{
+.permission-string .chip:hover .revoke {
   color: white;
 }
 ul {
@@ -147,17 +189,38 @@ ul {
   text-transform: none;
   background: transparent;
 }
-.perm-deletion-confirmation-prompt {
-  margin-bottom: 10px;
-  background: #252d29;
+.perm-deletion-confirmation-container {
+  background: #060505b3;
+  margin-top: 1em;
+  width: 100%;
+  height: 100%;
   padding: 1em;
-  border-radius: 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 8888;
 }
+.perm-deletion-confirmation-prompt {
+  background: #252d29;
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+  width: 100%;
+  left: 0;
+  padding: 1.5em;
+  border-radius: 20px 20px 0 0;
+  z-index: 9999;
+}
+
 .perm-deletion-confirmation-prompt .title {
-  margin: 0 0 0.5em;
+  margin: 0 0 0.8em;
   font-size: 14px;
   line-height: 16px;
   font-weight: bolder;
+}
+.perm-deletion-confirmation-prompt .subtitle {
+  margin-top: -0.5em !important;
+  font-size: 11px !important;
 }
 
 .permission-search {

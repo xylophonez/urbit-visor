@@ -13,6 +13,8 @@ import {
   Messaging,
 } from "@dcspark/uv-core";
 import deleteIcon from "../../icons/delete-icon.svg";
+import arrowIcon from "../../icons/arrow-down.svg";
+import illustrationEmpty from "../../icons/illustration-empty.svg";
 
 interface PermissionsProps {
   ship: EncryptedShipCredentials;
@@ -94,7 +96,10 @@ export default function Permissions({
       </div>
       <div className="permslist perms-flex-grow-wrapper">
         {!domains.length ? (
-          <p>No permissions granted</p>
+          <div className="centered empty-container">
+            <img src={illustrationEmpty} alt="" />
+            <p>No permissions granted</p>
+          </div>
         ) : !query.length ? (
           domains.map((domain) => (
             <Domain
@@ -179,10 +184,19 @@ function Domain({
   }
   return (
     <div className="domain-wrapper perms-flex-grow-wrapper">
-      <div className="domain">
-        <p onClick={() => uncollapse(domain)} className="domain-text">
-          {domain}
-        </p>
+      <div className={toDisplay === domain ? "domain border-none" : "domain"}>
+        <div
+          role="button"
+          className="collapse-header"
+          onClick={() => uncollapse(domain)}
+        >
+          <img
+            className={toDisplay === domain ? "arrow-up" : "arrow-down"}
+            src={arrowIcon}
+            alt=""
+          />
+          <p className="domain-text">{domain}</p>
+        </div>
         <button className="minibutton" onClick={promptDelete}>
           <img src={deleteIcon} alt="trash" />
         </button>
@@ -190,10 +204,12 @@ function Domain({
       {displayterms}
       {deleting && (
         <ConfirmationPrompt
-          message={"Delete domain?"}
+          message={`Delete domain?`}
           cancel={() => setDeleting(false)}
           confirm={dispatchDeleteDomain}
-        />
+        >
+          <p className="description subtitle">{domain}</p>
+        </ConfirmationPrompt>
       )}
       {revokingPerm && (
         <ConfirmationPrompt
@@ -241,21 +257,30 @@ function IndividualPerm({ perm, promptRevokePerm }: IPProps) {
 }
 interface ConfirmationProps {
   message: string;
+  children?: React.ReactNode;
   cancel: () => void;
   confirm: () => void;
 }
-function ConfirmationPrompt({ message, cancel, confirm }: ConfirmationProps) {
+function ConfirmationPrompt({
+  message,
+  children,
+  cancel,
+  confirm,
+}: ConfirmationProps) {
   return (
-    <div className="perm-deletion-confirmation-prompt">
-      <p className="title">{message}</p>
-      <div className="two-buttons">
-        <button className="small-button red-bg" onClick={cancel}>
-          No
-        </button>
-        <button className="small-button right" onClick={confirm}>
-          {" "}
-          Yes
-        </button>
+    <div className="perm-deletion-confirmation-container">
+      <div className="perm-deletion-confirmation-prompt">
+        <p className="title">{message}</p>
+        {children}
+        <div className="two-buttons">
+          <button className="red-bg left" onClick={cancel}>
+            No
+          </button>
+          <button className="linear-button right" onClick={confirm}>
+            {" "}
+            Yes
+          </button>
+        </div>
       </div>
     </div>
   );

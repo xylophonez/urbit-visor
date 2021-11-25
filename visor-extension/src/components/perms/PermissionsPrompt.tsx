@@ -86,19 +86,20 @@ export default function PermissionsPrompt(props: PermissionsPromptProps) {
           {perms.permissions.map((perm) => {
             return (
               <li key={perm}>
-                <Chip type={"new"} perm={perm} destroyPerm={removePerm} />
+                <Chip type={"new"} perm={perm} description="description" destroyPerm={removePerm} />
               </li>
             );
           })}
         </ul>
       </div>
       {/* {perms.existing && <Existing {...props}/>} */}
-      <p className="title-footer">Give permission</p>
+      <p className="title-footer">Grant Permissions</p>
       <div className="block-footer">
         <div className="perm-req-password-box">
           <input
             onChange={(e) => setPw(e.currentTarget.value)}
             type="password"
+            placeholder="Master Password"
           />
           <p className="errorMessage">{error}</p>
         </div>
@@ -134,6 +135,7 @@ function Existing(props: ExistingProps) {
 }
 type chipType = "new" | "old";
 interface ChipProps {
+  description?: string;
   perm: Permission;
   destroyPerm?: (perm: Permission) => void;
   type: chipType;
@@ -147,7 +149,7 @@ export function Chip(props: ChipProps) {
       <div className="vertical">
         <label className="perm-label">{props.perm}</label>
         {/* //TODO: add corresponding description to each permission */}
-        <p className="perm-description">description</p>
+        <p className="perm-description">{props.description}</p>
       </div>
       {/* This is not working as a checkbox, like the new mockups. */}
       {props.type == "new" && (
@@ -158,7 +160,7 @@ export function Chip(props: ChipProps) {
       {props.type == "old" && (
         <div className="flex">
           <img src={cancelIcon} alt="alert" />
-          <p className="revoke">Revoke</p>
+          {/* <p className="revoke">Revoke</p> */}
         </div>
       )}
     </div>
