@@ -46,7 +46,7 @@ export default function Setup() {
 
         <img src={icon} className="icon" />
         <h2 className="mid-title">
-          Please set up a master password for this extension.
+          Please set up a master password for this extension 
           <span
             className="tooltip-title"
             onMouseLeave={hideTooltip}
@@ -73,7 +73,7 @@ export default function Setup() {
         {tooltip && (
           <div className="tooltip">
             <p>
-              The password will be used to encrypt the credentials to access
+              This password will be used to encrypt the credentials of your
               your Urbit ships.
             </p>
           </div>
@@ -96,7 +96,7 @@ export default function Setup() {
           />
           <p className="errorMessage">{error}</p>
         </div>
-        <button className="linear-button">Submit</button>
+        <button className="single-button">Submit</button>
       </form>
     </motion.div>
   );
