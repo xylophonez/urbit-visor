@@ -150,17 +150,17 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
 
   function confirmConnect(){
     setShowPasswordInput(true);
-    setConfirmString("Connect to Your Ship");
+    setConfirmString("Connect To Your Ship");
     setConfirmAction("connect");
   }
   function confirmPerms(){
     setShowPasswordInput(true);
-    setConfirmString("Show granted permissions");
+    setConfirmString("Show Granted Permissions");
     setConfirmAction("perms");
   }
   function confirmHome(){
     setShowPasswordInput(true);
-    setConfirmString("Go to your Urbit Home");
+    setConfirmString("Go To Your Urbit Home");
     setConfirmAction("home");
   }
 

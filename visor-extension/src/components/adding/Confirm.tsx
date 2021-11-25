@@ -85,10 +85,10 @@ export default function Confirm(props: ConfirmProps) {
           <p className="errorMessage">{error}</p>
         </div>
         <div className="two-buttons">
-          <button className="linear-red-bg left" onClick={props.goBack}>
+          <button className="red-bg left" onClick={props.goBack}>
             Cancel
           </button>
-          <button disabled={!pw} type="submit" className="linear-button right">
+          <button disabled={!pw} type="submit" className="single-button right">
             Submit
           </button>
         </div>
