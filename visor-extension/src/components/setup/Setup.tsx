@@ -5,7 +5,11 @@ import { Messaging } from "@dcspark/uv-core";
 import { motion } from "framer-motion";
 import icon from "../../icons/lock-icon.svg";
 
-export default function Setup() {
+interface SetupProps{
+  setInteracting: (b: boolean) => void
+}
+
+export default function Setup({setInteracting}: SetupProps) {
   const history = useHistory();
   const [pw, setpw] = useState("");
   const [tooltip, setTooltip] = useState(false);
@@ -25,6 +29,7 @@ export default function Setup() {
         action: "set_master_password",
         data: { password: pw },
       }).then((res) => {
+        setInteracting(false);
         history.push("/add_ship");
       });
     } else {
