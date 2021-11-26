@@ -1,9 +1,8 @@
 import * as React from "react";
 import Sigil from "../ui/svg/Sigil";
 import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
-import { whatShip, processName } from "../../utils";
+import { whatShip, getIcon, processName } from "../../utils";
 import { useHistory } from "react-router-dom";
-import icon from "../../icons/type-moon.svg";
 import "./list.css";
 
 interface ShipProps {
@@ -63,8 +62,8 @@ export default function Ship(props: ShipProps) {
       <div className="vertical name-container">
         {shipname}
         <div className="type-label">
-          <img src={icon} className="type-icon" />
-          <p>moon</p>
+          <img src={getIcon(props.ship.shipName)} className="type-icon" />
+          <p>{whatShip(props.ship.shipName)}</p>
         </div>
       </div>
     </div>
