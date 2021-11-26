@@ -6,15 +6,13 @@ import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
 import { motion } from "framer-motion";
 import "./list.css";
 
-interface ShipListProps {
-  active: EncryptedShipCredentials;
-}
-export default function ShipList({ active }: ShipListProps) {
+export default function ShipList() {
   useEffect(() => {
     let isMounted = true;
     Messaging.sendToBackground({ action: "cache_form_url", data: { url: "" } });
     Messaging.sendToBackground({ action: "get_ships" }).then((res) => {
       if (isMounted) {
+        console.log(res, "ships")
         setShips(res.ships);
         setActive(res.active)
       };
@@ -25,16 +23,16 @@ export default function ShipList({ active }: ShipListProps) {
   }, []);
   const history = useHistory();
   const [ships, setShips] = useState([]);
-  const [aactive, setActive] = useState<EncryptedShipCredentials>(null);
+  const [active, setActive] = useState<EncryptedShipCredentials>(null);
   
   const inactive = ships.filter((s) => s.shipName != active?.shipName);
 
-  const message = aactive ? "" : "No ship connected";
+  const message = active ? "" : "No ship connected";
   let ordered = [];
-  ordered = aactive ? [aactive, ...inactive] : inactive;
+  ordered = active ? [active, ...inactive] : inactive;
   const display = ordered.length ? (
     ordered.map((ship) => {
-      return <Ship active={aactive} key={ship.shipName} ship={ship} />;
+      return <Ship active={active} key={ship.shipName} ship={ship} />;
     })
   ) : (
     <p>Please add a ship</p>

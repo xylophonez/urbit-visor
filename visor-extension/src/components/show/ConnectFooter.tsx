@@ -3,7 +3,6 @@ import Spinner from "../ui/svg/Spinner";
 
 interface ConnectFooterProps {
   setPw: (value: string) => void;
-  loading: boolean;
   error: string;
   confirmString: string;
   children: React.ReactNode;
@@ -11,7 +10,6 @@ interface ConnectFooterProps {
 
 const ConnectFooter = ({
   setPw,
-  loading,
   error,
   confirmString,
   children,
@@ -25,16 +23,6 @@ const ConnectFooter = ({
         type="password"
         placeholder="Master Password"
       />
-      {loading && (
-        <div className="spinner">
-          <Spinner
-            width="24"
-            height="24"
-            innerColor="white"
-            outerColor="black"
-          />
-        </div>
-      )}
       <p className="errorMessage">{error}</p>
     </div>
     {children}

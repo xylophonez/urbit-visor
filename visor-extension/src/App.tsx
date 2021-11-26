@@ -85,10 +85,10 @@ export default function App() {
             <AddShip />
           </Route>
           <Route path="/ship_list">
-            <ShipList active={active}/>
+            <ShipList />
           </Route>
           <Route key={Date.now()} path="/ship/:patp">
-            <ShipShow active={active} setActive={setActive}/>
+            <ShipShow />
           </Route>
           <Route path="/ask_perms">
             <PermissionsPrompt perms={permsRequest}/>

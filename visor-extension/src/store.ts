@@ -27,7 +27,8 @@ export const useStore = create<UrbitVisorState>((set, get) => ({
     },
     addShip: async (ship, url, code, pw) => {
         const creds = await storeCredentials(ship, url, code, pw);
-        set(state => ({ selectedShip: creds }));
+        const airlock = await connectToShip(url, creds);
+        set(state => ({ selectedShip: creds, activeShip: creds, airlock: airlock }));
     },
     cacheURL: (string: string) => set(state => ({ cached_url: string })),
     removeShip: async (ship) => {
