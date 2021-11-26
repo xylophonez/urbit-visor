@@ -13,3 +13,12 @@ export function whatShip(shipName: string) : string{
     if (shipName.length > 4) return "star"
     else return "galaxy"
 }
+
+export const permDescriptions = {
+    shipName: "The name (@p) of your Urbit ship/identity.",
+    shipURL: "The URL of your running Urbit ship.",
+    scry: "Reads data from your Urbit ship.",
+    poke: "Sends data to your Urbit ship.",
+    thread: "Issues spider threads in your Urbit ship.",
+    subscribe: "Reads a continuous stream of data from your Urbit ship."
+}
