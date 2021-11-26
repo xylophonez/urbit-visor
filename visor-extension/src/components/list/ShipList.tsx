@@ -14,7 +14,10 @@ export default function ShipList({ active }: ShipListProps) {
     let isMounted = true;
     Messaging.sendToBackground({ action: "cache_form_url", data: { url: "" } });
     Messaging.sendToBackground({ action: "get_ships" }).then((res) => {
-      if (isMounted) setShips(res.ships);
+      if (isMounted) {
+        setShips(res.ships);
+        setActive(res.active)
+      };
     });
     return () => {
       isMounted = false;
@@ -22,15 +25,16 @@ export default function ShipList({ active }: ShipListProps) {
   }, []);
   const history = useHistory();
   const [ships, setShips] = useState([]);
-
+  const [aactive, setActive] = useState<EncryptedShipCredentials>(null);
+  
   const inactive = ships.filter((s) => s.shipName != active?.shipName);
 
-  const message = active ? "" : "No ship connected";
+  const message = aactive ? "" : "No ship connected";
   let ordered = [];
-  ordered = active ? [active, ...inactive] : inactive;
+  ordered = aactive ? [aactive, ...inactive] : inactive;
   const display = ordered.length ? (
     ordered.map((ship) => {
-      return <Ship active={active} key={ship.shipName} ship={ship} />;
+      return <Ship active={aactive} key={ship.shipName} ship={ship} />;
     })
   ) : (
     <p>Please add a ship</p>

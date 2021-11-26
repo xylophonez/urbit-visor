@@ -28,6 +28,7 @@ export default function App() {
   useEffect(() => {
     Messaging.sendToBackground({ action: "get_initial_state" })
       .then(state => {
+        console.log("filling state at App.tsx")
         setFirst(state.first);
         setShips(state.ships)
         setActive(state.activeShip);
