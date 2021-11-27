@@ -78,7 +78,7 @@ export default function App() {
             <Welcome />
           </Route>
           <Route path="/setup">
-            <Setup />
+            <Setup setInteracting={setInteracting}/>
           </Route>
           <Route path="/add_ship">
             <AddShip />

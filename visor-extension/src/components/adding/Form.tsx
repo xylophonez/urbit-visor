@@ -118,7 +118,7 @@ export default function AddShipForm({
             required
           />
           <label className="label-input" htmlFor="shipCode">
-            +code
+            +code ({code.length}/27)
           </label>
           <input
             type="password"
@@ -140,7 +140,6 @@ export default function AddShipForm({
         <button
           disabled={code.length < 27}
           className="single-button"
-          // className="linear-button"
           type="submit"
         >
           + Add Ship
