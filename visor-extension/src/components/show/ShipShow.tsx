@@ -6,10 +6,9 @@ import Sigil from "../ui/svg/Sigil";
 import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
 import { loginToShip } from "../../urbit";
 import { decrypt } from "../../storage";
-import { whatShip, processName } from "../../utils";
+import { whatShip, getIcon, processName } from "../../utils";
 import Permissions from "../perms/Permissions";
 import { motion } from "framer-motion";
-import typeIcon from "../../icons/type-moon.svg";
 import locationIcon from "../../icons/location-icon.svg";
 
 import "./show.css";
@@ -42,9 +41,6 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
   const [loading, setLoading] = useState(false);
   const [confirmString, setConfirmString] = useState("");
   const [confirmAction, setConfirmAction] = useState("connect");
-
-
-  console.log(showPerms, "showing perms")
 
   const displayName = processName(ship.shipName);
   const shipname =
@@ -229,8 +225,8 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
             <div className="separator" />
             <div className="ship-type vertical">
               <div className="flex">
-                <img src={typeIcon} className="ship-info-icon" />
-                <p className="value">Moon</p>
+                <img src={getIcon(ship.shipName)} className="ship-info-icon" />
+                <p className="value">{whatShip(ship.shipName)}</p>
               </div>
               <p className="label">Type</p>
             </div>

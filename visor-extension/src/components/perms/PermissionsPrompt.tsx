@@ -6,6 +6,7 @@ import "./perms.css";
 import { PermissionRequest, Permission, Messaging } from "@dcspark/uv-core";
 import { motion } from "framer-motion";
 import cancelIcon from "../../icons/cancel-icon.svg";
+import { permDescriptions } from "../../utils";
 
 interface PermissionsPromptProps {
   perms: PermissionRequest;
@@ -141,6 +142,7 @@ interface ChipProps {
   type: chipType;
 }
 export function Chip(props: ChipProps) {
+  console.log(props, "chip props")
   function destroy() {
     props.destroyPerm(props.perm);
   }
@@ -149,7 +151,7 @@ export function Chip(props: ChipProps) {
       <div className="vertical">
         <label className="perm-label">{props.perm}</label>
         {/* //TODO: add corresponding description to each permission */}
-        <p className="perm-description">{props.description}</p>
+        <p className="perm-description">{permDescriptions[props.perm]}</p>
       </div>
       {/* This is not working as a checkbox, like the new mockups. */}
       {props.type == "new" && (

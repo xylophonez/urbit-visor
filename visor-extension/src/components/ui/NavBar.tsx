@@ -31,7 +31,7 @@ export default function NavBar({ interacting, active }: NavbarProps) {
   );
   function openMenu() {
     if (!interacting) toggleModal(!modalOpen);
-  }
+  };
   function gotoSigil() {
     if (!interacting) {
       Messaging.sendToBackground({
@@ -39,7 +39,7 @@ export default function NavBar({ interacting, active }: NavbarProps) {
         data: { ship: active },
       }).then((res) => history.push(`/ship/${active.shipName}`));
     }
-  }
+  };
   const displaySigil = active ? sigil : dummy;
 
   return (
