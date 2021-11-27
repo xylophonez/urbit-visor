@@ -140,7 +140,6 @@ export default function AddShipForm({
         <button
           disabled={code.length < 27}
           className="single-button"
-          // className="linear-button"
           type="submit"
         >
           + Add Ship
