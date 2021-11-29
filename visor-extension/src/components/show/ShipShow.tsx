@@ -214,10 +214,10 @@ export default function ShipShow(props: ShipProps) {
       >
         <div>
           <div className="ship-data">
-            <Sigil size={75} patp={ship.shipName} />
+            <Sigil size={155} patp={ship.shipName} />
             {shipname}
           </div>
-          <div className="ship-information">
+          {/* <div className="ship-information">
             <div className="vertical">
               <span className="value">1075</span>
               <p className="label">contacts</p>
@@ -230,7 +230,7 @@ export default function ShipShow(props: ShipProps) {
               <span className="value">6</span>
               <p className="label">channels</p>
             </div>
-          </div>
+          </div> */}
           <div className="flex">
             <div className="ship-location vertical">
               <div className="flex">
