@@ -18,11 +18,9 @@ interface NavbarProps {
 export default function NavBar({ interacting, active }: NavbarProps) {
   const history = useHistory();
   const location = useLocation();
-  console.log(location, "lokashun")
   const urbitlogo = useRef(null);
   const [modalOpen, toggleModal] = useState(false);
   const rootPage = ["/welcome", "/ship_list", "/settings/menu", "/about"].includes(location.pathname)
-  console.log(history, "history")
   const wrapperClass = active
     ? "navbar-sigil-wrapper active-navbar-sigil"
     : "navbar-sigil-wrapper inactive-navbar-sigil";

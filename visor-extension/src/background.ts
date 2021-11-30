@@ -112,6 +112,14 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
         })
         .catch(err => sendResponse(null));
       break;
+    case "get_data":
+      state.airlock.subscribe({
+        app: "graph-store", 
+        path: "/keys", 
+        event: (data)=> {
+          sendResponse(data)
+      }})
+      break;
     case "disconnect_ship":
       state.disconnectShip();
       Messaging.pushEvent({ action: "disconnected" }, recipients)
