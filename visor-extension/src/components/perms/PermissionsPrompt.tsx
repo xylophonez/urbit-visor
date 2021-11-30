@@ -54,7 +54,7 @@ export default function PermissionsPrompt(props: PermissionsPromptProps) {
           window.close();
         })
         .catch((err) => setError("Connection error"));
-    } else setError("Wrong password");
+    } else setError("Wrong Password");
   }
   function deny() {
     Messaging.sendToBackground({ action: "deny_perms" }).then((res) => {

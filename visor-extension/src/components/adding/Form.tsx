@@ -50,18 +50,18 @@ export default function AddShipForm({
               .catch((err) => setError("Your ship needs an OS update"));
             break;
           case 400:
-            setError("Invalid +code.\nCould not connect to ship.");
+            setError("Invalid +code.\nCould Not Connect To Ship");
             setLoading(false);
             break;
           default:
-            setError("Invalid URL.\nCould not connect to ship.");
+            setError("Invalid URL.\nCould Not Connect To Ship");
             setLoading(false);
             break;
         }
       })
       .catch((err) => {
         console.log(err, "err");
-        setError("Could not connect");
+        setError("Could Not Connect");
         setLoading(false);
       });
   }

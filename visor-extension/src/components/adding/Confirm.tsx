@@ -31,7 +31,7 @@ export default function Confirm(props: ConfirmProps) {
       if (string === "urbit_visor") {
         saveShip();
       } else {
-        setError("Wrong password.");
+        setError("Wrong Password.");
       }
     });
   }

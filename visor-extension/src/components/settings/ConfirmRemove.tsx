@@ -25,7 +25,7 @@ export default function ConfirmRemove({ ship }: ConfirmRemoveProps) {
         history.push("/ship_list");
       });
     } else {
-      setError("Wrong password");
+      setError("Wrong Password");
     }
   }
   return (

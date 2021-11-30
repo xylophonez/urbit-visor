@@ -88,12 +88,12 @@ export default function ShipShow(props: ShipProps) {
     loginToShip(url, code)
       .then((res) => {
         if (res.statusText == "missing") {
-          setError("Could not connect");
+          setError("Could Not Connect");
           setLoading(false);
         } else connect();
       })
       .catch((err) => {
-        setError("Could not connect");
+        setError("Could Not Connect");
         setLoading(false);
       });
   }
@@ -101,7 +101,7 @@ export default function ShipShow(props: ShipProps) {
   async function connect(): Promise<void> {
     setError("");
     if (pw === "") {
-      setError("Password can't be empty.");
+      setError("Password Cannot Be Empty");
       return;
     }
     const url = decrypt(ship.encryptedShipURL, pw);
@@ -113,15 +113,15 @@ export default function ShipShow(props: ShipProps) {
       })
         .then((res) => {
           if (res) setActive(ship), setShowPasswordInput(false);
-          else setError("Could not connect");
+          else setError("Could Not Connect");
           setLoading(false);
         })
         .catch((err) => {
           if (err.message == "Failed to PUT channel") reconnect(url);
-          else setError("Could not connect");
+          else setError("Could Not Connect");
           setLoading(false);
         });
-    } else setError("Wrong password."), setLoading(false);
+    } else setError("Wrong Password."), setLoading(false);
   }
   function disconnect(): void {
     Messaging.sendToBackground({ action: "disconnect_ship" }).then((res) => {
@@ -183,7 +183,7 @@ export default function ShipShow(props: ShipProps) {
     if (url.length) {
       chrome.tabs.create({ url: url });
     } else {
-      setError("Wrong password.");
+      setError("Wrong Password.");
     }
   }
   function gotoPerms() {
@@ -196,7 +196,7 @@ export default function ShipShow(props: ShipProps) {
       setURL(url);
       setShowPerms(true);
     } else {
-      setError("Wrong password");
+      setError("Wrong Password");
     }
   }
   function gotoDashboard() {
@@ -213,7 +213,7 @@ export default function ShipShow(props: ShipProps) {
       >
         <div>
           <div className="ship-data">
-            <Sigil size={155} patp={ship.shipName} />
+            <Sigil size={140} patp={ship.shipName} />
             {shipname}
           </div>
           {/* <div className="ship-information">
