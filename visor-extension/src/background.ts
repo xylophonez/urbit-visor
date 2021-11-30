@@ -69,7 +69,7 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
       sendResponse({ first: state.first, ships: state.ships, activeShip: state.activeShip, cachedURL: state.cached_url, requestedPerms: state.requestedPerms })
       break;
     case "get_ships":
-      sendResponse({ ships: state.ships })
+      sendResponse({ ships: state.ships, active: state.activeShip })
       break;
     case "get_selected":
       sendResponse({ selected: state.selectedShip, active: state.activeShip })

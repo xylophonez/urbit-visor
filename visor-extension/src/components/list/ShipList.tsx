@@ -6,15 +6,16 @@ import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
 import { motion } from "framer-motion";
 import "./list.css";
 
-interface ShipListProps {
-  active: EncryptedShipCredentials;
-}
-export default function ShipList({ active }: ShipListProps) {
+export default function ShipList() {
   useEffect(() => {
     let isMounted = true;
     Messaging.sendToBackground({ action: "cache_form_url", data: { url: "" } });
     Messaging.sendToBackground({ action: "get_ships" }).then((res) => {
-      if (isMounted) setShips(res.ships);
+      if (isMounted) {
+        console.log(res, "ships")
+        setShips(res.ships);
+        setActive(res.active)
+      };
     });
     return () => {
       isMounted = false;
@@ -22,7 +23,8 @@ export default function ShipList({ active }: ShipListProps) {
   }, []);
   const history = useHistory();
   const [ships, setShips] = useState([]);
-
+  const [active, setActive] = useState<EncryptedShipCredentials>(null);
+  
   const inactive = ships.filter((s) => s.shipName != active?.shipName);
 
   const message = active ? "" : "No ship connected";

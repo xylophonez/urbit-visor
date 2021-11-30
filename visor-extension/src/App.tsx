@@ -28,6 +28,7 @@ export default function App() {
   useEffect(() => {
     Messaging.sendToBackground({ action: "get_initial_state" })
       .then(state => {
+        console.log("filling state at App.tsx")
         setFirst(state.first);
         setShips(state.ships)
         setActive(state.activeShip);
@@ -84,10 +85,10 @@ export default function App() {
             <AddShip />
           </Route>
           <Route path="/ship_list">
-            <ShipList active={active}/>
+            <ShipList />
           </Route>
           <Route key={Date.now()} path="/ship/:patp">
-            <ShipShow active={active} setActive={setActive}/>
+            <ShipShow />
           </Route>
           <Route path="/ask_perms">
             <PermissionsPrompt perms={permsRequest}/>

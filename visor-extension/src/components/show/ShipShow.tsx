@@ -2,6 +2,8 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router";
 import Sigil from "../ui/svg/Sigil";
+import Spinner from "../ui/svg/Spinner";
+
 
 import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
 import { loginToShip } from "../../urbit";
@@ -18,13 +20,11 @@ import ConnectFooter from "./ConnectFooter";
 declare const window: any;
 
 interface ShipProps {
-  active: EncryptedShipCredentials;
-  setActive: (ship: EncryptedShipCredentials) => void;
   saveActive?: (ship: EncryptedShipCredentials, url: string) => void;
   setThemPerms?: (pw: string) => void;
 }
 
-export default function ShipShow({ active, setActive, ...props }: ShipProps) {
+export default function ShipShow(props: ShipProps) {
   const dummyShip: EncryptedShipCredentials = {
     shipName: "~sampel-palnet",
     encryptedShipCode: "",
@@ -32,6 +32,7 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
   };
   const history = useHistory();
   const [ship, setShip] = useState(dummyShip);
+  const [active, setActive] = useState(dummyShip);
   const [shipURL, setURL] = useState("");
   const [showPerms, setShowPerms] = useState(false);
   const { patp }: any = useParams();
@@ -44,26 +45,32 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
 
   const displayName = processName(ship.shipName);
   const shipname =
-    whatShip(ship.shipName) === "moon" ? (
-      <h1 className="ship-data-name">
-        <span>~{displayName.slice(0, -14)}</span>
-        <span>{displayName.slice(-14)}</span>
-      </h1>
-    ) : (
-      <h1 className="ship-data-name">
-        <span>~{displayName}</span>
-      </h1>
-    );
+    whatShip(ship.shipName) === "moon"
+      ?
+      (
+        <h1 className="ship-data-name">
+          <span>~{displayName.slice(0, -14)}</span>
+          <span>{displayName.slice(-14)}</span>
+        </h1>
+      )
+      :
+      (
+        <h1 className="ship-data-name">
+          <span>~{displayName}</span>
+        </h1>
+      );
   useEffect(() => {
     let isMounted = true;
     Messaging.sendToBackground({ action: "cache_form_url", data: { url: "" } });
     Messaging.sendToBackground({ action: "get_ships" }).then((res) => {
       if (isMounted) {
+        console.log(res, "res")
         setShowPerms(false);
         const s = res.ships.find(
           (ur: EncryptedShipCredentials) => ur.shipName == patp
         );
         setShip(s);
+        setActive(res.active);
       }
     });
     return () => {
@@ -105,7 +112,7 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
         data: { url: url, ship: ship },
       })
         .then((res) => {
-          if (res) setActive(ship);
+          if (res) setActive(ship), setShowPasswordInput(false);
           else setError("Could not connect");
           setLoading(false);
         })
@@ -142,26 +149,35 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
   );
 
   const connectionButton =
-    ship?.shipName == active?.shipName ? disconnectButton : connectButton;
+    ship.shipName == active?.shipName ? disconnectButton : connectButton;
 
-  function confirmConnect(){
+  const spinner = <div className="spinner">
+    <Spinner
+      width="24"
+      height="24"
+      innerColor="white"
+      outerColor="black"
+    />
+  </div>
+
+  function confirmConnect() {
     setShowPasswordInput(true);
     setConfirmString("Connect To Your Ship");
     setConfirmAction("connect");
   }
-  function confirmPerms(){
+  function confirmPerms() {
     setShowPasswordInput(true);
     setConfirmString("Show Granted Permissions");
     setConfirmAction("perms");
   }
-  function confirmHome(){
+  function confirmHome() {
     setShowPasswordInput(true);
     setConfirmString("Go To Your Urbit Home");
     setConfirmAction("home");
   }
 
 
-   function gotoHome() {
+  function gotoHome() {
     setError("");
     const url = decrypt(ship.encryptedShipURL, pw);
     if (url.length) {
@@ -170,7 +186,7 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
       setError("Wrong password.");
     }
   }
-   function gotoPerms() {
+  function gotoPerms() {
     setError("");
     const url = decrypt(ship.encryptedShipURL, pw);
     console.log(url, "url")
@@ -197,10 +213,10 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
       >
         <div>
           <div className="ship-data">
-            <Sigil size={75} patp={ship.shipName} />
+            <Sigil size={155} patp={ship.shipName} />
             {shipname}
           </div>
-          <div className="ship-information">
+          {/* <div className="ship-information">
             <div className="vertical">
               <span className="value">1075</span>
               <p className="label">contacts</p>
@@ -213,7 +229,7 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
               <span className="value">6</span>
               <p className="label">channels</p>
             </div>
-          </div>
+          </div> */}
           <div className="flex">
             <div className="ship-location vertical">
               <div className="flex">
@@ -234,8 +250,11 @@ export default function ShipShow({ active, setActive, ...props }: ShipProps) {
         </div>
         <div className="block-footer">
           {showPasswordInput ? (
-            <ConnectFooter loading={loading} error={error} setPw={setPw} confirmString={confirmString}>
-              {confirmAction === "connect" && <button onClick={connect} className="single-button">Confirm</button>}
+            <ConnectFooter error={error} setPw={setPw} confirmString={confirmString}>
+              {confirmAction === "connect" &&
+                <button onClick={connect} className="single-button">
+                  {loading ? spinner : "Confirm"}
+                </button>}
               {confirmAction === "perms" && <button onClick={gotoPerms} className="single-button">Confirm</button>}
               {confirmAction === "home" && <button onClick={gotoHome} className="single-button">Confirm</button>}
             </ConnectFooter>
