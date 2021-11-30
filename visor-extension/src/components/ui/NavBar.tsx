@@ -9,7 +9,7 @@ import MenuIcon from "../../icons/menu-icon.svg";
 import CloseIcon from "../../icons/close-icon.svg";
 import BackIcon from "../../icons/back-icon.svg";
 import AboutIcon from "../../icons/info";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
 interface NavbarProps {
   active: EncryptedShipCredentials;
@@ -17,8 +17,10 @@ interface NavbarProps {
 }
 export default function NavBar({ interacting, active }: NavbarProps) {
   const history = useHistory();
+  const location = useLocation();
   const urbitlogo = useRef(null);
   const [modalOpen, toggleModal] = useState(false);
+  const rootPage = ["/welcome", "/ship_list", "/settings/menu", "/about"].includes(location.pathname)
   const wrapperClass = active
     ? "navbar-sigil-wrapper active-navbar-sigil"
     : "navbar-sigil-wrapper inactive-navbar-sigil";
@@ -32,8 +34,8 @@ export default function NavBar({ interacting, active }: NavbarProps) {
   function openMenu() {
     if (!interacting) toggleModal(!modalOpen);
   }
+ 
   function goBack(){
-    console.log('go back')
     history.goBack()
   };
   function gotoSigil() {
@@ -48,7 +50,7 @@ export default function NavBar({ interacting, active }: NavbarProps) {
 
   return (
     <nav className="App-navbar">
-      <div onClick={goBack}  className="back-button"><img src={BackIcon} /></div>
+      <div className="back-button"> {!rootPage && <img onClick={goBack} src={BackIcon}/>}</div>
       <img src={visorLogo} className="Nav-logo" />
       <img
         ref={urbitlogo}

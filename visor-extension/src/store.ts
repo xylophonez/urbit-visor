@@ -34,7 +34,6 @@ export const useStore = create<UrbitVisorState>((set, get) => ({
     removeShip: async (ship) => {
         const active = get().activeShip;
         if (active?.shipName === ship.shipName) {
-            console.log("deleting the shit")
             const airlock = (get() as any).airlock;
             airlock.reset();
             const ships = await removeShip(ship);
@@ -81,7 +80,15 @@ export const useStore = create<UrbitVisorState>((set, get) => ({
         await reEncryptAll(oldPassword, password);
         await savePassword(password);
     },
-    resetApp: async () => await resetApp(),
+    resetApp: async () => {
+        const active = get().activeShip;
+        if (active) {
+            const airlock = (get() as any).airlock;
+            airlock.reset();
+        }
+        await resetApp();
+        set(state => ({ first: true, ships: [], activeShip: null, airlock: null, activeSubscriptions: [] }))
+    },
     addConsumerTab: (newConsumer) => {
         const match = get().consumer_tabs.find(consumer => newConsumer.tab == consumer.tab);
         if (!match) set(state => ({ consumer_tabs: [...state.consumer_tabs, newConsumer] }))
