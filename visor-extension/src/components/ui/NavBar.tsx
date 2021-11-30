@@ -31,6 +31,10 @@ export default function NavBar({ interacting, active }: NavbarProps) {
   );
   function openMenu() {
     if (!interacting) toggleModal(!modalOpen);
+  }
+  function goBack(){
+    console.log('go back')
+    history.goBack()
   };
   function gotoSigil() {
     if (!interacting) {
@@ -45,7 +49,7 @@ export default function NavBar({ interacting, active }: NavbarProps) {
   return (
     <nav className="App-navbar">
       {/* TODO: ADD BACK LINK */}
-      <img src={BackIcon} />
+      <img onClick={goBack} src={BackIcon} className="back-button"/>
       <img src={visorLogo} className="Nav-logo" />
       <img
         ref={urbitlogo}
