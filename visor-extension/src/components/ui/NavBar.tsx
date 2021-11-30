@@ -48,8 +48,7 @@ export default function NavBar({ interacting, active }: NavbarProps) {
 
   return (
     <nav className="App-navbar">
-      {/* TODO: ADD BACK LINK */}
-      <img onClick={goBack} src={BackIcon} className="back-button"/>
+      <div onClick={goBack}  className="back-button"><img src={BackIcon} /></div>
       <img src={visorLogo} className="Nav-logo" />
       <img
         ref={urbitlogo}
@@ -58,9 +57,6 @@ export default function NavBar({ interacting, active }: NavbarProps) {
         alt="menu-icon"
         className="menu-icon"
       />
-      {/* <div className={wrapperClass}>
-      {displaySigil}
-    </div> */}
       {modalOpen && (
         <Modal parent={urbitlogo} hide={() => toggleModal(!modalOpen)} />
       )}
