@@ -4,6 +4,7 @@ import { Messaging } from "./messaging";
 import { inject, visorPromptModal, showPopup, promptUnlock, promptPerms } from "./modals"
 
 const modal = visorPromptModal();
+console.log(modal, "modal injected")
 inject(modal);
 
 export const urbitVisor = {
