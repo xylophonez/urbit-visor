@@ -57,7 +57,7 @@ export interface UrbitVisorState {
     cacheURL: (string: string) => void,
     removeShip: (ship: EncryptedShipCredentials) => Promise<void>,
     selectShip: (ship: EncryptedShipCredentials) => void,
-    connectShip: (url: string, ship: EncryptedShipCredentials) => Promise<void>,
+    connectShip: (url: string, ship: EncryptedShipCredentials) => Promise<any>,
     disconnectShip: () => void,
     requestPerms: (request: PermissionRequest) => void,
     grantPerms: (perms: PermissionRequest) => Promise<void>,
