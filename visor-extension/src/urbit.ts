@@ -1,53 +1,52 @@
 import Urbit from "@urbit/http-api";
-import {useStore} from "./store";
+import { useStore } from "./store";
 import { EncryptedShipCredentials, PermissionRequest } from "@dcspark/uv-core";
 
 
 
-export async function fetchShipname(url: string): Promise<string>{
+export async function fetchShipname(url: string): Promise<string> {
   return new Promise(async (resolve, reject) => {
-    try{
+    try {
       const res = await fetch(url.replace(/\/$/g, '') + "/who.json");
       const json = await res.json();
       resolve(json.who)
-    } catch{
+    } catch {
       reject("OTA outdated")
     }
   })
 }
 
-export async function scrapeShipname(url: string): Promise <string>{
+export async function scrapeShipname(url: string): Promise<string> {
   return new Promise(async (resolve, reject) => {
-    try{
+    try {
       const res = await fetch(url.replace(/\/$/g, '') + "/~/login");
       const html = await res.text();
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, "text/html");
       const ship = doc.querySelector('input').value.replace("~", "")
       resolve(ship)
-    } catch{
+    } catch {
       reject("OTA outdated")
     }
   })
 }
-export async function connectToShip(url: string, ship: EncryptedShipCredentials): Promise<any>{
-  const {connectShip, activeSubscriptions} = useStore.getState();
+export async function connectToShip(url: string, ship: EncryptedShipCredentials): Promise<any> {
+  const { connectShip, activeSubscriptions } = useStore.getState();
   const airlock = new Urbit(url, "");
-    airlock.ship = ship.shipName;
-    // airlock.verbose = true;
-    airlock.onError = async (err) => {
-      airlock.reset();
-      console.log(err, "error");
-      await connectShip(url, ship);
-    }
-    airlock.onRetry = () => console.log("")
-    airlock.onOpen = () => console.log("")
-    await airlock.poke({ app: 'hood', mark: 'helm-hi', json: 'opening airlock' });
-    for (let sub of activeSubscriptions) await airlock.subscribe(sub.subscription)
-    return airlock;
+  airlock.ship = ship.shipName;
+  airlock.onError = async (err) => {
+    airlock.reset();
+    console.log(err, "error");
+    await connectShip(url, ship);
+  }
+  airlock.onRetry = () => console.log("")
+  airlock.onOpen = () => console.log("")
+  await airlock.poke({ app: 'hood', mark: 'helm-hi', json: 'opening airlock' });
+  for (let sub of activeSubscriptions) await airlock.subscribe(sub.subscription)
+  return airlock;
 }
 
-export async function loginToShip(url: string, code: string): Promise<any>{
+export async function loginToShip(url: string, code: string): Promise<any> {
   const controller = new AbortController()
   setTimeout(() => { controller.abort() }, 5000)
   const res = await fetch(url.replace(/\/$/g, '') + "/~/login", {
@@ -62,7 +61,6 @@ export async function loginToShip(url: string, code: string): Promise<any>{
 export async function savePermission(permission: any): Promise<void> {
 
 }
-// this should go through the background script really
 export async function initPerms(shipName: string, url: string) {
   const airlock = new Urbit(url, "");
   airlock.ship = shipName;
@@ -81,7 +79,6 @@ export async function setPerms(airlock: Urbit) {
       "bucket": {},
     }
   }
-  // await openChannel(airlock);
   return await airlock.poke({ app: "settings-store", mark: "settings-event", json: json })
 }
 export interface NewPermissionRequest {
@@ -100,7 +97,7 @@ export async function grantPerms(airlock: Urbit, perms: NewPermissionRequest) { 
   }
   else {
     value = perms.permissions;
-    if (perms.name) value.push(JSON.stringify({extName: perms.name}))
+    if (perms.name) value.push(JSON.stringify({ extName: perms.name }))
   }
 
 
@@ -112,7 +109,7 @@ export async function grantPerms(airlock: Urbit, perms: NewPermissionRequest) { 
       "value": value
     }
   }
-  return await airlock.poke({app: "settings-store", mark: "settings-event", json: json })
+  return await airlock.poke({ app: "settings-store", mark: "settings-event", json: json })
 }
 
 export async function revokePerms(url: string, shipName: string, perms: PermissionRequest) {
@@ -135,12 +132,12 @@ export async function revokePerms(url: string, shipName: string, perms: Permissi
       "value": value
     }
   }
-  const poke =  await airlock.poke({app: "settings-store", mark: "settings-event", json: json });
+  const poke = await airlock.poke({ app: "settings-store", mark: "settings-event", json: json });
   airlock.reset();
   return poke
 }
 
-export async function deleteDomain(url: string, ship: string, domain: string){
+export async function deleteDomain(url: string, ship: string, domain: string) {
   const airlock = new Urbit(url, "");
   airlock.ship = ship;
   const json = {
@@ -150,7 +147,7 @@ export async function deleteDomain(url: string, ship: string, domain: string){
       "entry-key": domain,
     }
   }
-  return await airlock.poke({app: "settings-store", mark: "settings-event", json: json })
+  return await airlock.poke({ app: "settings-store", mark: "settings-event", json: json })
 }
 
 export async function checkPerms(url: string, domain: string) {

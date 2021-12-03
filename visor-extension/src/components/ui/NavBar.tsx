@@ -20,7 +20,12 @@ export default function NavBar({ interacting, active }: NavbarProps) {
   const location = useLocation();
   const urbitlogo = useRef(null);
   const [modalOpen, toggleModal] = useState(false);
-  const rootPage = ["/welcome", "/ship_list", "/settings/menu", "/about"].includes(location.pathname)
+  const rootPage = [
+    "/welcome",
+    "/ship_list",
+    "/settings/menu",
+    "/about",
+  ].includes(location.pathname);
   const wrapperClass = active
     ? "navbar-sigil-wrapper active-navbar-sigil"
     : "navbar-sigil-wrapper inactive-navbar-sigil";
@@ -39,6 +44,7 @@ export default function NavBar({ interacting, active }: NavbarProps) {
     if (location.pathname.includes("/ship/")) history.push("/ship_list")
     else history.goBack()
   };
+
   function gotoSigil() {
     if (!interacting) {
       Messaging.sendToBackground({
@@ -46,12 +52,19 @@ export default function NavBar({ interacting, active }: NavbarProps) {
         data: { ship: active },
       }).then((res) => history.push(`/ship/${active.shipName}`));
     }
-  };
+  }
   const displaySigil = active ? sigil : dummy;
 
   return (
     <nav className="App-navbar">
-      <div className="back-button"> {!rootPage && <img onClick={goBack} src={BackIcon}/>}</div>
+      <div className="back-button-container">
+        {!rootPage && (
+          <div onClick={goBack} className="back-button">
+            {" "}
+            <img src={BackIcon} />{" "}
+          </div>
+        )}
+      </div>
       <img src={visorLogo} className="Nav-logo" />
       <img
         ref={urbitlogo}

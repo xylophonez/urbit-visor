@@ -47,7 +47,7 @@ export default function AddShipForm({
             setLoading(false);
             scrapeShipname(url)
               .then((shipName) => setShipName(shipName))
-              .catch((err) => setError("Your ship needs an OS update"));
+              .catch((err) => setError("Your Ship Needs An OS Update"));
             break;
           case 400:
             setError("Invalid +code.\nCould Not Connect To Ship");

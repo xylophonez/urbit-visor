@@ -4,7 +4,6 @@ import { useHistory, useParams } from "react-router";
 import Sigil from "../ui/svg/Sigil";
 import Spinner from "../ui/svg/Spinner";
 
-
 import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
 import { loginToShip } from "../../urbit";
 import { decrypt } from "../../storage";
@@ -45,20 +44,16 @@ export default function ShipShow(props: ShipProps) {
 
   const displayName = processName(ship.shipName);
   const shipname =
-    whatShip(ship.shipName) === "moon"
-      ?
-      (
-        <h1 className="ship-data-name">
-          <span>~{displayName.slice(0, -14)}</span>
-          <span>{displayName.slice(-14)}</span>
-        </h1>
-      )
-      :
-      (
-        <h1 className="ship-data-name">
-          <span>~{displayName}</span>
-        </h1>
-      );
+    whatShip(ship.shipName) === "moon" ? (
+      <h1 className="ship-data-name">
+        <span>~{displayName.slice(0, -14)}</span>
+        <span>{displayName.slice(-14)}</span>
+      </h1>
+    ) : (
+      <h1 className="ship-data-name">
+        <span>~{displayName}</span>
+      </h1>
+    );
   useEffect(() => {
     let isMounted = true;
     Messaging.sendToBackground({ action: "cache_form_url", data: { url: "" } });
@@ -120,7 +115,7 @@ export default function ShipShow(props: ShipProps) {
           else setError("Could Not Connect");
           setLoading(false);
         });
-    } else setError("Wrong Password."), setLoading(false);
+    } else setError("Wrong Password"), setLoading(false);
   }
   function disconnect(): void {
     Messaging.sendToBackground({ action: "disconnect_ship" }).then((res) => {
@@ -131,10 +126,7 @@ export default function ShipShow(props: ShipProps) {
   }
 
   const connectButton = (
-    <button
-      className="single-button"
-      onClick={confirmConnect}
-    >
+    <button className="single-button" onClick={confirmConnect}>
       Connect
     </button>
   );
@@ -150,14 +142,11 @@ export default function ShipShow(props: ShipProps) {
   const connectionButton =
     ship.shipName == active?.shipName ? disconnectButton : connectButton;
 
-  const spinner = <div className="spinner">
-    <Spinner
-      width="24"
-      height="24"
-      innerColor="white"
-      outerColor="black"
-    />
-  </div>
+  const spinner = (
+    <div className="spinner">
+      <Spinner width="24" height="24" innerColor="white" outerColor="black" />
+    </div>
+  );
 
   function confirmConnect() {
     setShowPasswordInput(true);
@@ -175,14 +164,13 @@ export default function ShipShow(props: ShipProps) {
     setConfirmAction("home");
   }
 
-
   function gotoHome() {
     setError("");
     const url = decrypt(ship.encryptedShipURL, pw);
     if (url.length) {
       chrome.tabs.create({ url: url });
     } else {
-      setError("Wrong Password.");
+      setError("Wrong Password");
     }
   }
   function gotoPerms() {
@@ -246,13 +234,26 @@ export default function ShipShow(props: ShipProps) {
         </div>
         <div className="block-footer">
           {showPasswordInput ? (
-            <ConnectFooter error={error} setPw={setPw} confirmString={confirmString}>
-              {confirmAction === "connect" &&
+            <ConnectFooter
+              error={error}
+              setPw={setPw}
+              confirmString={confirmString}
+            >
+              {confirmAction === "connect" && (
                 <button onClick={connect} className="single-button">
                   {loading ? spinner : "Confirm"}
-                </button>}
-              {confirmAction === "perms" && <button onClick={gotoPerms} className="single-button">Confirm</button>}
-              {confirmAction === "home" && <button onClick={gotoHome} className="single-button">Confirm</button>}
+                </button>
+              )}
+              {confirmAction === "perms" && (
+                <button onClick={gotoPerms} className="single-button">
+                  Confirm
+                </button>
+              )}
+              {confirmAction === "home" && (
+                <button onClick={gotoHome} className="single-button">
+                  Confirm
+                </button>
+              )}
             </ConnectFooter>
           ) : (
             <ManagerFooter

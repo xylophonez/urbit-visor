@@ -47,8 +47,6 @@ async function compress(isCrxBuild) {
 
   if (isCrxBuild) {
     const crxBuffer = await crx.pack();
-    // const updateXML = crx.generateUpdateXML();
-    // fs.writeFileSync(`${name}-${argv.env}-update.xml`, updateXML);
     fs.writeFileSync(`${name}-${argv.env}.crx`, crxBuffer);
   }
 }

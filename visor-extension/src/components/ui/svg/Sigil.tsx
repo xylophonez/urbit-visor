@@ -1,22 +1,20 @@
 import * as React from "react";
-import { sigil, reactRenderer } from '@tlon/sigil-js';
+import { sigil, reactRenderer } from "@tlon/sigil-js";
 interface SigilProps {
-  patp: string,
-  size: number
-  // colors: string[]
+  patp: string;
+  size: number;
 }
 
 const Sigil = (props: SigilProps) => {
-
   function setPatp(patp: string): string {
     if (props.patp.length > 28) return props.patp.slice(-13);
     else if (props.patp.length > 13) return props.patp.slice(-13);
-    else return props.patp
+    else return props.patp;
   }
   function setColors(patp: string): any {
-    if (props.patp.length > 28) return ['purple', 'yellow'];
-    else if (props.patp.length > 13) return ['grey', 'white'];
-    else return ['black', 'white'];
+    if (props.patp.length > 28) return ["purple", "yellow"];
+    else if (props.patp.length > 13) return ["grey", "white"];
+    else return ["black", "white"];
   }
 
   const styles = {
@@ -24,11 +22,19 @@ const Sigil = (props: SigilProps) => {
     width: props.size,
   };
   const cometStyle = { fill: "var(--foreground)" };
-  if (props.patp.length > 28) return (
-    <div className="comet-sigil" style={styles}>
-      <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-        <g>
-          <path style={cometStyle} d="M503.694,7.871c1.344-2.047,1.047-4.781-0.734-6.453c-1.781-1.703-4.5-1.891-6.484-0.438l-98.547,71.344
+  if (props.patp.length > 28)
+    return (
+      <div className="comet-sigil" style={styles}>
+        <svg
+          version="1.1"
+          id="_x32_"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+        >
+          <g>
+            <path
+              style={cometStyle}
+              d="M503.694,7.871c1.344-2.047,1.047-4.781-0.734-6.453c-1.781-1.703-4.5-1.891-6.484-0.438l-98.547,71.344
 		c-1.891,1.359-4.484,1.266-6.266-0.25s-2.313-4.047-1.266-6.141l10.844-21.656c1.031-2.047,0.547-4.547-1.156-6.063
 		c-1.719-1.531-4.25-1.719-6.172-0.469L83.006,230.137c-3.156,1.813-6.297,3.688-9.328,5.75l-0.25,0.156l0.016,0.016
 		c-7.625,5.219-14.922,11.125-21.688,17.891c-59.047,59.031-59.047,154.75-0.016,213.766
@@ -46,26 +52,23 @@ const Sigil = (props: SigilProps) => {
 		c0.063,1.016,0.109,2.047,0.156,3.063c0.063,2.047,0.109,4.094,0.047,6.141c-0.016,0.656-0.063,1.328-0.094,1.984
 		c-0.453,10.406-2.438,20.766-6,30.688c-0.063,0.219-0.141,0.438-0.219,0.641c-0.891,2.422-1.875,4.813-2.938,7.188
 		c-0.125,0.266-0.266,0.563-0.391,0.828c-1.125,2.406-2.313,4.781-3.609,7.094c-4.547,8.078-10.141,15.703-17,22.563
-		C212.475,453.934,186.397,464.73,158.647,464.73z"></path>
-        </g>
-      </svg>
-
-    </div>
-  )
+		C212.475,453.934,186.397,464.73,158.647,464.73z"
+            ></path>
+          </g>
+        </svg>
+      </div>
+    );
   else
     return (
       <>
-        {
-          sigil({
-            patp: setPatp(props.patp),
-            renderer: reactRenderer,
-            size: props.size,
-            colors: setColors(props.patp),
-          })
-        }
+        {sigil({
+          patp: setPatp(props.patp),
+          renderer: reactRenderer,
+          size: props.size,
+          colors: setColors(props.patp),
+        })}
       </>
-    )
-}
-
+    );
+};
 
 export default Sigil;
