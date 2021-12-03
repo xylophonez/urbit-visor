@@ -36,7 +36,8 @@ export default function NavBar({ interacting, active }: NavbarProps) {
   }
  
   function goBack(){
-    history.goBack()
+    if (location.pathname.includes("/ship/")) history.push("/ship_list")
+    else history.goBack()
   };
   function gotoSigil() {
     if (!interacting) {
