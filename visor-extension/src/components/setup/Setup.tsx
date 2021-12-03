@@ -5,11 +5,11 @@ import { Messaging } from "@dcspark/uv-core";
 import { motion } from "framer-motion";
 import icon from "../../icons/lock-icon.svg";
 
-interface SetupProps{
-  setInteracting: (b: boolean) => void
+interface SetupProps {
+  setInteracting: (b: boolean) => void;
 }
 
-export default function Setup({setInteracting}: SetupProps) {
+export default function Setup({ setInteracting }: SetupProps) {
   const history = useHistory();
   const [pw, setpw] = useState("");
   const [tooltip, setTooltip] = useState(false);
@@ -51,7 +51,7 @@ export default function Setup({setInteracting}: SetupProps) {
 
         <img src={icon} className="icon" />
         <h2 className="mid-title">
-          Please set up a master password for this extension 
+          Please set up a master password for this extension
           <span
             className="tooltip-title"
             onMouseLeave={hideTooltip}
@@ -79,7 +79,7 @@ export default function Setup({setInteracting}: SetupProps) {
           <div className="tooltip">
             <p>
               This password will be used to encrypt the credentials of your
-              your Urbit ships.
+              Urbit ships.
             </p>
           </div>
         )}
