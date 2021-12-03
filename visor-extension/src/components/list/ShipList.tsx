@@ -12,7 +12,6 @@ export default function ShipList() {
     Messaging.sendToBackground({ action: "cache_form_url", data: { url: "" } });
     Messaging.sendToBackground({ action: "get_ships" }).then((res) => {
       if (isMounted) {
-        console.log(res, "ships")
         setShips(res.ships);
         setActive(res.active)
       };

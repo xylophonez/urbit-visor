@@ -30,7 +30,6 @@ export async function scrapeShipname(url: string): Promise <string>{
     }
   })
 }
-// todo
 export async function connectToShip(url: string, ship: EncryptedShipCredentials): Promise<any>{
   const {connectShip, activeSubscriptions} = useStore.getState();
   const airlock = new Urbit(url, "");
@@ -85,8 +84,13 @@ export async function setPerms(airlock: Urbit) {
   // await openChannel(airlock);
   return await airlock.poke({ app: "settings-store", mark: "settings-event", json: json })
 }
-
-export async function grantPerms(airlock: Urbit, perms: PermissionRequest) {
+export interface NewPermissionRequest {
+  key: string,
+  name?: string
+  permissions: string[],
+  existing?: string[]
+}
+export async function grantPerms(airlock: Urbit, perms: NewPermissionRequest) { // TODO: fix types at uv-core too
   let value;
   const existing = await checkPerms(airlock.url, perms.key);
   const set = new Set(existing);
@@ -94,7 +98,11 @@ export async function grantPerms(airlock: Urbit, perms: PermissionRequest) {
     for (let p of perms.permissions) set.add(p);
     value = Array.from(set);
   }
-  else value = perms.permissions;
+  else {
+    value = perms.permissions;
+    if (perms.name) value.push(JSON.stringify({extName: perms.name}))
+  }
+
 
   const json = {
     "put-entry": {

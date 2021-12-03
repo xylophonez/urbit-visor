@@ -142,7 +142,6 @@ interface ChipProps {
   type: chipType;
 }
 export function Chip(props: ChipProps) {
-  console.log(props, "chip props")
   function destroy() {
     props.destroyPerm(props.perm);
   }
