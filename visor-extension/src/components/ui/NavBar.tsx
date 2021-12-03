@@ -39,10 +39,12 @@ export default function NavBar({ interacting, active }: NavbarProps) {
   function openMenu() {
     if (!interacting) toggleModal(!modalOpen);
   }
+ 
+  function goBack(){
+    if (location.pathname.includes("/ship/")) history.push("/ship_list")
+    else history.goBack()
+  };
 
-  function goBack() {
-    history.goBack();
-  }
   function gotoSigil() {
     if (!interacting) {
       Messaging.sendToBackground({
