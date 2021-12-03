@@ -275,7 +275,7 @@ function SettingsChangePw() {
     setError("");
     const res = await validate(oldPassword);
     if (res) proceed();
-    else setError("Wrong old password");
+    else setError("Wrong Old Password");
   }
 
   function proceed() {

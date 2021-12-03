@@ -33,7 +33,7 @@ export default function Setup({ setInteracting }: SetupProps) {
         history.push("/add_ship");
       });
     } else {
-      setError("Passwords do not match");
+      setError("Passwords Do Not Match");
     }
   }
   return (

@@ -31,7 +31,7 @@ export default function Confirm(props: ConfirmProps) {
       if (string === "urbit_visor") {
         saveShip();
       } else {
-        setError("Wrong Password.");
+        setError("Wrong Password");
       }
     });
   }
@@ -44,7 +44,7 @@ export default function Confirm(props: ConfirmProps) {
       })
       .catch((err) => {
         setLoading(false);
-        setError("Error adding the ship, please try again.");
+        setError("Error Adding Ship, Please Try Again");
       });
   }
   const hidden = { display: "none" };
@@ -60,9 +60,8 @@ export default function Confirm(props: ConfirmProps) {
           <div className="progress-bar" style={{ width: "100%" }} />
           <span className="progress-step">Step 3/3</span>
         </div>
-        <div  className="image-container" >
-
-        <img src={icon} className="image-success" />
+        <div className="image-container">
+          <img src={icon} className="image-success" />
         </div>
         <h1 className="center-title">Connection Success To</h1>
         <div className="container-shipname">
