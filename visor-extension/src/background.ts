@@ -128,13 +128,11 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
     case "grant_perms":
       state.grantPerms(request.data.request)
         .then(res => {
-          console.log(request, "granting perm request")
           chrome.browserAction.setBadgeText({ text: "" });
           const tbs = new Set(state.consumer_tabs.filter(tab => tab.url.origin === request.data.request.key).map(tab => tab.tab));
           const xtns = new Set(state.consumer_extensions.filter(ext => ext.id === request.data.request.key).map(ext => ext.id));
           const xtns_tabs = new Set(state.consumer_extensions.filter(ext => ext.id === request.data.request.key).map(ext => ext.tabs).flat());
           recipients = new Set([...tbs, ...xtns, ...xtns_tabs]);
-          console.log(recipients, "recipients")
           Messaging.pushEvent({ action: "permissions_granted", data: request.data.request }, recipients)
           sendResponse("ok")
         })
@@ -145,7 +143,6 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
       sendResponse("ok");
       break;
     case "remove_whole_domain":
-      console.log(request, "request")
       state.removeWholeDomain(request.data.url, request.data.ship, request.data.domain)
         .then(res => {
           const tbs = new Set(state.consumer_tabs.filter(tab => tab.url.origin === request.data.domain).map(tab => tab.tab));
@@ -157,7 +154,6 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
         })
       break;
     case "revoke_perm":
-      console.log(request, "request")
       state.revokePerm(request.data.url, request.data.ship, request.data.request)
         .then(res => {
           const tbs = new Set(state.consumer_tabs.filter(tab => tab.url.origin === request.data.request.key).map(tab => tab.tab));

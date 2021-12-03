@@ -92,7 +92,6 @@ export interface NewPermissionRequest {
   existing?: string[]
 }
 export async function grantPerms(airlock: Urbit, perms: NewPermissionRequest) { // TODO: fix types at uv-core too
-  console.log(perms, "permission request to be granted. need to add the name here now.")
   let value;
   const existing = await checkPerms(airlock.url, perms.key);
   const set = new Set(existing);
@@ -102,7 +101,7 @@ export async function grantPerms(airlock: Urbit, perms: NewPermissionRequest) { 
   }
   else {
     value = perms.permissions;
-    if (perms.name) value.push(`extName:${perms.name}`)
+    if (perms.name) value.push(`extName:::${perms.name}`)
   }
 
 
