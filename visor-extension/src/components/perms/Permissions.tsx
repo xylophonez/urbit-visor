@@ -27,7 +27,6 @@ export default function Permissions({
   shipURL,
   ...props
 }: PermissionsProps) {
-  const [perms, setPerms] = useState<PermissionsGraph>({});
 
   useEffect(() => {
     let isMounted = true;
@@ -39,6 +38,8 @@ export default function Permissions({
     };
   }, []);
 
+  
+  const [perms, setPerms] = useState<PermissionsGraph>({});
   const [query, search] = useState("");
   const domains = Object.keys(perms).sort();
   const displayName = processName(ship.shipName);
@@ -71,6 +72,7 @@ export default function Permissions({
     })
       .then((res) => {
         fetchAllPerms(shipURL).then((res) => {
+          console.log(res, "bucket after revoking")
           setPerms(res.bucket);
         });
       })
@@ -161,6 +163,8 @@ function Domain({
       <div />
     );
 
+  const extName = perms.find(perm => perm.includes("extName"));
+
   function uncollapse(domain: string) {
     if (toDisplay == domain) display("");
     else display(domain);
@@ -195,7 +199,7 @@ function Domain({
             src={arrowIcon}
             alt=""
           />
-          <p className="domain-text">{domain}</p>
+          <p className="domain-text">{extName ? extName.split(":")[1] : domain}</p>
         </div>
         <button className="minibutton" onClick={promptDelete}>
           <img src={deleteIcon} alt="trash" />
@@ -230,7 +234,7 @@ function DisplayPerms({ perms, promptRevokePerm }: DPProps) {
   if (perms.length)
     return (
       <div className="grantedperms flex-grow">
-        {perms.map((perm) => (
+        {perms.filter((per: any) => !per.includes("extName")).map((perm: any) => (
           <IndividualPerm
             key={perm}
             promptRevokePerm={promptRevokePerm}
