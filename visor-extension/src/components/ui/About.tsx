@@ -12,7 +12,7 @@ export default function About() {
     >
       <h1 className="urbit-name"> Urbit Visor</h1>
       <div className="about-version">
-        <p>Version: 0.2.2</p>
+        <p>Version: 0.3.0</p>
       </div>
       <div className="about-description">
         <p>

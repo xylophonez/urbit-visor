@@ -82,8 +82,6 @@ async function saveShip(ship: EncryptedShipCredentials): Promise<EncryptedShipCr
 
 
 // getters
-
-
 export async function getShips(): Promise<any>{
     return new Promise((resolve, reject) =>{
         chrome.storage.local.get("ships", (res) => {
@@ -108,7 +106,6 @@ export async function getPreference(): Promise<any>{
 };
 
 // encryption utils 
-
 export async function reEncryptAll(oldPassword: string, newPassword: string): Promise<void> {
   const ships = await getShips();
   for (const ship of ships.ships){
