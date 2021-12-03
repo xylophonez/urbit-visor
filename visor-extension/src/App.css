@@ -477,3 +477,17 @@ button:hover {
   height: 100%;
   width: 100%;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3e3e3e;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #969494;
+  border-radius: 20px;
+}

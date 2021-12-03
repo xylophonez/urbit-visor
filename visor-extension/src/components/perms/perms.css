@@ -27,20 +27,6 @@
   overflow-y: scroll;
   overflow-x: hidden;
 }
-.permission-request-list::-webkit-scrollbar {
-  width: 10px;
-}
- 
-.permission-request-list::-webkit-scrollbar-thumb {
-  background: #3e3e3e;
-  border-radius: 20px;
-}
-
-.permission-request-list::-webkit-scrollbar-track {
-  background: #969494;
-  border-radius: 20px;
-}
-
 .permission-request-list ul {
   margin-left: auto;
   margin-right: auto;
