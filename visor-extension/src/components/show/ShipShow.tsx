@@ -64,7 +64,6 @@ export default function ShipShow(props: ShipProps) {
     Messaging.sendToBackground({ action: "cache_form_url", data: { url: "" } });
     Messaging.sendToBackground({ action: "get_ships" }).then((res) => {
       if (isMounted) {
-        console.log(res, "res")
         setShowPerms(false);
         const s = res.ships.find(
           (ur: EncryptedShipCredentials) => ur.shipName == patp
@@ -189,9 +188,6 @@ export default function ShipShow(props: ShipProps) {
   function gotoPerms() {
     setError("");
     const url = decrypt(ship.encryptedShipURL, pw);
-    console.log(url, "url")
-    console.log(ship, "ship")
-    console.log(pw, "pw")
     if (url.length) {
       setURL(url);
       setShowPerms(true);

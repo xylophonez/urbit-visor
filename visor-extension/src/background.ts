@@ -195,8 +195,6 @@ function handleVisorCall(request: any, sender: any, sendResponse: any, callType:
   const state = useStore.getState();
   if (callType !== "website") state.addConsumerExtension ({ tabs: [sender.tab.id], id: sender.id, name: request?.data?.consumerName || "" });
   else state.addConsumerTab({ tab: sender.tab.id, url: new URL(sender.tab.url) });
-  console.log(useStore.getState().consumer_tabs, "consumer tabs as of now")
-  console.log(useStore.getState().consumer_extensions, "consumer exts as of now")
   if (request.action == "register_name") sendResponse({ status: "ok"})
   else if (request.action == "check_connection") sendResponse({ status: "ok", response: !!state.activeShip })
   else if (request.action == "unsubscribe") unsubscribe(state, request, sender, sendResponse)
@@ -239,11 +237,7 @@ function checkPerms(state: UrbitVisorState, callType: visorCallType, request: an
       const existingPerms = res.bucket[id] || [];
       if (request.action === "check_perms") sendResponse({ status: "ok", response: existingPerms });
       else if (request.action === "perms") bulkRequest(state, id, name, existingPerms, request, sender, sendResponse)
-      else if (!existingPerms || !existingPerms.includes(request.action)) {
-        console.log(request, "checkperm")
-        console.log(sender, "sender")
-        console.log(callType, "calltype")
-       
+      else if (!existingPerms || !existingPerms.includes(request.action)) {      
         state.requestPerms({key: id, name: name, permissions: [request.action], existing: existingPerms})
         notifyUser(state, "noperms", sendResponse);
       }
