@@ -27,7 +27,6 @@ export default function Permissions({
   shipURL,
   ...props
 }: PermissionsProps) {
-
   useEffect(() => {
     let isMounted = true;
     fetchAllPerms(shipURL).then((res) => {
@@ -38,7 +37,6 @@ export default function Permissions({
     };
   }, []);
 
-  
   const [perms, setPerms] = useState<PermissionsGraph>({});
   const [query, search] = useState("");
   const domains = Object.keys(perms).sort();
@@ -72,7 +70,7 @@ export default function Permissions({
     })
       .then((res) => {
         fetchAllPerms(shipURL).then((res) => {
-          console.log(res, "bucket after revoking")
+          console.log(res, "bucket after revoking");
           setPerms(res.bucket);
         });
       })
@@ -163,7 +161,7 @@ function Domain({
       <div />
     );
 
-  const extName = perms.find(perm => perm.includes("extName"));
+  const extName = perms.find((perm) => perm.includes("extName"));
 
   function uncollapse(domain: string) {
     if (toDisplay == domain) display("");
@@ -199,7 +197,9 @@ function Domain({
             src={arrowIcon}
             alt=""
           />
-          <p className="domain-text">{extName ? JSON.parse(extName).extName : domain}</p>
+          <p className="domain-text">
+            {extName ? JSON.parse(extName).extName : domain}
+          </p>
         </div>
         <button className="minibutton" onClick={promptDelete}>
           <img src={deleteIcon} alt="trash" />
@@ -208,7 +208,7 @@ function Domain({
       {displayterms}
       {deleting && (
         <ConfirmationPrompt
-          message={`Delete domain?`}
+          message={`Revoke Permissions?`}
           cancel={() => setDeleting(false)}
           confirm={dispatchDeleteDomain}
         >
@@ -234,13 +234,15 @@ function DisplayPerms({ perms, promptRevokePerm }: DPProps) {
   if (perms.length)
     return (
       <div className="grantedperms flex-grow">
-        {perms.filter((per: any) => !per.includes("extName")).map((perm: any) => (
-          <IndividualPerm
-            key={perm}
-            promptRevokePerm={promptRevokePerm}
-            perm={perm}
-          />
-        ))}
+        {perms
+          .filter((per: any) => !per.includes("extName"))
+          .map((perm: any) => (
+            <IndividualPerm
+              key={perm}
+              promptRevokePerm={promptRevokePerm}
+              perm={perm}
+            />
+          ))}
       </div>
     );
   else return <p>No permissions</p>;

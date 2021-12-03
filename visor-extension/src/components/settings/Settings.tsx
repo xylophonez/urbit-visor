@@ -109,18 +109,11 @@ function SettingsPopup() {
     });
   }, []);
 
-  function handleChange(e: React.FormEvent<HTMLInputElement>) {
-    // const value = setting === "modal" ? "window" : "modal"
-    // setSetting(value);
-    // // setSetting(e.currentTarget.value);
-    // setButton("Save");
-    // setDisabled(false);
-  }
+  function handleChange(e: React.FormEvent<HTMLInputElement>) {}
 
   function handleClick(e: React.FormEvent<HTMLInputElement>) {
     const value = setting === "modal" ? "window" : "modal";
     setSetting(value);
-    // setSetting(e.currentTarget.value);
     setButton("Save");
     setDisabled(false);
   }

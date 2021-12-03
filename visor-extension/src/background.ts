@@ -114,11 +114,12 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
       break;
     case "get_data":
       state.airlock.subscribe({
-        app: "graph-store", 
-        path: "/keys", 
-        event: (data)=> {
+        app: "graph-store",
+        path: "/keys",
+        event: (data) => {
           sendResponse(data)
-      }})
+        }
+      })
       break;
     case "disconnect_ship":
       state.disconnectShip();
@@ -193,9 +194,9 @@ type visorCallType = "website" | "extension"
 
 function handleVisorCall(request: any, sender: any, sendResponse: any, callType: visorCallType) {
   const state = useStore.getState();
-  if (callType !== "website") state.addConsumerExtension ({ tabs: [sender.tab.id], id: sender.id, name: request?.data?.consumerName || "" });
+  if (callType !== "website") state.addConsumerExtension({ tabs: [sender.tab.id], id: sender.id, name: request?.data?.consumerName || "" });
   else state.addConsumerTab({ tab: sender.tab.id, url: new URL(sender.tab.url) });
-  if (request.action == "register_name") sendResponse({ status: "ok"})
+  if (request.action == "register_name") sendResponse({ status: "ok" })
   else if (request.action == "check_connection") sendResponse({ status: "ok", response: !!state.activeShip })
   else if (request.action == "unsubscribe") unsubscribe(state, request, sender, sendResponse)
   else if (!state.activeShip) notifyUser(state, "locked", sendResponse)
@@ -237,8 +238,8 @@ function checkPerms(state: UrbitVisorState, callType: visorCallType, request: an
       const existingPerms = res.bucket[id] || [];
       if (request.action === "check_perms") sendResponse({ status: "ok", response: existingPerms });
       else if (request.action === "perms") bulkRequest(state, id, name, existingPerms, request, sender, sendResponse)
-      else if (!existingPerms || !existingPerms.includes(request.action)) {      
-        state.requestPerms({key: id, name: name, permissions: [request.action], existing: existingPerms})
+      else if (!existingPerms || !existingPerms.includes(request.action)) {
+        state.requestPerms({ key: id, name: name, permissions: [request.action], existing: existingPerms })
         notifyUser(state, "noperms", sendResponse);
       }
       else {
@@ -251,7 +252,7 @@ function checkPerms(state: UrbitVisorState, callType: visorCallType, request: an
 function bulkRequest(state: UrbitVisorState, requester: string, name: string, existingPerms: any, request: any, sender: any, sendResponse: any) {
   if (existingPerms && request.data.every((el: UrbitVisorAction) => existingPerms.includes(el))) sendResponse("perms_exist");
   else {
-    state.requestPerms({key: requester, name: name, permissions: request.data, existing: existingPerms});
+    state.requestPerms({ key: requester, name: name, permissions: request.data, existing: existingPerms });
     notifyUser(state, "noperms", sendResponse);
   }
 }
@@ -294,9 +295,6 @@ function reqres(state: UrbitVisorState, request: any, sendResponse: any): void {
 }
 
 function pubsub(state: UrbitVisorState, callType: visorCallType, request: any, sender: any, sendResponse: any): void {
-  // let eventRecipient : number | string;
-  // if (callType == "extension") eventRecipient = sender.id;
-  // else if (callType == "website") eventRecipient = sender.tab.id;
   const eventRecipient = sender.tab.id;
   switch (request.action) {
     case "poke":
@@ -308,7 +306,7 @@ function pubsub(state: UrbitVisorState, callType: visorCallType, request: any, s
         .then(res => sendResponse({ status: "ok", response: res }))
         .catch(err => sendResponse({ status: "error", response: err }))
       break;
-      case "subscribe":
+    case "subscribe":
       const existing = state.activeSubscriptions.find(sub => {
         return (
           sub.subscription.app == request.data.payload.app &&
