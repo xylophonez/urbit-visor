@@ -199,7 +199,7 @@ function Domain({
             src={arrowIcon}
             alt=""
           />
-          <p className="domain-text">{extName ? extName.split(":::")[1] : domain}</p>
+          <p className="domain-text">{extName ? JSON.parse(extName).extName : domain}</p>
         </div>
         <button className="minibutton" onClick={promptDelete}>
           <img src={deleteIcon} alt="trash" />

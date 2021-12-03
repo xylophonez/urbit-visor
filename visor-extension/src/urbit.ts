@@ -30,7 +30,6 @@ export async function scrapeShipname(url: string): Promise <string>{
     }
   })
 }
-// todo
 export async function connectToShip(url: string, ship: EncryptedShipCredentials): Promise<any>{
   const {connectShip, activeSubscriptions} = useStore.getState();
   const airlock = new Urbit(url, "");
@@ -101,7 +100,7 @@ export async function grantPerms(airlock: Urbit, perms: NewPermissionRequest) { 
   }
   else {
     value = perms.permissions;
-    if (perms.name) value.push(`extName:::${perms.name}`)
+    if (perms.name) value.push(JSON.stringify({extName: perms.name}))
   }
 
 
