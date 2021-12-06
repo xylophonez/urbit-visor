@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { fetchAllPerms } from "../../urbit";
 import "./perms.css";
 import Sigil from "../ui/svg/Sigil";
@@ -160,8 +160,25 @@ function Domain({
     ) : (
       <div />
     );
+  
+  const [tooltip, setTooltip] = useState(false);
+  const [tooltipStyles, setTooltipStyles] = useState(null);
+  const toolTipParent = useRef(null);
 
   const extName = perms.find((perm) => perm.includes("extName"));
+
+  function handleHover(){
+    const cords = toolTipParent.current.getBoundingClientRect();
+    console.log(cords, "cords")
+    console.log(toolTipParent.current, "parent")
+    console.log(toolTipParent.current.offsetTop, "top")
+    const height = cords.top - 40;
+    setTooltip(true)
+    setTooltipStyles({top: `${height}px`, left: "2rem"})
+  }
+  function handleUnhover(){
+    setTooltip(false)
+  }
 
   function uncollapse(domain: string) {
     if (toDisplay == domain) display("");
@@ -197,9 +214,17 @@ function Domain({
             src={arrowIcon}
             alt=""
           />
-          <p className="domain-text">
+          <p ref={toolTipParent}
+          onMouseLeave={handleUnhover} 
+          onMouseEnter={handleHover}
+          className="domain-text">
             {extName ? JSON.parse(extName).extName : domain}
           </p>
+          {extName && tooltip && (
+          <div style={tooltipStyles} className="extension-id-tooltip">
+            <p>{domain}</p>
+          </div>
+        )}
         </div>
         <button className="minibutton" onClick={promptDelete}>
           <img src={deleteIcon} alt="trash" />
