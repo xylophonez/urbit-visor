@@ -212,7 +212,7 @@ function Domain({
           cancel={() => setDeleting(false)}
           confirm={dispatchDeleteDomain}
         >
-          <p className="description subtitle">{domain}</p>
+          <p className="description subtitle">{extName ? JSON.parse(extName).extName : domain}</p>
         </ConfirmationPrompt>
       )}
       {revokingPerm && (
