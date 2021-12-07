@@ -73,7 +73,11 @@ export default function ShipShow(props: ShipProps) {
   }, [patp]);
 
   window.onkeypress = function (e: any) {
-    if (e.key == "Enter" && ship.shipName !== active?.shipName) connect();
+    if (e.key == "Enter" && ship.shipName !== active?.shipName) {
+      if (confirmAction === "connect") connect()
+      else if (confirmAction === "perms") gotoPerms()
+      else if (confirmAction === "home") gotoHome()
+    }
   };
 
   async function reconnect(url: string): Promise<void> {
