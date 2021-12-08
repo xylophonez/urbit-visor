@@ -344,7 +344,7 @@ function SettingsReset() {
         <div className="alert-container vertical">
           <img src={alertIcon} alt="alert" />
           <h5>Important information</h5>
-          <p>This will delete all ships and your master password.</p>
+          <p>This will remove all of your data from Urbit Visor.</p>
         </div>
         <button className="single-button red-bg" onClick={doReset}>
           Reset
