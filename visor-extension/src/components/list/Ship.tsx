@@ -1,6 +1,7 @@
 import * as React from "react";
 import Sigil from "../ui/svg/Sigil";
-import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
+import { EncryptedShipCredentials} from "../../types";
+import { Messaging } from "@dcspark/uv-core";
 import { whatShip, getIcon, processName } from "../../utils";
 import { useHistory } from "react-router-dom";
 import "./list.css";

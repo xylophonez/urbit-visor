@@ -32,7 +32,7 @@ export const setStorage = (item: { [key: string]: any; }) : Promise<any> =>
 
 // setters
 export async function storeCredentials(ship: string, url: string, code: string, pw: string): Promise<any>{
-    const encryptedCredentials = encryptShip(ship, url, code, pw);
+    const encryptedCredentials = encryptCreds(ship, url, code, pw);
     return saveShip(encryptedCredentials);
 };
 
@@ -114,7 +114,7 @@ export async function reEncryptAll(oldPassword: string, newPassword: string): Pr
   }
 }
 
-function encryptShip(ship: string, url: string, code: string, pw: string): EncryptedShipCredentials{
+export function encryptCreds(ship: string, url: string, code: string, pw: string): EncryptedShipCredentials{
     const encryptedURL = encrypt(url, pw).toString();
     const encryptedCode = encrypt(code, pw).toString();
     return {

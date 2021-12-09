@@ -2,17 +2,19 @@ import * as React from "react";
 import { useState } from "react";
 import Spinner from "../ui/svg/Spinner";
 import { fetchShipname, scrapeShipname } from "../../urbit";
+import { DecryptedShipCredentials } from "../../types";
 import { Messaging } from "@dcspark/uv-core";
 import "./adding.css";
 import { motion } from "framer-motion";
 import icon from "../../icons/plus-icon.svg";
+import { encryptCreds } from "../../storage";
 
 interface AddShipFormProps {
   url: string;
   code: string;
-  setUrl: (v: string) => void;
-  setCode: (v: string) => void;
-  setShipName: (shipName: string) => void;
+  setUrl: (a: string) => void;
+  setCode: (a: string) => void;
+  setCreds: (a: DecryptedShipCredentials) => void;
 }
 
 export default function AddShipForm({
@@ -20,7 +22,7 @@ export default function AddShipForm({
   code,
   setUrl,
   setCode,
-  setShipName,
+  setCreds,
 }: AddShipFormProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -46,7 +48,7 @@ export default function AddShipForm({
             });
             setLoading(false);
             scrapeShipname(url)
-              .then((shipName) => setShipName(shipName))
+              .then((shipName) => setCreds({shipName: shipName, shipURL: url, shipCode: code}))
               .catch((err) => setError("Your Ship Needs An OS Update"));
             break;
           case 400:

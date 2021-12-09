@@ -1,7 +1,8 @@
-import { UrbitVisorState } from "@dcspark/uv-core";
+import { UrbitVisorState } from "./types";
 import { getStorage, initStorage, storeCredentials, removeShip, setPopupPreference, reEncryptAll, savePassword, resetApp } from "./storage";
 import { connectToShip, grantPerms, deleteDomain, revokePerms } from "./urbit";
 import create from 'zustand';
+import { EncryptedShipCredentials } from "@dcspark/uv-core";
 
 
 export const useStore = create<UrbitVisorState>((set, get) => ({
@@ -9,6 +10,7 @@ export const useStore = create<UrbitVisorState>((set, get) => ({
     first: true,
     ships: [],
     cached_url: "",
+    cached_creds: null,
     popupPreference: "modal",
     requestedPerms: null,
     selectedShip: null,
@@ -31,6 +33,7 @@ export const useStore = create<UrbitVisorState>((set, get) => ({
         set(state => ({ selectedShip: creds, activeShip: creds, airlock: airlock }));
     },
     cacheURL: (string: string) => set(state => ({ cached_url: string })),
+    cacheCreds: (creds: EncryptedShipCredentials) => set(state => ({cached_creds: creds})),
     removeShip: async (ship) => {
         const active = get().activeShip;
         if (active?.shipName === ship.shipName) {
