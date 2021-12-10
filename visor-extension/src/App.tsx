@@ -10,8 +10,8 @@ import PermissionsPrompt from "./components/perms/PermissionsPrompt";
 import Settings from "./components/settings/Settings";
 import About from "./components/ui/About";
 import { AnimatePresence } from "framer-motion";
-import { EncryptedShipCredentials } from "@dcspark/uv-core";
-import { Messaging } from "@dcspark/uv-core";
+import { EncryptedShipCredentials } from "./types";
+import { Messaging } from "./messaging";
 import {
   MemoryRouter as Router,
   Switch,
@@ -46,8 +46,9 @@ export default function App() {
 
 
   function route(state: any): void{
+    console.log(state, "state to route from")
     if (state.first)  history.push("/welcome")
-    else if (state.cachedURL?.length) history.push("/add_ship")
+    else if (state.cachedURL?.length || state.cachedCreds) history.push("/add_ship")
     else if (state.requestedPerms) history.push("/ask_perms")
     else if (state.activeShip)  {
       Messaging.sendToBackground({action: "select_ship", data: {ship: state.activeShip}})

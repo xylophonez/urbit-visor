@@ -10,7 +10,8 @@ import CloseIcon from "../../icons/close-icon.svg";
 import BackIcon from "../../icons/back-icon.svg";
 import AboutIcon from "../../icons/info";
 import { useHistory, useLocation } from "react-router-dom";
-import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
+import { Messaging } from "../../messaging";
+import { EncryptedShipCredentials } from "../../types";
 interface NavbarProps {
   active: EncryptedShipCredentials;
   interacting: boolean;

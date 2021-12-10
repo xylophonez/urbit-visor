@@ -1,6 +1,6 @@
 import Urbit from "@urbit/http-api";
 import { useStore } from "./store";
-import { EncryptedShipCredentials, PermissionRequest } from "@dcspark/uv-core";
+import { EncryptedShipCredentials, PermissionRequest } from "./types";
 
 
 

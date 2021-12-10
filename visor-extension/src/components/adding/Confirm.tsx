@@ -6,15 +6,21 @@ import Spinner from "../ui/svg/Spinner";
 import { motion } from "framer-motion";
 import icon from "../../icons/success-icon.svg";
 import "./adding.css";
+import { DecryptedShipCredentials, EncryptedShipCredentials } from "../../types";
 
 interface ConfirmProps {
   url: string;
   code: string;
-  ship: string;
+  creds: EncryptedShipCredentials;
   goBack: () => void;
-  save: (url: string, code: string, pw: string) => void;
+  save: (shipName: string, url: string, code: string, pw: string) => void;
 }
 export default function Confirm(props: ConfirmProps) {
+  const decryptedCreds: DecryptedShipCredentials = {
+    shipName: props.creds.shipName,
+    shipURL: decrypt(props.creds.encryptedShipURL, "caching"),
+    shipCode: decrypt(props.creds.encryptedShipCode, "caching")
+  }
   const [loading, setLoading] = useState(false);
   const [pw, setPw] = useState("");
   const [error, setError] = useState("");
@@ -37,9 +43,9 @@ export default function Confirm(props: ConfirmProps) {
   }
   function saveShip() {
     setLoading(true);
-    initPerms(props.ship, props.url)
+    initPerms(decryptedCreds.shipName, decryptedCreds.shipURL)
       .then((res) => {
-        props.save(props.url, props.code, pw);
+        props.save(decryptedCreds.shipName, decryptedCreds.shipURL, decryptedCreds.shipCode, pw);
         setLoading(false);
       })
       .catch((err) => {
@@ -65,7 +71,7 @@ export default function Confirm(props: ConfirmProps) {
         </div>
         <h1 className="center-title">Connection Success To</h1>
         <div className="container-shipname">
-          <p className="confirm-shipname">~{props.ship} </p>
+          <p className="confirm-shipname">~{decryptedCreds.shipName} </p>
         </div>
       </div>
       <form onSubmit={addShip} className="form">

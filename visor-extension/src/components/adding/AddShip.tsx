@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import Form from "./Form";
 import Confirm from "./Confirm"
 import { useHistory } from "react-router";
-import { Messaging } from "@dcspark/uv-core";
+import { DecryptedShipCredentials, EncryptedShipCredentials } from "../../types";
+import { Messaging } from "../../messaging";
 import { motion } from "framer-motion";
+import { encrypt, encryptCreds } from "../../storage";
 
 
 
@@ -13,36 +15,58 @@ export default function AddShip() {
     let isMounted = true;
     Messaging.sendToBackground({action: "get_cached_url"})
       .then(res => {
-        if (isMounted) setURL(res.cached_url)
+        if (isMounted) {
+          setURL(res.cached_url);
+          fixCreds(res.cached_creds);
+        }
       })
       return () => { isMounted = false }; 
   }, [])
   const history = useHistory();
 
+  function goBack(){
+    Messaging.sendToBackground({
+      action: "cache_form_creds",
+      data: { creds: null }
+    });
+    fixCreds(null);
+  };
 
-  async function save(url: string, code: string, pw: string): Promise<any> {
-    Messaging.sendToBackground({action: "add_ship", data: {ship: ship, url: url, code: code, pw: pw}})
-      .then(res => history.push(`/ship/${ship}`));
+
+  async function save(shipName: string, url: string, code: string, pw: string): Promise<any> {
+    Messaging.sendToBackground({action: "add_ship", data: {ship: shipName, url: url, code: code, pw: pw}})
+      .then(res => {
+        Messaging.sendToBackground({
+          action: "cache_form_creds",
+          data: { creds: null },
+        });
+        history.push(`/ship/${creds.shipName}`)
+      });
   }
 
   const [url, setURL] = useState("http://localhost");
-  const [ship, setShipName] = useState<string>(null);
   const [code, setCode] = useState("");
+  const [creds, fixCreds] = useState<EncryptedShipCredentials>(null);
+  function setCreds(creds: DecryptedShipCredentials){
+    const encryptedCreds: EncryptedShipCredentials = encryptCreds(creds.shipName, creds.shipURL, creds.shipCode, "caching");
+    Messaging.sendToBackground({action: "cache_form_creds", data: {creds: encryptedCreds}});
+    fixCreds(encryptedCreds);
+  }
   const component =
-    ship
+    creds
       ? <Confirm
         url={url.replace(/\/$/g, '')}
         code={code}
         save={save}
-        ship={ship}
-        goBack={() => setShipName(null)}
+        creds={creds}
+        goBack={goBack}
       />
       : <Form
         url={url}
         code={code}
         setUrl={setURL}
         setCode={setCode}
-        setShipName={setShipName}
+        setCreds={setCreds}
       />
   return (
     <motion.div

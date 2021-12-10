@@ -1,4 +1,6 @@
-import { Messaging, SubscriptionRequestInterface, EncryptedShipCredentials, UrbitVisorAction, UrbitVisorInternalAction, UrbitVisorInternalComms, UrbitVisorState } from "@dcspark/uv-core";
+import { Messaging } from "@dcspark/uv-core";
+import { SubscriptionRequestInterface } from "@urbit/http-api/src/types";
+import { EncryptedShipCredentials, UrbitVisorAction, UrbitVisorInternalAction, UrbitVisorInternalComms, UrbitVisorState } from "./types";
 
 import { fetchAllPerms } from "./urbit"
 import { useStore } from "./store";
@@ -66,7 +68,7 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
 
   switch (request.action) {
     case "get_initial_state":
-      sendResponse({ first: state.first, ships: state.ships, activeShip: state.activeShip, cachedURL: state.cached_url, requestedPerms: state.requestedPerms })
+      sendResponse({ first: state.first, ships: state.ships, activeShip: state.activeShip, cachedURL: state.cached_url, cachedCreds: state.cached_creds, requestedPerms: state.requestedPerms })
       break;
     case "get_ships":
       sendResponse({ ships: state.ships, active: state.activeShip })
@@ -75,7 +77,7 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
       sendResponse({ selected: state.selectedShip, active: state.activeShip })
       break;
     case "get_cached_url":
-      sendResponse({ cached_url: state.cached_url })
+      sendResponse({ cached_url: state.cached_url, cached_creds: state.cached_creds })
       break;
     case "get_perms":
       sendResponse({ selectedShip: state.selectedShip })
@@ -186,6 +188,10 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
       break;
     case "cache_form_url":
       state.cacheURL(request.data.url);
+      sendResponse("ok");
+      break;
+    case "cache_form_creds":
+      state.cacheCreds(request.data.creds);
       sendResponse("ok");
       break;
   }
