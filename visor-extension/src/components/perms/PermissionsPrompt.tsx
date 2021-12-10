@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { validate } from "../../storage";
 import "./perms.css";
-import { Messaging } from "@dcspark/uv-core";
+import { Messaging } from "../../messaging";
 import { PermissionRequest, Permission } from "../../types";
 import { motion } from "framer-motion";
 import cancelIcon from "../../icons/cancel-icon.svg";

@@ -4,7 +4,7 @@ import Form from "./Form";
 import Confirm from "./Confirm"
 import { useHistory } from "react-router";
 import { DecryptedShipCredentials, EncryptedShipCredentials } from "../../types";
-import { Messaging } from "@dcspark/uv-core";
+import { Messaging } from "../../messaging";
 import { motion } from "framer-motion";
 import { encrypt, encryptCreds } from "../../storage";
 

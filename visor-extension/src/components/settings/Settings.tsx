@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useStore } from "../../store";
 import Sigil from "../../components/ui/svg/Sigil";
 import { validate } from "../../storage";
-import { Messaging } from "@dcspark/uv-core";
+import { Messaging } from "../../messaging";
 import { EncryptedShipCredentials } from "../../types";
 import ConfirmRemove from "./ConfirmRemove";
 import { whatShip, processName } from "../../utils";

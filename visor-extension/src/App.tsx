@@ -11,7 +11,7 @@ import Settings from "./components/settings/Settings";
 import About from "./components/ui/About";
 import { AnimatePresence } from "framer-motion";
 import { EncryptedShipCredentials } from "./types";
-import { Messaging } from "@dcspark/uv-core";
+import { Messaging } from "./messaging";
 import {
   MemoryRouter as Router,
   Switch,

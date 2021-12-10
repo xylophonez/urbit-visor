@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { useHistory } from "react-router";
-import { Messaging } from "@dcspark/uv-core";
+import { Messaging } from "../../messaging";
 import { motion } from "framer-motion";
 import icon from "../../icons/lock-icon.svg";
 

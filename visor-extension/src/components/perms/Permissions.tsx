@@ -6,7 +6,7 @@ import Sigil from "../ui/svg/Sigil";
 import { Chip } from "./PermissionsPrompt";
 import { whatShip, processName } from "../../utils";
 import { motion } from "framer-motion";
-import { Messaging } from "@dcspark/uv-core";
+import { Messaging } from "../../messaging";
 import {
   EncryptedShipCredentials,
   PermissionsGraph,

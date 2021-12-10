@@ -1,4 +1,4 @@
-import { Messaging } from "@dcspark/uv-core";
+import { Messaging } from "./messaging";
 
 function shouldInject(): boolean {
   const documentElement = document.documentElement.nodeName;

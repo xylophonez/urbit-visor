@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sigil from "../ui/svg/Sigil";
 import { useHistory } from "react-router-dom";
-import { Messaging } from "@dcspark/uv-core";
+import { Messaging } from "../../messaging";
 import { decrypt } from "../../storage";
 import { EncryptedShipCredentials } from "../../types";
 import { motion } from "framer-motion";

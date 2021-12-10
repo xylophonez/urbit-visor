@@ -3,11 +3,10 @@ import { useState } from "react";
 import Spinner from "../ui/svg/Spinner";
 import { fetchShipname, scrapeShipname } from "../../urbit";
 import { DecryptedShipCredentials } from "../../types";
-import { Messaging } from "@dcspark/uv-core";
+import { Messaging } from "../../messaging";
 import "./adding.css";
 import { motion } from "framer-motion";
 import icon from "../../icons/plus-icon.svg";
-import { encryptCreds } from "../../storage";
 
 interface AddShipFormProps {
   url: string;
