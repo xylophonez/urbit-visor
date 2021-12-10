@@ -6,12 +6,12 @@ import Sigil from "../ui/svg/Sigil";
 import { Chip } from "./PermissionsPrompt";
 import { whatShip, processName } from "../../utils";
 import { motion } from "framer-motion";
+import { Messaging } from "@dcspark/uv-core";
 import {
   EncryptedShipCredentials,
   PermissionsGraph,
-  Permission,
-  Messaging,
-} from "@dcspark/uv-core";
+  Permission
+} from "../../types";
 import deleteIcon from "../../icons/delete-icon.svg";
 import arrowIcon from "../../icons/arrow-down.svg";
 import illustrationEmpty from "../../icons/illustration-empty.svg";
@@ -160,23 +160,23 @@ function Domain({
     ) : (
       <div />
     );
-  
+
   const [tooltip, setTooltip] = useState(false);
   const [tooltipStyles, setTooltipStyles] = useState(null);
   const toolTipParent = useRef(null);
 
   const extName = perms.find((perm) => perm.includes("extName"));
 
-  function handleHover(){
+  function handleHover() {
     const cords = toolTipParent.current.getBoundingClientRect();
     console.log(cords, "cords")
     console.log(toolTipParent.current, "parent")
     console.log(toolTipParent.current.offsetTop, "top")
     const height = cords.top - 40;
     setTooltip(true)
-    setTooltipStyles({top: `${height}px`, left: "2rem"})
+    setTooltipStyles({ top: `${height}px`, left: "2rem" })
   }
-  function handleUnhover(){
+  function handleUnhover() {
     setTooltip(false)
   }
 
@@ -215,16 +215,16 @@ function Domain({
             alt=""
           />
           <p ref={toolTipParent}
-          onMouseLeave={handleUnhover} 
-          onMouseEnter={handleHover}
-          className="domain-text">
+            onMouseLeave={handleUnhover}
+            onMouseEnter={handleHover}
+            className="domain-text">
             {extName ? JSON.parse(extName).extName : domain}
           </p>
           {extName && tooltip && (
-          <div style={tooltipStyles} className="extension-id-tooltip">
-            <p>{domain}</p>
-          </div>
-        )}
+            <div style={tooltipStyles} className="extension-id-tooltip">
+              <p>{domain}</p>
+            </div>
+          )}
         </div>
         <button className="minibutton" onClick={promptDelete}>
           <img src={deleteIcon} alt="trash" />

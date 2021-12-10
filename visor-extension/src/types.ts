@@ -1,6 +1,5 @@
 import Urbit from "@urbit/http-api";
 import { Scry, Thread, Poke, SubscriptionRequestInterface } from "@urbit/http-api/src/types"
-import {Permission} from "@dcspark/uv-core";
 
 export type DecryptedShipCredentials = {
     shipName: string;
@@ -13,6 +12,8 @@ export type EncryptedShipCredentials = {
     encryptedShipURL: string;
     encryptedShipCode: string;
 };
+
+export type Permission = "shipName" | "shipURL" | "scry" | "thread" | "poke" | "subscribe";
 
 export type TabID = number;
 export type ExtensionID = string;
@@ -87,3 +88,48 @@ export interface UrbitVisorState {
     addSubscription: (sub: VisorSubscription) => void,
     removeSubscription: (sub: VisorSubscription) => void
 }
+export interface PermissionRequest {
+    key: Website | ExtensionID,
+    name?: string
+    permissions: Permission[],
+    existing?: Permission[]
+}
+
+export type UrbitVisorAction = "on" | "check_connection" | "check_perms" | "shipURL" | "perms" | "shipName" | "scry" | "poke" | "subscribe" | "subscribeOnce" | "unsubscribe" | "thread";
+export type UrbitVisorInternalAction = "state" | "connected" | "cache_form_url" | "end_url_caching" | "dismiss_perms";
+type UrbitVisorRequestType = Scry | Thread<any> | Poke<any> | SubscriptionRequestInterface | UrbitVisorAction[]
+
+export interface UrbitVisorRequest {
+    app: "urbitVisor",
+    action: UrbitVisorAction,
+    data?: UrbitVisorRequestType
+}
+export interface UrbitVisorResponse {
+    id: string,
+    status: "locked" | "noperms" | "ok"
+    response?: any
+    error?: any
+}
+
+export interface UrbitVisorInternalComms {
+    action: UrbitVisorInternalAction | string,
+    data?: any
+}
+
+export interface UrbitVisorEvent {
+    action: UrbitVisorEventType
+    requestID?: string,
+    data?: any
+}
+export type UrbitVisorEventType = UrbitVisorInternalEvent | UrbitEvent
+
+type UrbitVisorInternalEvent = "connected" | "disconnected" | "permissions_granted" | "permissions_revoked"
+type UrbitEvent = "sse" | "poke_success" | "poke_error" | "subscription_error"
+
+export interface PermissionGraph{
+    [key: string]: {
+        permissions: Permission[]
+    }
+}
+
+type UrbitAction = "scry" | "thread" | "poke" | "subscribe"

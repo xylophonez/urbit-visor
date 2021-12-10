@@ -1,8 +1,9 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import Ship from "./Ship";
+import { EncryptedShipCredentials } from "../../types";
 import { useHistory } from "react-router-dom";
-import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
+import { Messaging } from "@dcspark/uv-core";
 import { motion } from "framer-motion";
 import "./list.css";
 
