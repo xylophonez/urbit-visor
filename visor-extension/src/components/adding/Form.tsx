@@ -31,7 +31,7 @@ export default function AddShipForm({
     setTimeout(() => {
       controller.abort();
     }, 5000);
-    fetch(url.replace(/\/$/g, "") + "/~/login", {
+    fetch(url + "/~/login", {
       body: `password=${code}`,
       method: "POST",
       credentials: "include",
@@ -75,7 +75,7 @@ export default function AddShipForm({
     setUrl(e.currentTarget.value);
     Messaging.sendToBackground({
       action: "cache_form_url",
-      data: { url: e.currentTarget.value },
+      data: { url: e.currentTarget.value.replace(/\/$/g, "") },
     });
   };
   const onChangeCode = (e: React.FormEvent<HTMLInputElement>) =>
@@ -86,7 +86,7 @@ export default function AddShipForm({
     e.preventDefault();
     setError("");
     setLoading(true);
-    postLogin(url, code);
+    postLogin(url.replace(/\/$/g, ""), code);
   };
 
   return (
