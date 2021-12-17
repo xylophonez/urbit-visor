@@ -4,8 +4,7 @@ import { useHistory, useParams } from "react-router";
 import Sigil from "../ui/svg/Sigil";
 import Spinner from "../ui/svg/Spinner";
 
-import { Messaging } from "../../messaging";
-import { EncryptedShipCredentials } from "../../types";
+import { EncryptedShipCredentials, Messaging } from "@dcspark/uv-core";
 import { loginToShip } from "../../urbit";
 import { decrypt } from "../../storage";
 import { whatShip, getIcon, processName } from "../../utils";
@@ -32,6 +31,7 @@ export default function ShipShow(props: ShipProps) {
   };
   const history = useHistory();
   const [ship, setShip] = useState(dummyShip);
+  const [activeURL, setActiveURL] = useState("");
   const [active, setActive] = useState(dummyShip);
   const [shipURL, setURL] = useState("");
   const [showPerms, setShowPerms] = useState(false);
@@ -66,6 +66,7 @@ export default function ShipShow(props: ShipProps) {
         );
         setShip(s);
         setActive(res.active);
+        if (res.airlock) setActiveURL(res.airlock.url);
       }
     });
     return () => {
@@ -75,9 +76,9 @@ export default function ShipShow(props: ShipProps) {
 
   window.onkeypress = function (e: any) {
     if (e.key == "Enter" && ship.shipName !== active?.shipName) {
-      if (confirmAction === "connect") connect()
-      else if (confirmAction === "perms") gotoPerms()
-      else if (confirmAction === "home") gotoHome()
+      if (confirmAction === "connect") connect();
+      else if (confirmAction === "perms") gotoPerms();
+      else if (confirmAction === "home") gotoHome();
     }
   };
 
@@ -153,20 +154,32 @@ export default function ShipShow(props: ShipProps) {
     </div>
   );
 
+  function canGo() {
+    return active?.shipName === ship.shipName && activeURL;
+  }
+
   function confirmConnect() {
     setShowPasswordInput(true);
     setConfirmString("Connect To Your Ship");
     setConfirmAction("connect");
   }
   function confirmPerms() {
-    setShowPasswordInput(true);
-    setConfirmString("Show Granted Permissions");
-    setConfirmAction("perms");
+    if (canGo()) {
+      setURL(activeURL);
+      setShowPerms(true);
+    } else {
+      setShowPasswordInput(true);
+      setConfirmString("Show Granted Permissions");
+      setConfirmAction("perms");
+    }
   }
   function confirmHome() {
-    setShowPasswordInput(true);
-    setConfirmString("Go To Your Urbit Home");
-    setConfirmAction("home");
+    if (canGo()) chrome.tabs.create({ url: activeURL });
+    else {
+      setShowPasswordInput(true);
+      setConfirmString("Go To Your Urbit Home");
+      setConfirmAction("home");
+    }
   }
 
   function gotoHome() {
