@@ -59,7 +59,7 @@ function extensionListener() {
 }
 function hotkeyListener() {
   const showLauncher = () => {
-    const modal: any = <any>document.querySelector('#command-launcher');
+    const modal: any = <any>document.querySelector("html > div").shadowRoot.querySelector("#command-launcher-container");
     modal.showModal();
   }
   chrome.commands.onCommand.addListener((command, tab) => {

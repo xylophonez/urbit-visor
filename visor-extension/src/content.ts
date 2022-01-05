@@ -1,4 +1,7 @@
+import React from "react";
+import ReactDOM from "react-dom";
 import { Messaging } from "./messaging";
+import Modal from "./components/modal/Modal";
 
 function shouldInject(): boolean {
   const documentElement = document.documentElement.nodeName;
@@ -21,9 +24,16 @@ function embed(fn: Function) {
 }
 
 function appendLauncher() {
+  const shadowWrapper = document.createElement("div");
+  const shadowDOM = shadowWrapper.attachShadow({mode: "open"});
   const modal = document.createElement("dialog");
-  modal.id = "command-launcher";
-  document.body.appendChild(modal);
+  modal.id = "command-launcher-container";
+  modal.style.width = '690px';
+  modal.style.padding = '0';
+  shadowDOM.appendChild(modal);
+  document.documentElement.appendChild(shadowWrapper);
+  const react = React.createElement(Modal)
+  ReactDOM.render(react, modal);
 }
 appendLauncher();
 
