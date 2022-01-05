@@ -20,8 +20,14 @@ function embed(fn: Function) {
   document.documentElement.appendChild(script);
 }
 
+function appendLauncher() {
+  const modal = document.createElement("dialog");
+  modal.id = "command-launcher";
+  document.body.appendChild(modal);
+}
+appendLauncher();
+
 if (shouldInject()) {
   embed(proofOfVisor)
   Messaging.createProxyController();
 }
-
