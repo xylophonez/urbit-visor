@@ -27,15 +27,15 @@ export const urbitVisor = {
 
 async function initialize(perms: Permission[], callback: Function): Promise<void>{
     const sub = urbitVisor.on("connected", [], () => initialize(perms, callback));
-    urbitVisor.on("permissions_granted", [], () => callback());
+    const sub2 = urbitVisor.on("permissions_granted", [], () => initialize(perms, callback));
     const isConnected = await requestData("check_connection");
     if (isConnected.response){
         urbitVisor.off(sub);
         const existing = await requestData("check_perms");
         const granted = perms.every(p => existing.response.includes(p));
-        if (granted) callback();
+        if (granted) urbitVisor.off(sub2), callback();
         else requestData("perms", perms);
-    }else promptUnlock();
+    } else promptUnlock();
 };
 
 
