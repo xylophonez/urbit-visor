@@ -16,6 +16,7 @@ async function init() {
   storageListener();
   messageListener();
   extensionListener();
+  hotkeyListener();
 };
 init();
 
@@ -56,7 +57,17 @@ function extensionListener() {
     handleVisorCall(request, sender, sendResponse, "extension");
   });
 }
-
+function hotkeyListener() {
+  const showLauncher = () => {
+    const modal: any = <any>document.querySelector('#command-launcher');
+    modal.showModal();
+  }
+  chrome.commands.onCommand.addListener((command, tab) => {
+    chrome.tabs.executeScript(tab.id, {
+	    code: `(${showLauncher})()`
+    });
+  });
+}
 
 function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, sendResponse: any) {
   const state = useStore.getState();

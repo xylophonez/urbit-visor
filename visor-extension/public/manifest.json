@@ -44,9 +44,20 @@
         "chromeos": "Ctrl+Shift+U",
         "linux": "Ctrl+Shift+U"
       }
+    },
+    "command-launcher": {
+      "suggested_key" : {
+        "windows": "Ctrl+Period",
+        "mac": "Ctrl+Period",
+        "chromeos": "Ctrl+Period",
+        "linux": "Ctrl+Period"
+      },
+      "description" : "UV command launcher"
     }
   },
   "permissions": [
-    "storage"
+    "storage",
+    "tabs",
+    "activeTab"
  ]
 }
