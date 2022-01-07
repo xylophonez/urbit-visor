@@ -2,10 +2,14 @@ import React from "react";
 import * as CSS from 'csstype';
 import { useEffect, useState } from "react";
 
-const Display: React.FunctionComponent = () => {
+interface DisplayProps {
+  selected: String;
+}
+
+const Display = (props: DisplayProps) => {
   return (
   <div style={divStyle}>
-    <p style={{textAlign: 'center'}}>this is display</p>
+    <p style={{textAlign:'center'}}>{props.selected} display to be rendered here</p>
   </div>
   )
 };

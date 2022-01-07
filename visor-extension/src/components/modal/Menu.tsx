@@ -1,21 +1,17 @@
 import React from "react";
 import * as CSS from 'csstype';
 import { useEffect, useState } from "react";
+import MenuOptions from "./MenuOptions"
 
-const Menu: React.FunctionComponent = () => {
+interface MenuOptionProps {
+  handleClick: (textContent: String) => void;
+  keyDown: String;
+}
+
+const Menu = (props: MenuOptionProps) => {
   return (
   <div style={divStyle}>
-    <ul style={listStyle}>
-      <li>
-        bitcoin
-      </li>
-      <li>
-        poke
-      </li>
-      <li>
-        peek
-      </li>
-    </ul>
+    <MenuOptions handleClick={props.handleClick} keyDown={props.keyDown} />
   </div>
   )
 };
@@ -24,8 +20,5 @@ const divStyle: CSS.Properties = {
   width: '160px',
 }
 
-const listStyle: CSS.Properties = {
-  listStyleType: 'none',
-}
 
 export default Menu;

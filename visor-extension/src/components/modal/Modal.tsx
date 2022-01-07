@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Inputbox from "./Inputbox"
 import Body from "./Body"
 
-const App = () => {
+const Modal = () => {
   return (
   <div>
     <Inputbox />
@@ -12,4 +12,4 @@ const App = () => {
   )
 };
 
-export default App;
+export default Modal;
