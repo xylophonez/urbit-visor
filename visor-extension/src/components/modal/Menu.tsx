@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import MenuOptions from "./MenuOptions"
 
 interface MenuOptionProps {
-  handleClick: (textContent: String) => void;
-  keyDown: String;
+  handleSelection: (textContent: String) => void;
+  keyDown: React.KeyboardEvent;
 }
 
 const Menu = (props: MenuOptionProps) => {
   return (
   <div style={divStyle}>
-    <MenuOptions handleClick={props.handleClick} keyDown={props.keyDown} />
+    <MenuOptions handleSelection={props.handleSelection} keyDown={props.keyDown} />
   </div>
   )
 };
