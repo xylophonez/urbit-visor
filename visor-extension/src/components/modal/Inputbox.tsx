@@ -1,11 +1,35 @@
 import React from "react";
 import * as CSS from 'csstype';
 import { useEffect, useState } from "react";
+import PokeInput from "./input/PokeInput"
+import PeekInput from "./input/PeekInput"
+import BitcoinInput from "./input/BitcoinInput"
 
-const Inputbox: React.FunctionComponent = () => {
+interface InputProps {
+  selected: String;
+  nextArg: Boolean;
+}
+
+const Inputbox = (props: InputProps) => {
   return (
   <div style={divStyle}>
-  <input style={inputStyle}></input>
+    {
+      (() => {
+        switch (props.selected) {
+        case 'poke':
+          return <PokeInput selected={props.selected} nextArg={props.nextArg}/>
+          break;
+        case 'peek':
+          return <PeekInput nextArg={props.nextArg} />
+          break;
+        case 'bitcoin':
+          return <BitcoinInput nextArg={props.nextArg} />
+          break;
+        default:
+        return <input style={inputStyle}></input>
+        }
+      })()
+    }
   </div>
   )
 };

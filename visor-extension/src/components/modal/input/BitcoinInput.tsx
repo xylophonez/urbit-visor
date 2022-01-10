@@ -1,0 +1,62 @@
+import React from "react";
+import * as CSS from 'csstype';
+import { useEffect, useState, useRef } from "react";
+
+interface InputProps {
+  nextArg: Boolean;
+}
+
+const BitcoinInput = (props: InputProps) => {
+  const shipInput = useRef(null);
+  const amountInput = useRef(null);
+  const [currentFocus, setCurrentFocus] = useState(null)
+
+  useEffect(() => {shipInput.current.focus(); setCurrentFocus("ship")}, [shipInput])
+  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'ship') {amountInput.current.focus(); setCurrentFocus("amount")}}, [props.nextArg])
+
+
+  return (
+  <div style={divStyle}> 
+  <style dangerouslySetInnerHTML={{
+  __html: [
+     '.div-input {',
+     '  display: inline-block;',
+     '  vertical-align: top;',
+     '  min-width: 1em;',
+     '  padding: 0px 5px 0px 5px;',
+     '  cursor: text;',
+     '}',
+     '.div-input:empty:before {',
+     '  content: attr(data-placeholder);',
+     '  color: #ccc;',
+     '}',
+     '.div-input br {',
+     '  display: none;',
+     '}',
+     '.div-input * {',
+     '  display: inline;',
+     '}'
+    ].join('\n')
+  }}>
+  </style>
+    <div>
+      bitcoin:
+    </div>
+    <div>
+      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="ship" ref={shipInput}></div>
+    </div>
+    <div>
+      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="amount" ref={amountInput}></div>
+    </div>
+  </div>
+  )
+};
+
+const divStyle: CSS.Properties = {
+  display: 'flex'
+}
+const inputStyle: CSS.Properties = {
+  width: 'fit-content'
+}
+
+export default BitcoinInput;
