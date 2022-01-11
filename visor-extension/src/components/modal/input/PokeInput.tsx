@@ -13,6 +13,8 @@ const PokeInput = (props: InputProps) => {
   const cageInput = useRef(null);
   const [currentFocus, setCurrentFocus] = useState(null)
 
+  const selection = (document.querySelector("html > div").shadowRoot as any).getSelection()
+
   useEffect(() => {shipInput.current.focus(); setCurrentFocus("ship")}, [shipInput])
   useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'ship') {appInput.current.focus(); setCurrentFocus("app")}}, [props.nextArg])
   useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'app') {cageInput.current.focus(); setCurrentFocus("cage")}}, [props.nextArg])
@@ -48,10 +50,10 @@ const PokeInput = (props: InputProps) => {
       <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="ship" ref={shipInput}></div>
     </div>
     <div>
-      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="app" ref={appInput}></div>
+      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="app" ref={appInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {shipInput.current.focus(); event.preventDefault(); setCurrentFocus("ship"); selection.setPosition(selection.focusNode, selection.focusNode.length)}}}></div>
     </div>
     <div>
-      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="cage" ref={cageInput}></div>
+      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="cage" ref={cageInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {appInput.current.focus(); event.preventDefault(); setCurrentFocus("app"); selection.setPosition(selection.focusNode, selection.focusNode.length)}}}></div>
     </div>
   </div>
   )

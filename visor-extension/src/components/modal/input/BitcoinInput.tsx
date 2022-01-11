@@ -11,6 +11,8 @@ const BitcoinInput = (props: InputProps) => {
   const amountInput = useRef(null);
   const [currentFocus, setCurrentFocus] = useState(null)
 
+  const selection = (document.querySelector("html > div").shadowRoot as any).getSelection()
+
   useEffect(() => {shipInput.current.focus(); setCurrentFocus("ship")}, [shipInput])
   useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'ship') {amountInput.current.focus(); setCurrentFocus("amount")}}, [props.nextArg])
 
@@ -46,7 +48,7 @@ const BitcoinInput = (props: InputProps) => {
       <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="ship" ref={shipInput}></div>
     </div>
     <div>
-      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="amount" ref={amountInput}></div>
+      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="amount" ref={amountInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {shipInput.current.focus(); event.preventDefault(); setCurrentFocus("ship"); selection.setPosition(selection.focusNode, selection.focusNode.length)}}}></div>
     </div>
   </div>
   )

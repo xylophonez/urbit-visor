@@ -17,7 +17,7 @@ const Inputbox = (props: InputProps) => {
       (() => {
         switch (props.selected) {
         case 'poke':
-          return <PokeInput selected={props.selected} nextArg={props.nextArg}/>
+          return <PokeInput selected={props.selected} nextArg={props.nextArg} />
           break;
         case 'peek':
           return <PeekInput nextArg={props.nextArg} />
