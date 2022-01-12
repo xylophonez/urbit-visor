@@ -8,6 +8,7 @@ import BitcoinInput from "./input/BitcoinInput"
 interface InputProps {
   selected: String;
   nextArg: Boolean;
+  sendCommand: Boolean;
 }
 
 const Inputbox = (props: InputProps) => {
@@ -17,13 +18,13 @@ const Inputbox = (props: InputProps) => {
       (() => {
         switch (props.selected) {
         case 'poke':
-          return <PokeInput selected={props.selected} nextArg={props.nextArg} />
+          return <PokeInput selected={props.selected} nextArg={props.nextArg} sendCommand={props.sendCommand} />
           break;
         case 'peek':
-          return <PeekInput nextArg={props.nextArg} />
+          return <PeekInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
           break;
         case 'bitcoin':
-          return <BitcoinInput nextArg={props.nextArg} />
+          return <BitcoinInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
           break;
         default:
         return <input style={inputStyle}></input>
