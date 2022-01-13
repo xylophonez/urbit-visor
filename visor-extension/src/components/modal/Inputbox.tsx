@@ -1,9 +1,11 @@
 import React from "react";
 import * as CSS from 'csstype';
 import { useEffect, useState } from "react";
-import PokeInput from "./input/PokeInput"
-import PeekInput from "./input/PeekInput"
-import BitcoinInput from "./input/BitcoinInput"
+import PokeInput from "./input/PokeInput";
+import PeekInput from "./input/PeekInput";
+import BitcoinInput from "./input/BitcoinInput";
+import SubscribeInput from "./input/SubscribeInput";
+import SpiderInput from "./input/SpiderInput";
 
 interface InputProps {
   selected: String;
@@ -18,13 +20,19 @@ const Inputbox = (props: InputProps) => {
       (() => {
         switch (props.selected) {
         case 'poke':
-          return <PokeInput selected={props.selected} nextArg={props.nextArg} sendCommand={props.sendCommand} />
+          return <PokeInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
           break;
         case 'peek':
           return <PeekInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
           break;
         case 'bitcoin':
           return <BitcoinInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
+          break;
+        case 'subscribe':
+          return <SubscribeInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
+          break;
+        case 'thread':
+          return <SpiderInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
           break;
         default:
         return <input style={inputStyle}></input>

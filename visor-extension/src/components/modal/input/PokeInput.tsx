@@ -4,7 +4,6 @@ import { useEffect, useState, useRef } from "react";
 import { urbitVisor } from "@dcspark/uv-core";
 
 interface InputProps {
-  selected: String;
   nextArg: Boolean;
   sendCommand: Boolean;
 }
