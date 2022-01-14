@@ -25,12 +25,14 @@ const SubscribeInput = (props: InputProps) => {
     else if (appInput.current.innerHTML && pathInput.current.innerHTML) {
       const arg = {'app':appInput.current.innerHTML,'path':pathInput.current.innerHTML}
       const data = {action: 'subscribe', argument: arg}
-      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => console.log(res, "did thing"))
+      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => handleAirlockResponse())
     }
     else {
       alert('please provide all arguments')
     }},
     [props.sendCommand])
+
+  const handleAirlockResponse = () => {return}
 
   return (
   <div style={divStyle}> 

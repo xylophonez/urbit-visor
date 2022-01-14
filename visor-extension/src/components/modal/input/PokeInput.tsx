@@ -22,20 +22,19 @@ const PokeInput = (props: InputProps) => {
   useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'app') {markInput.current.focus(); setCurrentFocus("mark")}}, [props.nextArg])
   useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'mark') {jsonInput.current.focus(); setCurrentFocus("json")}}, [props.nextArg])
 
-
-  
-
   useEffect(() => {
     if (!props.sendCommand) return;
     else if (appInput.current.innerHTML && markInput.current.innerHTML && jsonInput.current.innerHTML) {
       const arg = {app: appInput.current.innerHTML, mark: markInput.current.innerHTML, json: jsonInput.current.innerHTML}
       const data = {action: 'poke', argument: arg}
-      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => console.log(res, "did thing"))
+      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => handleAirlockResponse())
     }
     else {
       alert('please provide all arguments')
     }},
     [props.sendCommand])
+
+  const handleAirlockResponse = () => {return}
 
   return (
   <div style={divStyle}> 
