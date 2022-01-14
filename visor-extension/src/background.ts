@@ -82,7 +82,7 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
       sendResponse({ first: state.first, ships: state.ships, activeShip: state.activeShip, cachedURL: state.cached_url, cachedCreds: state.cached_creds, requestedPerms: state.requestedPerms })
       break;
     case "get_ships":
-      sendResponse({ ships: state.ships, active: state.activeShip })
+      sendResponse({ airlock: state.airlock, ships: state.ships, active: state.activeShip })
       break;
     case "call_airlock":
       if (state.airlock)
