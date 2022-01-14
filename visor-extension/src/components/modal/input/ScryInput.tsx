@@ -22,12 +22,17 @@ const ScryInput = (props: InputProps) => {
 
   useEffect(() => {
     if (!props.sendCommand) {return}
-    else if (appInput.current.innerHTML && pathInput.current.innerHTML)
-      {urbitVisor.scry({'app':appInput.current.innerHTML,'path':pathInput.current.innerHTML})}
+    else if (appInput.current.innerHTML && pathInput.current.innerHTML) {
+      const arg = {'app':appInput.current.innerHTML,'path':pathInput.current.innerHTML}
+      const data = {action: 'scry', argument: arg}
+      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => handleAirlockResponse(res))
+    }
     else {
       alert('please provide all arguments')
     }},
     [props.sendCommand])
+
+  const handleAirlockResponse = (res: any) => {console.log(res)}
 
   return (
   <div style={divStyle}> 

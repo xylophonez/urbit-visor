@@ -29,14 +29,14 @@ const SpiderInput = (props: InputProps) => {
     else if (threadNameInput.current.innerHTML && markInInput.current.innerHTML && markOutInput.current.innerHTML && jsonInput.current.innerHTML) {
       const arg = {'threadName':threadNameInput.current.innerHTML,'inputMark':markInInput.current.innerHTML,'outputMark':markOutInput.current.innerHTML,'body':jsonInput.current.innerHTML}
       const data = {action: 'thread', argument: arg}
-      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => handleAirlockResponse())
+      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => handleAirlockResponse(res))
     }
     else {
       alert('please provide all arguments')
     }},
     [props.sendCommand])
 
-  const handleAirlockResponse = () => {return}
+  const handleAirlockResponse = (res: any) => {console.log(res)}
 
   return (
   <div style={divStyle}> 

@@ -27,14 +27,14 @@ const PokeInput = (props: InputProps) => {
     else if (appInput.current.innerHTML && markInput.current.innerHTML && jsonInput.current.innerHTML) {
       const arg = {app: appInput.current.innerHTML, mark: markInput.current.innerHTML, json: jsonInput.current.innerHTML}
       const data = {action: 'poke', argument: arg}
-      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => handleAirlockResponse())
+      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => handleAirlockResponse(res))
     }
     else {
       alert('please provide all arguments')
     }},
     [props.sendCommand])
 
-  const handleAirlockResponse = () => {return}
+  const handleAirlockResponse = (res: any) => {console.log(res)}
 
   return (
   <div style={divStyle}> 
