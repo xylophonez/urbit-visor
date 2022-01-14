@@ -7,7 +7,7 @@ interface MenuOptionProps {
   keyDown: React.KeyboardEvent;
 }
 
-const options = ['bitcoin', 'poke', 'peek'];
+const options = ['bitcoin', 'poke', 'scry', 'subscribe', 'thread'];
  
 const MenuOptions = (props: MenuOptionProps) => {
   const [clickedIndex, setClickedIndex] = useState(-1);

@@ -84,6 +84,10 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
     case "get_ships":
       sendResponse({ airlock: state.airlock, ships: state.ships, active: state.activeShip })
       break;
+    case "call_airlock":
+      if (state.airlock)
+      (state.airlock as any)[request.data.action](request.data.argument).then((res: any) => sendResponse(res))
+      break;
     case "get_selected":
       sendResponse({ selected: state.selectedShip, active: state.activeShip })
       break;

@@ -1,6 +1,7 @@
 import React from "react";
 import * as CSS from 'csstype';
 import { useEffect, useState, useRef } from "react";
+import { urbitVisor } from "@dcspark/uv-core";
 import { Messaging } from "@dcspark/uv-core";
 import Urbit from "@urbit/http-api";
 
@@ -9,24 +10,21 @@ interface InputProps {
   sendCommand: Boolean;
 }
 
-const PokeInput = (props: InputProps) => {
-  const markInput = useRef(null);
+const SubscribeInput = (props: InputProps) => {
   const appInput = useRef(null);
-  const jsonInput = useRef(null);
+  const pathInput = useRef(null);
   const [currentFocus, setCurrentFocus] = useState(null)
 
   const selection = (document.querySelector("html > div").shadowRoot as any).getSelection()
 
-
   useEffect(() => {appInput.current.focus(); setCurrentFocus("app")}, [appInput])
-  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'app') {markInput.current.focus(); setCurrentFocus("mark")}}, [props.nextArg])
-  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'mark') {jsonInput.current.focus(); setCurrentFocus("json")}}, [props.nextArg])
+  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'app') {pathInput.current.focus(); setCurrentFocus("path")}}, [props.nextArg])
 
   useEffect(() => {
-    if (!props.sendCommand) return;
-    else if (appInput.current.innerHTML && markInput.current.innerHTML && jsonInput.current.innerHTML) {
-      const arg = {app: appInput.current.innerHTML, mark: markInput.current.innerHTML, json: jsonInput.current.innerHTML}
-      const data = {action: 'poke', argument: arg}
+    if (!props.sendCommand) {return}
+    else if (appInput.current.innerHTML && pathInput.current.innerHTML) {
+      const arg = {'app':appInput.current.innerHTML,'path':pathInput.current.innerHTML}
+      const data = {action: 'subscribe', argument: arg}
       Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => handleAirlockResponse(res))
     }
     else {
@@ -61,16 +59,13 @@ const PokeInput = (props: InputProps) => {
   }}>
   </style>
     <div>
-      poke:
+      subscribe:
     </div>
     <div>
       <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="app" ref={appInput}></div>
     </div>
     <div>
-      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="mark" ref={markInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {appInput.current.focus(); event.preventDefault(); setCurrentFocus("app"); selection.setPosition(selection.focusNode, selection.focusNode.length)}}}></div>
-    </div>
-    <div>
-      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="json" ref={jsonInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {markInput.current.focus(); event.preventDefault(); setCurrentFocus("mark"); selection.setPosition(selection.focusNode, selection.focusNode.length)}}}></div>
+      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="path" ref={pathInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {appInput.current.focus(); event.preventDefault(); setCurrentFocus("app"); selection.setPosition(selection.focusNode, selection.focusNode.length)}}}></div>
     </div>
   </div>
   )
@@ -83,4 +78,4 @@ const inputStyle: CSS.Properties = {
   width: 'fit-content'
 }
 
-export default PokeInput;
+export default SubscribeInput;
