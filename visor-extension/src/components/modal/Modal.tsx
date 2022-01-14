@@ -1,6 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { urbitVisor } from "@dcspark/uv-core";
+import Urbit from "@urbit/http-api";
+import { Messaging } from "@dcspark/uv-core";
+import { VisorSubscription } from "../../types";
 import Inputbox from "./Inputbox";
 import Body from "./Body";
 
@@ -10,8 +13,33 @@ const Modal = () => {
   const [keyDown, setKeyDown] = useState(null);
   const [nextArg, setNextArg] = useState(null);
   const [sendCommand, setSendCommand] = useState(null);
+  const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {setNextArg(null); setSendCommand(null)}, [nextArg, sendCommand])
+
+  useEffect(() => {
+    const sub = urbitVisor.on("connected", [], () => {
+      handleConnection()
+    });
+    handleConnection();
+    return () => urbitVisor.off(sub)
+  })
+
+  const handleConnection = () => {
+    if (isConnected) {
+      return
+    }
+    else {
+      urbitVisor.isConnected().then(connected => {
+        if (connected.response) {
+          setIsConnected(true);
+        }
+        else {
+          urbitVisor.promptConnection();
+        }
+      });
+    }
+  }
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key == 'Enter' && selectedToInput !== selected) {

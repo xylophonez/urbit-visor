@@ -2,13 +2,15 @@ import React from "react";
 import * as CSS from 'csstype';
 import { useEffect, useState, useRef } from "react";
 import { urbitVisor } from "@dcspark/uv-core";
+import { Messaging } from "@dcspark/uv-core";
+import Urbit from "@urbit/http-api";
 
 interface InputProps {
   nextArg: Boolean;
   sendCommand: Boolean;
 }
 
-const PeekInput = (props: InputProps) => {
+const ScryInput = (props: InputProps) => {
   const appInput = useRef(null);
   const pathInput = useRef(null);
   const [currentFocus, setCurrentFocus] = useState(null)
@@ -52,7 +54,7 @@ const PeekInput = (props: InputProps) => {
   }}>
   </style>
     <div>
-      peek:
+      scry:
     </div>
     <div>
       <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="app" ref={appInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {return}}}></div>
@@ -71,4 +73,4 @@ const inputStyle: CSS.Properties = {
   width: 'fit-content'
 }
 
-export default PeekInput;
+export default ScryInput;

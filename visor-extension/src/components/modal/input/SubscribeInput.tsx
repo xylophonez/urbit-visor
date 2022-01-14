@@ -2,6 +2,8 @@ import React from "react";
 import * as CSS from 'csstype';
 import { useEffect, useState, useRef } from "react";
 import { urbitVisor } from "@dcspark/uv-core";
+import { Messaging } from "@dcspark/uv-core";
+import Urbit from "@urbit/http-api";
 
 interface InputProps {
   nextArg: Boolean;
@@ -20,8 +22,11 @@ const SubscribeInput = (props: InputProps) => {
 
   useEffect(() => {
     if (!props.sendCommand) {return}
-    else if (appInput.current.innerHTML && pathInput.current.innerHTML)
-      {urbitVisor.subscribe({'app':appInput.current.innerHTML,'path':pathInput.current.innerHTML})}
+    else if (appInput.current.innerHTML && pathInput.current.innerHTML) {
+      const arg = {'app':appInput.current.innerHTML,'path':pathInput.current.innerHTML}
+      const data = {action: 'subscribe', argument: arg}
+      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => console.log(res, "did thing"))
+    }
     else {
       alert('please provide all arguments')
     }},

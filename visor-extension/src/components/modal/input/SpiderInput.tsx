@@ -2,6 +2,8 @@ import React from "react";
 import * as CSS from 'csstype';
 import { useEffect, useState, useRef } from "react";
 import { urbitVisor } from "@dcspark/uv-core";
+import { Messaging } from "@dcspark/uv-core";
+import Urbit from "@urbit/http-api";
 
 interface InputProps {
   nextArg: Boolean;
@@ -24,8 +26,11 @@ const SpiderInput = (props: InputProps) => {
 
   useEffect(() => {
     if (!props.sendCommand) {return}
-    else if (threadNameInput.current.innerHTML && markInInput.current.innerHTML && markOutInput.current.innerHTML && jsonInput.current.innerHTML)
-      {urbitVisor.thread({'threadName':threadNameInput.current.innerHTML,'inputMark':markInInput.current.innerHTML,'outputMark':markOutInput.current.innerHTML,'body':jsonInput.current.innerHTML})}
+    else if (threadNameInput.current.innerHTML && markInInput.current.innerHTML && markOutInput.current.innerHTML && jsonInput.current.innerHTML) {
+      const arg = {'threadName':threadNameInput.current.innerHTML,'inputMark':markInInput.current.innerHTML,'outputMark':markOutInput.current.innerHTML,'body':jsonInput.current.innerHTML}
+      const data = {action: 'thread', argument: arg}
+      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => console.log(res, "did thing"))
+    }
     else {
       alert('please provide all arguments')
     }},

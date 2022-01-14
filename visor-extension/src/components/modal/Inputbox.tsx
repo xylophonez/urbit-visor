@@ -1,8 +1,9 @@
 import React from "react";
 import * as CSS from 'csstype';
 import { useEffect, useState } from "react";
+import Urbit from "@urbit/http-api";
 import PokeInput from "./input/PokeInput";
-import PeekInput from "./input/PeekInput";
+import ScryInput from "./input/ScryInput";
 import BitcoinInput from "./input/BitcoinInput";
 import SubscribeInput from "./input/SubscribeInput";
 import SpiderInput from "./input/SpiderInput";
@@ -22,8 +23,8 @@ const Inputbox = (props: InputProps) => {
         case 'poke':
           return <PokeInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
           break;
-        case 'peek':
-          return <PeekInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
+        case 'scry':
+          return <ScryInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
           break;
         case 'bitcoin':
           return <BitcoinInput nextArg={props.nextArg} sendCommand={props.sendCommand} />

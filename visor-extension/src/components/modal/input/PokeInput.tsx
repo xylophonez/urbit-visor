@@ -1,7 +1,8 @@
 import React from "react";
 import * as CSS from 'csstype';
 import { useEffect, useState, useRef } from "react";
-import { urbitVisor } from "@dcspark/uv-core";
+import { Messaging } from "@dcspark/uv-core";
+import Urbit from "@urbit/http-api";
 
 interface InputProps {
   nextArg: Boolean;
@@ -13,20 +14,24 @@ const PokeInput = (props: InputProps) => {
   const appInput = useRef(null);
   const jsonInput = useRef(null);
   const [currentFocus, setCurrentFocus] = useState(null)
-  const [appArg, setAppArg] = useState(null)
-  const [markArg, setMarkArg] = useState(null)
-  const [jsonArg, setJsonArg] = useState(null)
 
   const selection = (document.querySelector("html > div").shadowRoot as any).getSelection()
+
 
   useEffect(() => {appInput.current.focus(); setCurrentFocus("app")}, [appInput])
   useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'app') {markInput.current.focus(); setCurrentFocus("mark")}}, [props.nextArg])
   useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'mark') {jsonInput.current.focus(); setCurrentFocus("json")}}, [props.nextArg])
 
+
+  
+
   useEffect(() => {
-    if (!props.sendCommand) {return}
-    else if (appInput.current.innerHTML && markInput.current.innerHTML && jsonInput.current.innerHTML)
-      {urbitVisor.poke({'app':appInput.current.innerHTML,'mark':markInput.current.innerHTML,'json':jsonInput.current.innerHTML})}
+    if (!props.sendCommand) return;
+    else if (appInput.current.innerHTML && markInput.current.innerHTML && jsonInput.current.innerHTML) {
+      const arg = {app: appInput.current.innerHTML, mark: markInput.current.innerHTML, json: jsonInput.current.innerHTML}
+      const data = {action: 'poke', argument: arg}
+      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => console.log(res, "did thing"))
+    }
     else {
       alert('please provide all arguments')
     }},
