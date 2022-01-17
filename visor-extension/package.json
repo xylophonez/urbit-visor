@@ -1,6 +1,6 @@
 {
   "name": "urbit-visor",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
