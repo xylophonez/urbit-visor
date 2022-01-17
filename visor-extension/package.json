@@ -50,7 +50,8 @@
     "ts-node": "^10.3.0",
     "@dcspark/uv-core": "^0.2.9",
     "zustand": "^3.5.13",
-    "follow-redirects": ">=1.14.7"
+    "follow-redirects": ">=1.14.7",
+    "node-forge": ">=1.0.0"
   },
   "engines": {
     "node": "14.17.6",
