@@ -14,6 +14,7 @@ const Modal = () => {
   const [nextArg, setNextArg] = useState(null);
   const [sendCommand, setSendCommand] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
+  const [airlockResponse, setAirlockResponse] = useState(null);
 
   useEffect(() => {setNextArg(null); setSendCommand(null)}, [nextArg, sendCommand])
 
@@ -44,7 +45,8 @@ const Modal = () => {
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key == 'Enter' && selectedToInput !== selected) {
       event.preventDefault();
-      setSelectedToInput(selected)
+      setSelectedToInput(selected);
+      setAirlockResponse(null)
     }
     else if (event.key == 'Enter' && selected == selectedToInput) {
       event.preventDefault();
@@ -61,8 +63,8 @@ const Modal = () => {
   }
   return (
   <div onKeyDown={(event: React.KeyboardEvent) => handleKeyDown(event)} tabIndex={-1}>
-    <Inputbox selected={selectedToInput} nextArg={nextArg} sendCommand={sendCommand} />
-    <Body handleSelection={(i: String) => setSelected(i)} selected={selected} keyDown={keyDown} />
+    <Inputbox selected={selectedToInput} nextArg={nextArg} sendCommand={sendCommand} airlockResponse={(res: any) => setAirlockResponse(res)} />
+    <Body handleSelection={(i: String) => setSelected(i)} selected={selected} keyDown={keyDown} airlockResponse={airlockResponse} />
   </div>
   )
 };

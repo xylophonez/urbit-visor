@@ -1,5 +1,5 @@
 import { Messaging } from "@dcspark/uv-core";
-import { SubscriptionRequestInterface } from "@urbit/http-api/src/types";
+import { SubscriptionRequestInterface } from "@urbit/http-api/dist/types";
 import { EncryptedShipCredentials, UrbitVisorAction, UrbitVisorInternalAction, UrbitVisorInternalComms, UrbitVisorState } from "./types";
 
 import { fetchAllPerms } from "./urbit"
@@ -87,6 +87,7 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
     case "call_airlock":
       if (state.airlock)
       (state.airlock as any)[request.data.action](request.data.argument).then((res: any) => sendResponse(res))
+        .catch((err: any) => sendResponse({ status: "error", response: err }))
       break;
     case "get_selected":
       sendResponse({ selected: state.selectedShip, active: state.activeShip })

@@ -8,13 +8,14 @@ interface BodyProps {
   handleSelection: (textContent: String) => void;
   keyDown: React.KeyboardEvent;
   selected: String;
+  airlockResponse: any;
 }
 
 const Body = (props: BodyProps) => {
   return (
   <div style={divStyle}>
     <Menu handleSelection={props.handleSelection} keyDown={props.keyDown} />
-    <Display selected={props.selected} />
+    <Display selected={props.selected} airlockResponse={props.airlockResponse} />
   </div>
   )
 };

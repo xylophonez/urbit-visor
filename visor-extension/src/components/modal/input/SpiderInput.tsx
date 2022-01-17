@@ -8,6 +8,7 @@ import Urbit from "@urbit/http-api";
 interface InputProps {
   nextArg: Boolean;
   sendCommand: Boolean;
+  airlockResponse: (response: any) => void;
 }
 
 const SpiderInput = (props: InputProps) => {
@@ -15,28 +16,30 @@ const SpiderInput = (props: InputProps) => {
   const markOutInput = useRef(null);
   const threadNameInput = useRef(null);
   const jsonInput = useRef(null);
+  const deskInput = useRef(null);
   const [currentFocus, setCurrentFocus] = useState(null)
 
   const selection = (document.querySelector("html > div").shadowRoot as any).getSelection()
 
   useEffect(() => {threadNameInput.current.focus(); setCurrentFocus("threadName")}, [threadNameInput])
-  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'threadName') {markInInput.current.focus(); setCurrentFocus("markIn")}}, [props.nextArg])
+  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'threadName') {deskInput.current.focus(); setCurrentFocus("desk")}}, [props.nextArg])
+  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'desk') {markInInput.current.focus(); setCurrentFocus("markIn")}}, [props.nextArg])
   useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'markIn') {markOutInput.current.focus(); setCurrentFocus("markOut")}}, [props.nextArg])
   useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'markOut') {jsonInput.current.focus(); setCurrentFocus("json")}}, [props.nextArg])
 
   useEffect(() => {
     if (!props.sendCommand) {return}
-    else if (threadNameInput.current.innerHTML && markInInput.current.innerHTML && markOutInput.current.innerHTML && jsonInput.current.innerHTML) {
-      const arg = {'threadName':threadNameInput.current.innerHTML,'inputMark':markInInput.current.innerHTML,'outputMark':markOutInput.current.innerHTML,'body':jsonInput.current.innerHTML}
+    else if (threadNameInput.current.innerHTML && deskInput.current.innerHTML && markInInput.current.innerHTML && markOutInput.current.innerHTML && jsonInput.current.innerHTML) {
+      const arg = {'threadName':threadNameInput.current.innerHTML,'desk':deskInput.current.innerHTML,'inputMark':markInInput.current.innerHTML,'outputMark':markOutInput.current.innerHTML,'body':JSON.parse(jsonInput.current.innerHTML)}
       const data = {action: 'thread', argument: arg}
-      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => handleAirlockResponse(res))
+      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => handleAirlockResponse(res)).catch(err => console.log(err))
     }
     else {
       alert('please provide all arguments')
     }},
     [props.sendCommand])
 
-  const handleAirlockResponse = (res: any) => {console.log(res)}
+  const handleAirlockResponse = (res: any) => {console.log(res); props.airlockResponse(res)}
 
   return (
   <div style={divStyle}> 
@@ -69,7 +72,10 @@ const SpiderInput = (props: InputProps) => {
       <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="thread name" ref={threadNameInput}></div>
     </div>
     <div>
-      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="input mark" ref={markInInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {threadNameInput.current.focus(); event.preventDefault(); setCurrentFocus("threadName"); selection.setPosition(selection.focusNode, selection.focusNode.length)}}}></div>
+      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="desk" ref={deskInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {threadNameInput.current.focus(); event.preventDefault(); setCurrentFocus("threadName"); selection.setPosition(selection.focusNode, selection.focusNode.length)}}}></div>
+    </div>
+    <div>
+      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="input mark" ref={markInInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {deskInput.current.focus(); event.preventDefault(); setCurrentFocus("desk"); selection.setPosition(selection.focusNode, selection.focusNode.length)}}}></div>
     </div>
     <div>
       <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="output mark" ref={markOutInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {markInInput.current.focus(); event.preventDefault(); setCurrentFocus("markIn"); selection.setPosition(selection.focusNode, selection.focusNode.length)}}}></div>

@@ -1,5 +1,5 @@
 import Urbit from "@urbit/http-api";
-import { Scry, Thread, Poke, SubscriptionRequestInterface } from "@urbit/http-api/src/types"
+import { Scry, Thread, Poke, SubscriptionRequestInterface } from "@urbit/http-api/dist/types"
 
 export type DecryptedShipCredentials = {
     shipName: string;

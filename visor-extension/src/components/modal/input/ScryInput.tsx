@@ -8,6 +8,7 @@ import Urbit from "@urbit/http-api";
 interface InputProps {
   nextArg: Boolean;
   sendCommand: Boolean;
+  airlockResponse: (response: any) => void;
 }
 
 const ScryInput = (props: InputProps) => {
@@ -32,7 +33,7 @@ const ScryInput = (props: InputProps) => {
     }},
     [props.sendCommand])
 
-  const handleAirlockResponse = (res: any) => {console.log(res)}
+  const handleAirlockResponse = (res: any) => {props.airlockResponse(res)}
 
   return (
   <div style={divStyle}> 

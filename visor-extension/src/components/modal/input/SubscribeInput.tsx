@@ -8,6 +8,7 @@ import Urbit from "@urbit/http-api";
 interface InputProps {
   nextArg: Boolean;
   sendCommand: Boolean;
+  airlockResponse: (response: any) => void;
 }
 
 const SubscribeInput = (props: InputProps) => {
@@ -32,7 +33,7 @@ const SubscribeInput = (props: InputProps) => {
     }},
     [props.sendCommand])
 
-  const handleAirlockResponse = (res: any) => {console.log(res)}
+  const handleAirlockResponse = (res: any) => {console.log(res); props.airlockResponse(res)}
 
   return (
   <div style={divStyle}> 
