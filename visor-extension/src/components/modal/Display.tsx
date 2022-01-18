@@ -17,7 +17,7 @@ const Display = (props: DisplayProps) => {
       (props.airlockResponse) ?
       (typeof props.airlockResponse !== 'object') ?
       (<div style={{textAlign:'center'}}>{JSON.stringify(props.airlockResponse)}</div>) :
-      <ReactJson style={{padding:'15px'}} src={props.airlockResponse} /> :
+      <ReactJson style={{padding:'15px'}} src={props.airlockResponse} enableClipboard={false} /> :
       <div></div>
     }
   </div>
