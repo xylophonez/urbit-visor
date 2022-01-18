@@ -12,6 +12,7 @@ interface InputProps {
   selected: String;
   nextArg: Boolean;
   sendCommand: Boolean;
+  airlockResponse: (response: any) => void;
 }
 
 const Inputbox = (props: InputProps) => {
@@ -21,19 +22,19 @@ const Inputbox = (props: InputProps) => {
       (() => {
         switch (props.selected) {
         case 'poke':
-          return <PokeInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
+          return <PokeInput nextArg={props.nextArg} sendCommand={props.sendCommand} airlockResponse={props.airlockResponse} />
           break;
         case 'scry':
-          return <ScryInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
+          return <ScryInput nextArg={props.nextArg} sendCommand={props.sendCommand} airlockResponse={props.airlockResponse} />
           break;
         case 'bitcoin':
           return <BitcoinInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
           break;
         case 'subscribe':
-          return <SubscribeInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
+          return <SubscribeInput nextArg={props.nextArg} sendCommand={props.sendCommand} airlockResponse={props.airlockResponse} />
           break;
         case 'thread':
-          return <SpiderInput nextArg={props.nextArg} sendCommand={props.sendCommand} />
+          return <SpiderInput nextArg={props.nextArg} sendCommand={props.sendCommand} airlockResponse={props.airlockResponse} />
           break;
         default:
         return <input style={inputStyle}></input>
