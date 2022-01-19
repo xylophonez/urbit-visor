@@ -1,5 +1,6 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import * as CSS from 'csstype';
+import { useEffect, useLayoutEffect, useState, useRef, useCallback } from "react";
 import { urbitVisor } from "@dcspark/uv-core";
 import Urbit from "@urbit/http-api";
 import { Messaging } from "@dcspark/uv-core";
@@ -8,7 +9,9 @@ import Inputbox from "./Inputbox";
 import Body from "./Body";
 
 const Modal = () => {
+  const rootRef = useRef(null);
   const [selected, setSelected] = useState(null);
+  const [dims, setDims] = useState(null);
   const [selectedToInput, setSelectedToInput] = useState(null);
   const [keyDown, setKeyDown] = useState(null);
   const [nextArg, setNextArg] = useState(null);
@@ -18,6 +21,20 @@ const Modal = () => {
 
   useEffect(() => {setNextArg(null); setSendCommand(null)}, [nextArg, sendCommand])
 
+  const handleMessage = (e: any) => {
+    if (e.data == 'focus') {
+      console.log('focusing')
+      rootRef.current.focus()
+    }
+    else console.log('not focusing')
+  }
+
+  useEffect(() => {
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  })
+
+/*
   useEffect(() => {
     const sub = urbitVisor.on("connected", [], () => {
       handleConnection()
@@ -41,6 +58,7 @@ const Modal = () => {
       });
     }
   }
+*/
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key == 'Enter' && selectedToInput !== selected) {
@@ -56,13 +74,18 @@ const Modal = () => {
       event.preventDefault();
       setNextArg(true)
     }
+    else if (event.key == 'Escape') {
+      console.log('sending close')
+      event.preventDefault();
+      window.top.postMessage('close', "*")
+    }
     else {
     setKeyDown(event);
     return
     }
   }
   return (
-  <div onKeyDown={(event: React.KeyboardEvent) => handleKeyDown(event)} tabIndex={-1}>
+  <div style={{display: 'flex', flexDirection: 'column', height: '100%'}} ref={rootRef} id={"modalContainer"} onKeyDown={(event: React.KeyboardEvent) => handleKeyDown(event)} tabIndex={-1}>
     <Inputbox selected={selectedToInput} nextArg={nextArg} sendCommand={sendCommand} airlockResponse={(res: any) => setAirlockResponse(res)} />
     <Body handleSelection={(i: String) => setSelected(i)} selected={selected} keyDown={keyDown} airlockResponse={airlockResponse} />
   </div>
