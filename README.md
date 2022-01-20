@@ -57,6 +57,7 @@ Below you will find the API which the current version of Urbit Visor supports. I
 | `authorizedPermissions` | Returns the permissions that the user has authorized for the current domain. | No                  | `()`                                                                       | `Array<Permission>`   |
 | `on`                    | Adds an event listener for a subscription to Urbit Visor Events.             | No                  | `(eventType: string, keys: Array<string>, callback: Function)`             | `Subscription`        |
 | `off`                   | Removes an event listener set up by `on()`.                                  | No                  | `Subscription` (returned by `.on()`)                                       | undefined             |
+| `require`               | Sets the required permissions for your app and ensures their presence.       | No                  | `(perms: Array<Permission>, callback: Function)`                           | undefined             |
 
 ### .on()
 
@@ -79,6 +80,30 @@ urbitVisor.on("sse", ["graph-update", "add-nodes", "nodes", "children"] , (data)
 This will thus sent the sole argument, `children`, to the callback function that you call.
 
 If you are looking for the whole data structure you can just pass an empty array.
+
+### .require()
+
+Visor 0.3.3 introduces a new endpoint to make the initial setup of your app much easier and clean up most of the boilerplate.
+Any app will need a defined set of permissions required to run it, e.g. you might want the ship name early on to display it to the user, as well as making sure you can scry or poke.
+On the top page of your app (e.g. `App.tsx`) run `urbitVisor.require` and pass it two pieces of data: one array with the permissions you want, and a callback function to automatically query for the data that you know you will need.
+
+e.g.
+```
+urbitVisor.require(["shipName", "scry", "subscribe"], setData);
+
+function setData() {
+  urbitVisor.getShip().then((res) => setShip(res.response));
+  urbitVisor.subscribe({ app: "graph-store", path: "/updates" })
+    .then((res) => console.log(res, "subscribed to graph-store"));
+  const subscription = urbitVisor.on("sse", ["graph-update"], (data) => {
+    handleGraphUpdate(data)
+  });
+};
+function handleGraphUpdate(data){...}
+```
+
+The code above will make sure that your app checks the active ship on your Urbit visor for permissions to read the ship name, scry and subscribe; if they exist, it will run the `setData` callback, which sets the ship name into your application and subscribes to graph-store updates, then passes those updates to another function (with whatever behavior you need).
+If the ship does not have the permissions required, it will automatically request them, and once granted, it will know that they were granted and automatically run the setData callback, greatly reducing the amount of initial code you need to write so you can focus on your business logic. 
 
 ## FAQ
 

@@ -1,5 +1,5 @@
 import { fromEvent, Subscription } from "rxjs";
-import { VISOR_ID, Scry, Poke, Thread, SubscriptionRequestInterface, UrbitVisorAction, UrbitVisorRequest, UrbitVisorResponse } from "./types";
+import { VISOR_ID, Scry, Poke, Thread, Permission, SubscriptionRequestInterface, UrbitVisorAction, UrbitVisorRequest, UrbitVisorResponse, UrbitVisorEventType } from "./types";
 import { Messaging } from "./messaging";
 import { inject, visorPromptModal, showPopup, promptUnlock, promptPerms } from "./modals"
 
@@ -20,12 +20,26 @@ export const urbitVisor = {
     thread: (payload: Thread<any>) => requestData("thread", payload),
     subscribe: (payload: SubscriptionRequestInterface, once?: boolean) => requestData("subscribe", { payload: payload, once: once }),
     unsubscribe: (payload: number) => requestData("unsubscribe", payload),
-    on: (eventType: string, keys: string[], callback: Function) => addListener(eventType, keys, callback),
-    off: (subscription: Subscription) => subscription.unsubscribe()
+    on: (eventType: UrbitVisorEventType, keys: string[], callback: Function) => addListener(eventType, keys, callback),
+    off: (subscription: Subscription) => subscription.unsubscribe(),
+    require: (perms: Permission[], callback: Function) => initialize(perms, callback)
+};
+
+async function initialize(perms: Permission[], callback: Function): Promise<void>{
+    const sub = urbitVisor.on("connected", [], () => initialize(perms, callback));
+    const sub2 = urbitVisor.on("permissions_granted", [], () => initialize(perms, callback));
+    const isConnected = await requestData("check_connection");
+    if (isConnected.response){
+        urbitVisor.off(sub);
+        const existing = await requestData("check_perms");
+        const granted = perms.every(p => existing.response.includes(p));
+        if (granted) urbitVisor.off(sub2), callback();
+        else requestData("perms", perms);
+    } else promptUnlock();
 };
 
 
-function addListener(eventType: string, keys: string[], callback: Function) {
+function addListener(eventType: UrbitVisorEventType, keys: string[], callback: Function) {
     const get_in = (object: any, array: string[]): any => {
         if (object && typeof object === "object" && array.length) return get_in(object[array[0]], array.slice(1))
         else return object
