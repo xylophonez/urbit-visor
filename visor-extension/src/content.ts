@@ -24,14 +24,18 @@ function embed(fn: Function) {
 
 function appendLauncher() {
   const shadowWrapper = document.createElement("div");
-  const shadowDOM = shadowWrapper.attachShadow({mode: "open"});
+  const shadowDOM = shadowWrapper.attachShadow({ mode: "open" });
   const modal = document.createElement("dialog");
   modal.id = "command-launcher-container";
   modal.style.padding = '0';
+  modal.style.borderWidth = '2px';
+  modal.style.backgroundColor = "white";
+  modal.style.borderRadius = "6px";
   const frame = document.createElement("iframe");
   frame.src = "chrome-extension://oadimaacghcacmfipakhadejgalcaepg/launcher.html";
   frame.id = 'frame';
   frame.style.height = '300px';
+  frame.style.borderWidth = '0px';
   modal.appendChild(frame);
   shadowDOM.appendChild(modal);
   document.documentElement.appendChild(shadowWrapper);
