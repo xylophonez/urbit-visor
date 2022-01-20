@@ -19,7 +19,7 @@ const SpiderInput = (props: InputProps) => {
   const deskInput = useRef(null);
   const [currentFocus, setCurrentFocus] = useState(null)
 
-  const selection = (document.querySelector("html > div").shadowRoot as any).getSelection()
+  const selection = (window as any).getSelection()
 
   useEffect(() => {threadNameInput.current.focus(); setCurrentFocus("threadName")}, [threadNameInput])
   useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'threadName') {deskInput.current.focus(); setCurrentFocus("desk")}}, [props.nextArg])

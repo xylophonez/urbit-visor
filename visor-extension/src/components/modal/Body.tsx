@@ -24,6 +24,7 @@ const divStyle: CSS.Properties = {
   display: 'flex',
   justifyContent: 'flex-start',
   padding: '2px',
+  height: '100%'
 }
 
 export default Body;

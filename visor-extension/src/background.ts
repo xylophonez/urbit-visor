@@ -61,6 +61,7 @@ function hotkeyListener() {
   const showLauncher = () => {
     const modal: any = <any>document.querySelector("html > div").shadowRoot.querySelector("#command-launcher-container");
     modal.showModal();
+    modal.firstElementChild.contentWindow.postMessage('focus', "*")
   }
   chrome.commands.onCommand.addListener((command, tab) => {
     chrome.tabs.executeScript(tab.id, {
