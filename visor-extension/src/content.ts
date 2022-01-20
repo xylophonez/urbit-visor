@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Messaging } from "./messaging";
-import Modal from "./components/modal/Modal";
 
 function shouldInject(): boolean {
   const documentElement = document.documentElement.nodeName;
@@ -28,12 +27,23 @@ function appendLauncher() {
   const shadowDOM = shadowWrapper.attachShadow({mode: "open"});
   const modal = document.createElement("dialog");
   modal.id = "command-launcher-container";
-  modal.style.width = '690px';
   modal.style.padding = '0';
+  const frame = document.createElement("iframe");
+  frame.src = "chrome-extension://oadimaacghcacmfipakhadejgalcaepg/launcher.html";
+  frame.id = 'frame';
+  frame.style.height = '300px';
+  modal.appendChild(frame);
   shadowDOM.appendChild(modal);
   document.documentElement.appendChild(shadowWrapper);
-  const react = React.createElement(Modal)
-  ReactDOM.render(react, modal);
+  const handleHotkeys = (e: any) => {
+    if (e.data == 'close') {
+      console.log('closing')
+      const modal: any = <any>document.querySelector("html > div").shadowRoot.querySelector("#command-launcher-container");
+      modal.close()
+    }
+    else console.log('not closing')
+  }
+  window.addEventListener('message', handleHotkeys)
 }
 appendLauncher();
 

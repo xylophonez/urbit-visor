@@ -26,14 +26,20 @@ const MenuOptions = (props: MenuOptionProps) => {
     [props.keyDown])
 
   return (
-    <ul style={listStyle}>
-      {options.map((option, index) => <li style={(index == clickedIndex) ? {border:'outset'} : {border:'none'}} key={option}>{option}</li>)}
-    </ul>
+    <div /*style={listStyle}*/>
+      {options.map((option, index) => <div style={(index == clickedIndex) ? {...listItemStyle, border:'outset'} : {...listItemStyle, border:'none'}} key={option}>{option}</div>)}
+    </div>
   )
 };
 
+/*
 const listStyle: CSS.Properties = {
-  listStyleType: 'none',
+  color: 'gray',
+}
+*/
+const listItemStyle: CSS.Properties = {
+  margin: '12px',
+  fontSize: '18px'
 }
 
 export default MenuOptions;
