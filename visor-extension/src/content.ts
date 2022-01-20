@@ -34,7 +34,8 @@ function appendLauncher() {
   const frame = document.createElement("iframe");
   frame.src = "chrome-extension://oadimaacghcacmfipakhadejgalcaepg/launcher.html";
   frame.id = 'frame';
-  frame.style.height = '300px';
+  frame.style.height = '400px';
+  frame.style.width = '600px';
   frame.style.borderWidth = '0px';
   modal.appendChild(frame);
   shadowDOM.appendChild(modal);
