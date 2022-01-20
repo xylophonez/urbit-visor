@@ -1,4 +1,4 @@
-import { Messaging } from "@dcspark/uv-core";
+import { Messaging } from "./messaging";
 import { SubscriptionRequestInterface } from "@urbit/http-api/dist/types";
 import { EncryptedShipCredentials, UrbitVisorAction, UrbitVisorInternalAction, UrbitVisorInternalComms, UrbitVisorState } from "./types";
 
