@@ -1,6 +1,6 @@
-import * as React from "react";
-import { motion } from "framer-motion";
-import "./about.css";
+import * as React from 'react';
+import { motion } from 'framer-motion';
+import './about.css';
 
 export default function About() {
   return (
@@ -12,13 +12,13 @@ export default function About() {
     >
       <h1 className="urbit-name"> Urbit Visor</h1>
       <div className="about-version">
-        <p>Version: 0.3.2</p>
+        <p>Version: 0.3.3</p>
       </div>
       <div className="about-description">
         <p>
-          Urbit Visor is an extension which transforms your web browser into a
-          first class Urbit client. Its goal is to allow existing web tech to
-          seamlessly integrate together with the novel functionality of Urbit.
+          Urbit Visor is an extension which transforms your web browser into a first class Urbit
+          client. Its goal is to allow existing web tech to seamlessly integrate together with the
+          novel functionality of Urbit.
         </p>
       </div>
       <div className="about-created-by">

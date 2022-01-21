@@ -1,6 +1,6 @@
 {
   "name": "urbit-visor",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -51,7 +51,9 @@
     "react-router-dom": "^5.3.0",
     "rxjs": "^7.5.2",
     "ts-node": "^10.3.0",
-    "zustand": "^3.6.9"
+    "zustand": "^3.6.9",
+    "follow-redirects": ">=1.14.7",
+    "node-forge": ">=1.0.0"
   },
   "engines": {
     "node": "14.17.6",

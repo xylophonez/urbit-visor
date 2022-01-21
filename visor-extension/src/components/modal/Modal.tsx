@@ -3,7 +3,7 @@ import * as CSS from 'csstype';
 import { useEffect, useLayoutEffect, useState, useRef, useCallback } from "react";
 import { urbitVisor } from "@dcspark/uv-core";
 import Urbit from "@urbit/http-api";
-import { Messaging } from "@dcspark/uv-core";
+import { Messaging } from "../../messaging";
 import { VisorSubscription } from "../../types";
 import Inputbox from "./Inputbox";
 import Body from "./Body";
