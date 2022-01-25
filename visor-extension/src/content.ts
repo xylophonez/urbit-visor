@@ -46,9 +46,23 @@ function appendLauncher() {
       const modal: any = <any>document.querySelector("html > div").shadowRoot.querySelector("#command-launcher-container");
       modal.close()
     }
-    else console.log('not closing')
+    //its an sse data
+	      else {
+      const modal: any = <any>document.querySelector("html > div").shadowRoot.querySelector("#command-launcher-container");
+      modal.firstElementChild.contentWindow.postMessage(e.data, "*")
+	      }
   }
   window.addEventListener('message', handleHotkeys)
+	      window.addEventListener('click', (e) => {
+              const modal: any = <any>document.querySelector("html > div").shadowRoot.querySelector("#command-launcher-container");
+	      if (modal.open) {
+	        console.log('closing modal on click')
+	        modal.close()
+	      }
+	      else {
+	        console.log('modal not open')
+	      }
+	      })
 }
 appendLauncher();
 

@@ -15,9 +15,13 @@ const Display = (props: DisplayProps) => {
   <div style={divStyle}>
     {
       (props.airlockResponse) ?
-      (typeof props.airlockResponse !== 'object') ?
-      (<div style={{textAlign:'center'}}>{JSON.stringify(props.airlockResponse)}</div>) :
+      (Array.isArray(props.airlockResponse)) ?
+      (<div>
+        {props.airlockResponse.map((line: any, index: number) => (<div key={index} style={{textAlign:'left'}}>{JSON.stringify(line)}</div>))}
+      </div>) :
+      (typeof props.airlockResponse == 'object') ?
       <ReactJson style={{padding:'15px'}} src={props.airlockResponse} enableClipboard={false} /> :
+      (<div style={{textAlign:'center'}}>{JSON.stringify(props.airlockResponse)}</div>) :
       <div></div>
     }
   </div>

@@ -7,6 +7,7 @@ import ScryInput from "./input/ScryInput";
 import BitcoinInput from "./input/BitcoinInput";
 import SubscribeInput from "./input/SubscribeInput";
 import SpiderInput from "./input/SpiderInput";
+import TerminalInput from "./input/TerminalInput";
 
 interface InputProps {
   selected: String;
@@ -58,6 +59,15 @@ const Inputbox = (props: InputProps) => {
           case "thread":
             return (
               <SpiderInput
+                nextArg={props.nextArg}
+                sendCommand={props.sendCommand}
+                airlockResponse={props.airlockResponse}
+              />
+            );
+            break;
+          case "terminal":
+            return (
+              <TerminalInput
                 nextArg={props.nextArg}
                 sendCommand={props.sendCommand}
                 airlockResponse={props.airlockResponse}

@@ -26,7 +26,7 @@ const Modal = () => {
       console.log('focusing')
       rootRef.current.focus()
     }
-    else console.log('not focusing')
+    else return
   }
 
   useEffect(() => {
