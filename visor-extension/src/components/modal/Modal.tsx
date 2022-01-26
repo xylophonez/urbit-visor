@@ -77,7 +77,8 @@ const Modal = () => {
     else if (event.key == 'Escape') {
       console.log('sending close')
       event.preventDefault();
-      window.top.postMessage('close', "*")
+      window.top.postMessage('close', "*");
+      setSelectedToInput(null)
     }
     else {
     setKeyDown(event);
