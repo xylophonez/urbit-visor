@@ -1,6 +1,6 @@
 import React from "react";
 import * as CSS from "csstype";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Urbit from "@urbit/http-api";
 import PokeInput from "./input/PokeInput";
 import ScryInput from "./input/ScryInput";
@@ -11,12 +11,16 @@ import TerminalInput from "./input/TerminalInput";
 
 interface InputProps {
   selected: String;
+  baseFocus: Boolean;
   nextArg: Boolean;
   sendCommand: Boolean;
   airlockResponse: (response: any) => void;
 }
 
+
 const Inputbox = (props: InputProps) => {
+  const baseInput = useRef(null);
+  useEffect(() => {if (!props.selected) baseInput.current.focus()}, [props.baseFocus])
   return (
     <div style={divStyle} className="modal-input-box">
       {(() => {
@@ -75,7 +79,7 @@ const Inputbox = (props: InputProps) => {
             );
             break;
           default:
-            return <input style={inputStyle}></input>;
+            return <input ref={baseInput} type={'text'} style={inputStyle} />;
         }
       })()}
     </div>

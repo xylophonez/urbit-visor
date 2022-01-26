@@ -11,6 +11,7 @@ import Body from "./Body";
 const Modal = () => {
   const rootRef = useRef(null);
   const [selected, setSelected] = useState(null);
+  const [baseFocus, setBaseFocus] = useState(null);
   const [dims, setDims] = useState(null);
   const [selectedToInput, setSelectedToInput] = useState(null);
   const [keyDown, setKeyDown] = useState(null);
@@ -19,12 +20,20 @@ const Modal = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [airlockResponse, setAirlockResponse] = useState(null);
 
-  useEffect(() => {setNextArg(null); setSendCommand(null)}, [nextArg, sendCommand])
+  useEffect(() => {setNextArg(null); setSendCommand(null); setBaseFocus(false)}, [nextArg, sendCommand, baseFocus])
 
   const handleMessage = (e: any) => {
     if (e.data == 'focus') {
       console.log('focusing')
+    if (selectedToInput) {
       rootRef.current.focus()
+    }
+    else
+      setBaseFocus(true)
+    }
+    else if (e.data == 'closing') {
+      setSelectedToInput(null);
+      setSelected(null)
     }
     else return
   }
@@ -78,16 +87,21 @@ const Modal = () => {
       console.log('sending close')
       event.preventDefault();
       window.top.postMessage('close', "*");
-      setSelectedToInput(null)
+      setSelectedToInput(null);
+      setSelected(null)
+    }
+    else if (event.key == 'ArrowUp' || event.key == 'ArrowDown') {
+      event.preventDefault();
+      setKeyDown(event);
+      return
     }
     else {
-    setKeyDown(event);
     return
     }
   }
   return (
   <div style={{display: 'flex', flexDirection: 'column', height: '100%'}} ref={rootRef} id={"modalContainer"} onKeyDown={(event: React.KeyboardEvent) => handleKeyDown(event)} tabIndex={-1}>
-    <Inputbox selected={selectedToInput} nextArg={nextArg} sendCommand={sendCommand} airlockResponse={(res: any) => setAirlockResponse(res)} />
+    <Inputbox baseFocus={baseFocus} selected={selectedToInput} nextArg={nextArg} sendCommand={sendCommand} airlockResponse={(res: any) => setAirlockResponse(res)} />
     <Body handleSelection={(i: String) => setSelected(i)} selected={selected} keyDown={keyDown} airlockResponse={airlockResponse} />
   </div>
   )
