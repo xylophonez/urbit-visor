@@ -30,7 +30,10 @@ const Display = (props: DisplayProps) => {
 
 const divStyle: CSS.Properties = {
   width: '-webkit-fill-available',
+  height: '100%',
   background: 'lightgray',
+  overflowY: 'scroll',
+  overflowX: 'hidden',
 }
 
 export default Display;

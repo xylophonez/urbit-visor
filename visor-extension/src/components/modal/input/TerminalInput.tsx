@@ -23,7 +23,10 @@ const TerminalInput = (props: InputProps) => {
 
   useEffect(() => {terminalInput.current.focus(); setCurrentFocus("terminal")}, [terminalInput])
   useEffect(() => {
-    window.addEventListener('message', handleHerm)
+    window.addEventListener('message', handleHerm);
+      return () => {
+            window.removeEventListener("message", handleHerm);
+       }
   })
   useEffect(() => {
       let number = 0;
@@ -65,7 +68,7 @@ const TerminalInput = (props: InputProps) => {
             }
             else return
         }
-    }, []);
+    }, [lines]);
 
   useEffect(() => {props.airlockResponse(lines)}, [lines])
 
