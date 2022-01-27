@@ -26,7 +26,7 @@ const Modal = () => {
       console.log('focusing')
       rootRef.current.focus()
     }
-    else console.log('not focusing')
+    else return
   }
 
   useEffect(() => {
@@ -77,7 +77,8 @@ const Modal = () => {
     else if (event.key == 'Escape') {
       console.log('sending close')
       event.preventDefault();
-      window.top.postMessage('close', "*")
+      window.top.postMessage('close', "*");
+      setSelectedToInput(null)
     }
     else {
     setKeyDown(event);
