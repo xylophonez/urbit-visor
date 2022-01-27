@@ -1,6 +1,6 @@
 .command-launcher-body {
   display: flex;
-  justifycontent: flex-start;
+  justify-content: flex-start;
   padding: 2px;
   height: 370px;
 }
