@@ -1,13 +1,13 @@
-import React from "react";
-import * as CSS from "csstype";
-import { useEffect, useState } from "react";
-import Urbit from "@urbit/http-api";
-import PokeInput from "./input/PokeInput";
-import ScryInput from "./input/ScryInput";
-import BitcoinInput from "./input/BitcoinInput";
-import SubscribeInput from "./input/SubscribeInput";
-import SpiderInput from "./input/SpiderInput";
-import TerminalInput from "./input/TerminalInput";
+import React from 'react';
+import * as CSS from 'csstype';
+import { useEffect, useState } from 'react';
+import Urbit from '@urbit/http-api';
+import PokeInput from './input/PokeInput';
+import ScryInput from './input/ScryInput';
+import BitcoinInput from './input/BitcoinInput';
+import SubscribeInput from './input/SubscribeInput';
+import SpiderInput from './input/SpiderInput';
+import TerminalInput from './input/TerminalInput';
 
 interface InputProps {
   selected: String;
@@ -21,7 +21,7 @@ const Inputbox = (props: InputProps) => {
     <div style={divStyle} className="modal-input-box">
       {(() => {
         switch (props.selected) {
-          case "poke":
+          case 'poke':
             return (
               <PokeInput
                 nextArg={props.nextArg}
@@ -30,7 +30,7 @@ const Inputbox = (props: InputProps) => {
               />
             );
             break;
-          case "scry":
+          case 'scry':
             return (
               <ScryInput
                 nextArg={props.nextArg}
@@ -39,15 +39,10 @@ const Inputbox = (props: InputProps) => {
               />
             );
             break;
-          case "bitcoin":
-            return (
-              <BitcoinInput
-                nextArg={props.nextArg}
-                sendCommand={props.sendCommand}
-              />
-            );
+          case 'bitcoin':
+            return <BitcoinInput nextArg={props.nextArg} sendCommand={props.sendCommand} />;
             break;
-          case "subscribe":
+          case 'subscribe':
             return (
               <SubscribeInput
                 nextArg={props.nextArg}
@@ -56,7 +51,7 @@ const Inputbox = (props: InputProps) => {
               />
             );
             break;
-          case "thread":
+          case 'thread':
             return (
               <SpiderInput
                 nextArg={props.nextArg}
@@ -65,7 +60,7 @@ const Inputbox = (props: InputProps) => {
               />
             );
             break;
-          case "terminal":
+          case 'terminal':
             return (
               <TerminalInput
                 nextArg={props.nextArg}
@@ -83,17 +78,17 @@ const Inputbox = (props: InputProps) => {
 };
 
 const inputStyle: CSS.Properties = {
-  fontSize: "18px",
-  height: "34px",
-  width: "-webkit-fill-available",
-  padding: "0",
+  fontSize: '18px',
+  height: '34px',
+  width: '-webkit-fill-available',
+  padding: '0',
 };
 
 const divStyle: CSS.Properties = {
-  padding: "2px",
-  fontSize: "18px",
-  height: "34px",
-  outline: "none",
+  padding: '2px',
+  fontSize: '18px',
+  height: '34px',
+  outline: 'none',
 };
 
 export default Inputbox;
