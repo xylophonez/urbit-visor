@@ -13,6 +13,10 @@
   overflow-x: hidden;
 }
 
+.airlock-subscription-display-line {
+  color: black;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
