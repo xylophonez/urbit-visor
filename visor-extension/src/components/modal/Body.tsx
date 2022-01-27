@@ -13,18 +13,11 @@ interface BodyProps {
 
 const Body = (props: BodyProps) => {
   return (
-    <div style={divStyle} className="command-launcher-body">
+    <div className="command-launcher-body">
       <Menu handleSelection={props.handleSelection} keyDown={props.keyDown} />
       <Display selected={props.selected} airlockResponse={props.airlockResponse} />
     </div>
   );
-};
-
-const divStyle: CSS.Properties = {
-  display: 'flex',
-  justifyContent: 'flex-start',
-  padding: '2px',
-  height: '100%',
 };
 
 export default Body;
