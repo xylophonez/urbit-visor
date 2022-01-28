@@ -58,15 +58,33 @@ function extensionListener() {
   });
 }
 function hotkeyListener() {
+  const showPopup = () => {
+    const background = document.getElementById("urbit-visor-modal-bg");
+    if (background) {
+      background.style.display = "block";
+      background.style.opacity = "0.9";
+      const modalText = document.getElementById("urbit-visor-modal-text");
+      if (modalText) modalText.innerText = "Connect to a ship with your Urbit Visor";
+      setTimeout(() => background.style.display = "none", 3000);
+    }
+  }
   const showLauncher = () => {
     const modal: any = <any>document.querySelector("html > div").shadowRoot.querySelector("#command-launcher-container");
     modal.showModal();
     modal.firstElementChild.contentWindow.postMessage('focus', "*")
-  }
+	    }
   chrome.commands.onCommand.addListener((command, tab) => {
+    const state = useStore.getState();
+	    if (!state.activeShip) {
+              chrome.tabs.executeScript(tab.id, {
+                      code: `(${showPopup})()`
+              });
+	    }
+    else {
     chrome.tabs.executeScript(tab.id, {
 	    code: `(${showLauncher})()`
     });
+    }
   });
 }
 
