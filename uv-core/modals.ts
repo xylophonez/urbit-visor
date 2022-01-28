@@ -1,8 +1,8 @@
 export function visorPromptModal() {
-  const background = document.createElement('div');
+  const background = window.top.document.createElement('div');
   background.style.cssText = 'display:none;opacity:0;background-color:rgb(0,0,0,0.7);position:fixed;top:0;left:0;width:100%;height:100%;transition: top 2s, opacity 2s;z-index:2147483646';
   background.id = "urbit-visor-modal-bg";
-  const foreground = document.createElement('div');
+  const foreground = window.top.document.createElement('div');
   foreground.id = "urbit-visor-modal-fg";
   foreground.style.cssText = 'color:white;background-color:black;border:3px solid red;position:fixed;top:20px;right:50px;width:200px;height:200px;padding:0.5rem;text-align:center;font-weight:700;z-index:2147483647';
   const logo = document.createElement('div');
@@ -44,10 +44,10 @@ export function visorPromptModal() {
   </defs>
   </svg>
       `
-  const arrow = document.createElement("p");
+  const arrow = window.top.document.createElement("p");
   arrow.innerText = "↑";
   arrow.style.cssText = "font-size: 3rem; margin: 0";
-  const message = document.createElement("p");
+  const message = window.top.document.createElement("p");
   message.style.cssText = "margin-top: 0; margin-bottom: 2px; overflow: hidden;"
   message.id = "urbit-visor-modal-text";
   foreground.appendChild(arrow);
@@ -58,15 +58,15 @@ export function visorPromptModal() {
 }
 
 export function inject(node) {
-  document.body.appendChild(node);
+  window.top.document.body.appendChild(node);
 }
 
 export function showPopup(text: string) {
-  const background = document.getElementById("urbit-visor-modal-bg");
+  const background = window.top.document.getElementById("urbit-visor-modal-bg");
   if (background) {
     background.style.display = "block";
     background.style.opacity = "0.9";
-    const modalText = document.getElementById("urbit-visor-modal-text");
+    const modalText = window.top.document.getElementById("urbit-visor-modal-text");
     if (modalText) modalText.innerText = text;
     setTimeout(() => background.style.display = "none", 3000);
   }
