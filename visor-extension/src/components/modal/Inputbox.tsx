@@ -16,6 +16,7 @@ interface InputProps {
   nextArg: Boolean;
   sendCommand: Boolean;
   airlockResponse: (response: any) => void;
+  clearSelected: (clear: Boolean) => void;
 }
 
 
@@ -32,6 +33,7 @@ const Inputbox = (props: InputProps) => {
                 nextArg={props.nextArg}
                 sendCommand={props.sendCommand}
                 airlockResponse={props.airlockResponse}
+                clearSelected={props.clearSelected}
               />
             );
             break;

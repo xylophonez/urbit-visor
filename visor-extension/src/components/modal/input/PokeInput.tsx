@@ -8,6 +8,7 @@ interface InputProps {
   nextArg: Boolean;
   sendCommand: Boolean;
   airlockResponse: (response: any) => void;
+  clearSelected: (clear: Boolean) => void;
 }
 
 const PokeInput = (props: InputProps) => {
@@ -20,8 +21,8 @@ const PokeInput = (props: InputProps) => {
 
 
   useEffect(() => {appInput.current.focus(); setCurrentFocus("app")}, [appInput])
-  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'app') {markInput.current.focus(); setCurrentFocus("mark")}}, [props.nextArg])
-  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'mark') {jsonInput.current.focus(); setCurrentFocus("json")}}, [props.nextArg])
+  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'app') {markInput.current.focus(); setCurrentFocus("mark"); appInput.current.classList.remove('highlight-required')}}, [props.nextArg])
+  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'mark') {jsonInput.current.focus(); setCurrentFocus("json"); markInput.current.classList.remove('highlight-required')}}, [props.nextArg])
 
   useEffect(() => {
     if (!props.sendCommand) return;
@@ -29,9 +30,14 @@ const PokeInput = (props: InputProps) => {
       const arg = {app: appInput.current.innerHTML, mark: markInput.current.innerHTML, json: jsonInput.current.innerHTML}
       const data = {action: 'poke', argument: arg}
       Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => handleAirlockResponse(res))
+      appInput.current.innerHTML = '';
+      markInput.current.innerHTML = '';
+      jsonInput.current.innerHTML = '';
+      appInput.current.focus();
     }
     else {
-      alert('please provide all arguments')
+      let inputs = [appInput.current, markInput.current, jsonInput.current]
+      inputs.forEach(input => {if (input.innerHTML == '') input.classList.add('highlight-required')})
     }},
     [props.sendCommand])
 
@@ -57,6 +63,11 @@ const PokeInput = (props: InputProps) => {
      '}',
      '.div-input * {',
      '  display: inline;',
+     '}',
+     '.highlight-required {',
+     '  border: red;',
+     '  border-style: solid;',
+     '  border-width: thin;',
      '}'
     ].join('\n')
   }}>
@@ -65,7 +76,7 @@ const PokeInput = (props: InputProps) => {
       poke:
     </div>
     <div>
-      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="app" ref={appInput}></div>
+      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="app" onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") { props.clearSelected(true) }}} ref={appInput}></div>
     </div>
     <div>
       <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="mark" ref={markInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {appInput.current.focus(); event.preventDefault(); setCurrentFocus("app"); selection.setPosition(selection.focusNode, selection.focusNode.length)}}}></div>

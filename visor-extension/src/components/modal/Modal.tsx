@@ -19,8 +19,10 @@ const Modal = () => {
   const [sendCommand, setSendCommand] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [airlockResponse, setAirlockResponse] = useState(null);
+  const [clearSelected, setClearSelected] = useState(null);
 
-  useEffect(() => {setNextArg(null); setSendCommand(null); setBaseFocus(false)}, [nextArg, sendCommand, baseFocus])
+  useEffect(() => {setNextArg(null); setSendCommand(null); setBaseFocus(false); setClearSelected(null)}, [nextArg, sendCommand, baseFocus, clearSelected])
+  useEffect(() => {if (clearSelected) {setSelectedToInput(null);setSelected('');setBaseFocus(true)}}, [clearSelected])
 
   const handleMessage = (e: any) => {
     if (e.data == 'focus') {
@@ -101,7 +103,7 @@ const Modal = () => {
   }
   return (
   <div style={{display: 'flex', flexDirection: 'column', height: '100%'}} ref={rootRef} id={"modalContainer"} onKeyDown={(event: React.KeyboardEvent) => handleKeyDown(event)} tabIndex={-1}>
-    <Inputbox baseFocus={baseFocus} selected={selectedToInput} nextArg={nextArg} sendCommand={sendCommand} airlockResponse={(res: any) => setAirlockResponse(res)} />
+    <Inputbox baseFocus={baseFocus} selected={selectedToInput} clearSelected={(clear: Boolean) => setClearSelected(clear)} nextArg={nextArg} sendCommand={sendCommand} airlockResponse={(res: any) => setAirlockResponse(res)} />
     <Body handleSelection={(i: String) => setSelected(i)} selected={selected} keyDown={keyDown} airlockResponse={airlockResponse} />
   </div>
   )
