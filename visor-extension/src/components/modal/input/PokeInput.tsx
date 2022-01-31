@@ -21,8 +21,8 @@ const PokeInput = (props: InputProps) => {
 
 
   useEffect(() => {appInput.current.focus(); setCurrentFocus("app")}, [appInput])
-  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'app') {markInput.current.focus(); setCurrentFocus("mark"); appInput.current.classList.remove('highlight-required')}}, [props.nextArg])
-  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'mark') {jsonInput.current.focus(); setCurrentFocus("json"); markInput.current.classList.remove('highlight-required')}}, [props.nextArg])
+  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'app') {markInput.current.focus(); setCurrentFocus("mark")}}, [props.nextArg])
+  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == 'mark') {jsonInput.current.focus(); setCurrentFocus("json")}}, [props.nextArg])
 
   useEffect(() => {
     if (!props.sendCommand) return;
@@ -76,13 +76,13 @@ const PokeInput = (props: InputProps) => {
       poke:
     </div>
     <div>
-      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="app" onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") { props.clearSelected(true) }}} ref={appInput}></div>
+      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="app" onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") { props.clearSelected(true) } else {(event.target as Element).classList.remove('highlight-required')}}} ref={appInput}></div>
     </div>
     <div>
-      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="mark" ref={markInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {appInput.current.focus(); event.preventDefault(); setCurrentFocus("app"); selection.setPosition(selection.focusNode, selection.focusNode.length)}}}></div>
+      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="mark" ref={markInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {appInput.current.focus(); event.preventDefault(); setCurrentFocus("app"); selection.setPosition(selection.focusNode, selection.focusNode.length)} else {(event.target as Element).classList.remove('highlight-required')}}}></div>
     </div>
     <div>
-      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="json" ref={jsonInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {markInput.current.focus(); event.preventDefault(); setCurrentFocus("mark"); selection.setPosition(selection.focusNode, selection.focusNode.length)}}}></div>
+      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="json" ref={jsonInput} onKeyDown={(event: React.KeyboardEvent) => {if (event.key == 'Backspace' && (event.target as Element).innerHTML == "") {markInput.current.focus(); event.preventDefault(); setCurrentFocus("mark"); selection.setPosition(selection.focusNode, selection.focusNode.length)} else {(event.target as Element).classList.remove('highlight-required')}}}></div>
     </div>
   </div>
   )

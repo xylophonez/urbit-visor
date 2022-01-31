@@ -16,12 +16,14 @@ const Modal = () => {
   const [selectedToInput, setSelectedToInput] = useState(null);
   const [keyDown, setKeyDown] = useState(null);
   const [nextArg, setNextArg] = useState(null);
+  const [previousArg, setPreviousArg] = useState(null);
   const [sendCommand, setSendCommand] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [airlockResponse, setAirlockResponse] = useState(null);
   const [clearSelected, setClearSelected] = useState(null);
+  const [spaceAllowed, setSpaceAllowed] = useState(null);
 
-  useEffect(() => {setNextArg(null); setSendCommand(null); setBaseFocus(false); setClearSelected(null)}, [nextArg, sendCommand, baseFocus, clearSelected])
+  useEffect(() => {setNextArg(null); setPreviousArg(null); setSendCommand(null); setBaseFocus(false); setClearSelected(null)}, [nextArg, previousArg, sendCommand, baseFocus, clearSelected])
   useEffect(() => {if (clearSelected) {setSelectedToInput(null);setSelected('');setBaseFocus(true)}}, [clearSelected])
 
   const handleMessage = (e: any) => {
@@ -80,11 +82,11 @@ const Modal = () => {
     else if (event.key == 'Enter' && selected == selectedToInput) {
       event.preventDefault();
       setSendCommand(true)
+      setSpaceAllowed(false)
     }
-    else if (event.key == ' ' && selected == selectedToInput) {
-      event.preventDefault();
-      setNextArg(true)
-    }
+    else if (event.key == 'Tab' && selected == selectedToInput) {
+        setNextArg(true)
+      }
     else if (event.key == 'Escape') {
       console.log('sending close')
       event.preventDefault();
@@ -103,7 +105,7 @@ const Modal = () => {
   }
   return (
   <div style={{display: 'flex', flexDirection: 'column', height: '100%'}} ref={rootRef} id={"modalContainer"} onKeyDown={(event: React.KeyboardEvent) => handleKeyDown(event)} tabIndex={-1}>
-    <Inputbox baseFocus={baseFocus} selected={selectedToInput} clearSelected={(clear: Boolean) => setClearSelected(clear)} nextArg={nextArg} sendCommand={sendCommand} airlockResponse={(res: any) => setAirlockResponse(res)} />
+    <Inputbox baseFocus={baseFocus} selected={selectedToInput} spaceAllowed={(space: Boolean) => setSpaceAllowed(space)} clearSelected={(clear: Boolean) => setClearSelected(clear)} nextArg={nextArg} sendCommand={sendCommand} airlockResponse={(res: any) => setAirlockResponse(res)} />
     <Body handleSelection={(i: String) => setSelected(i)} selected={selected} keyDown={keyDown} airlockResponse={airlockResponse} />
   </div>
   )
