@@ -70,10 +70,12 @@ async function saveShip(ship: EncryptedShipCredentials): Promise<EncryptedShipCr
         const ships = res["ships"];
         const filteredShips = ships.filter(sp => sp.shipName !== ship.shipName);
         const new_ships = [...filteredShips, ship];
-        return await setStorage({ ships: new_ships })
+        await setStorage({ ships: new_ships })
+        return ship
     } else{
         const new_ships = [ship];
-        return await setStorage({ ships: new_ships });
+        await setStorage({ ships: new_ships });
+        return ship
     }
 }
 
