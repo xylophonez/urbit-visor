@@ -150,10 +150,10 @@ function handleInternalMessage(request: UrbitVisorInternalComms, sender: any, se
         .then(res => {
           const tbs = new Set(state.consumer_tabs.filter(tab => tab.url.origin === request.data.domain).map(tab => tab.tab));
           const xtns = new Set(state.consumer_extensions.filter(ext => ext.id === request.data.domain).map(ext => ext.id));
-          const xtns_tabs = new Set(state.consumer_extensions.filter(ext => ext.id === request.data.request.key).map(ext => ext.tabs).flat());
+          const xtns_tabs = new Set(state.consumer_extensions.filter(ext => ext.id === request.data.domain).map(ext => ext.tabs).flat());
           recipients = new Set([...tbs, ...xtns, ...xtns_tabs]);
-          Messaging.pushEvent({ action: "permissions_revoked", data: request.data }, recipients)
-          sendResponse("ok")
+          Messaging.pushEvent({ action: "permissions_revoked", data: request.data }, recipients);
+          sendResponse("ok");
         })
       break;
     case "revoke_perm":
