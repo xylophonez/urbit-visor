@@ -7,6 +7,14 @@ import { Messaging } from "../../messaging";
 import { VisorSubscription } from "../../types";
 import Inputbox from "./Inputbox";
 import Body from "./Body";
+import { Poke } from "./commands/Poke";
+import { Scry } from "./commands/Scry";
+import { Subscribe } from "./commands/Subscribe";
+import { Spider } from "./commands/Spider";
+import { Terminal } from "./commands/Terminal";
+import { Command } from "./types";
+
+const commands: Command[] = [Poke, Scry, Subscribe, Spider, Terminal]
 
 const Modal = () => {
   const rootRef = useRef(null);
@@ -105,8 +113,8 @@ const Modal = () => {
   }
   return (
   <div style={{display: 'flex', flexDirection: 'column', height: '100%'}} ref={rootRef} id={"modalContainer"} onKeyDown={(event: React.KeyboardEvent) => handleKeyDown(event)} tabIndex={-1}>
-    <Inputbox baseFocus={baseFocus} selected={selectedToInput} spaceAllowed={(space: Boolean) => setSpaceAllowed(space)} clearSelected={(clear: Boolean) => setClearSelected(clear)} nextArg={nextArg} sendCommand={sendCommand} airlockResponse={(res: any) => setAirlockResponse(res)} />
-    <Body handleSelection={(i: String) => setSelected(i)} selected={selected} keyDown={keyDown} airlockResponse={airlockResponse} />
+    <Inputbox baseFocus={baseFocus} selected={selectedToInput} clearSelected={(clear: Boolean) => setClearSelected(clear)} nextArg={nextArg} sendCommand={sendCommand} airlockResponse={(res: any) => setAirlockResponse(res)} />
+    <Body commands={commands} handleSelection={(i: Command) => setSelected(i)} selected={selected} keyDown={keyDown} airlockResponse={airlockResponse} />
   </div>
   )
 };

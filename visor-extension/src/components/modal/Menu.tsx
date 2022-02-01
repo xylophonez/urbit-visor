@@ -2,17 +2,19 @@ import React from 'react';
 import * as CSS from 'csstype';
 import { useEffect, useState } from 'react';
 import MenuOptions from './MenuOptions';
+import { Command } from "./types";
 
 interface MenuOptionProps {
-  handleSelection: (textContent: String) => void;
+  handleSelection: (command: Command) => void;
   keyDown: React.KeyboardEvent;
-  selected: String;
+  selected: Command;
+  commands: Command[];
 }
 
 const Menu = (props: MenuOptionProps) => {
   return (
     <div style={divStyle} className="command-launcher-menu">
-      <MenuOptions selected={props.selected} handleSelection={props.handleSelection} keyDown={props.keyDown} />
+      <MenuOptions commands={props.commands} selected={props.selected} handleSelection={props.handleSelection} keyDown={props.keyDown} />
     </div>
   );
 };

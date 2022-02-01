@@ -1,14 +1,15 @@
 import React from 'react';
 import * as CSS from 'csstype';
 import { useEffect, useState } from 'react';
+import { Command } from "./types";
 
 interface MenuOptionProps {
-  handleSelection: (textContent: String) => void;
+  handleSelection: (command: Command) => void;
   keyDown: React.KeyboardEvent;
-  selected: String;
+  selected: Command;
+  commands: Command[];
 }
 
-const options = ['bitcoin', 'poke', 'scry', 'subscribe', 'thread', 'terminal'];
 
 const MenuOptions = (props: MenuOptionProps) => {
   const [clickedIndex, setClickedIndex] = useState(-1);
@@ -16,9 +17,9 @@ const MenuOptions = (props: MenuOptionProps) => {
   useEffect(() => {
     if (!props.keyDown) {
       return;
-    } else if (props.keyDown.key === 'ArrowDown' && clickedIndex < options.length - 1) {
+    } else if (props.keyDown.key === 'ArrowDown' && clickedIndex < props.commands.length - 1) {
       setClickedIndex(clickedIndex + 1);
-      props.handleSelection(options[clickedIndex + 1]);
+      props.handleSelection(props.commands[clickedIndex + 1]);
     } else {
       return;
     }
@@ -28,7 +29,7 @@ const MenuOptions = (props: MenuOptionProps) => {
       return;
     } else if (props.keyDown.key === 'ArrowUp' && clickedIndex > 0) {
       setClickedIndex(clickedIndex - 1);
-      props.handleSelection(options[clickedIndex - 1]);
+      props.handleSelection(props.commands[clickedIndex - 1]);
     } else {
       return;
     }
@@ -36,19 +37,19 @@ const MenuOptions = (props: MenuOptionProps) => {
 
   return (
     <div /*style={listStyle}*/ className="command-launcher-menu-list">
-      {options.map((option, index) => (
+      {props.commands.map((option, index) => (
         <div
           className="command-launcher-menu-option"
           style={
-            props.selected == ''
+            (!props.selected)
               ? { ...listItemStyle, border: 'none' }
               : index == clickedIndex
                  ? { ...listItemStyle, border: 'outset' }
                  : { ...listItemStyle, border: 'none' }
           }
-          key={option}
+          key={index}
         >
-          {option}
+          {option.command}
         </div>
       ))}
     </div>

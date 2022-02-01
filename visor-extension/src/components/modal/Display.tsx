@@ -2,9 +2,10 @@ import React from 'react';
 import * as CSS from 'csstype';
 import { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import ReactJson from 'react-json-view';
+import { Command } from "./types";
 
 interface DisplayProps {
-  selected: String;
+  selected: Command;
   airlockResponse: any;
 }
 
