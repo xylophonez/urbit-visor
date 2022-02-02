@@ -11,20 +11,33 @@ import Body from "./Body";
 const Modal = () => {
   const rootRef = useRef(null);
   const [selected, setSelected] = useState(null);
+  const [baseFocus, setBaseFocus] = useState(null);
   const [dims, setDims] = useState(null);
   const [selectedToInput, setSelectedToInput] = useState(null);
   const [keyDown, setKeyDown] = useState(null);
   const [nextArg, setNextArg] = useState(null);
+  const [previousArg, setPreviousArg] = useState(null);
   const [sendCommand, setSendCommand] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [airlockResponse, setAirlockResponse] = useState(null);
+  const [clearSelected, setClearSelected] = useState(null);
+  const [spaceAllowed, setSpaceAllowed] = useState(null);
 
-  useEffect(() => {setNextArg(null); setSendCommand(null)}, [nextArg, sendCommand])
+  useEffect(() => {setNextArg(null); setPreviousArg(null); setSendCommand(null); setBaseFocus(false); setClearSelected(null)}, [nextArg, previousArg, sendCommand, baseFocus, clearSelected])
+  useEffect(() => {if (clearSelected) {setSelectedToInput(null);setSelected('');setBaseFocus(true)}}, [clearSelected])
 
   const handleMessage = (e: any) => {
     if (e.data == 'focus') {
       console.log('focusing')
+    if (selectedToInput) {
       rootRef.current.focus()
+    }
+    else
+      setBaseFocus(true)
+    }
+    else if (e.data == 'closing') {
+      setSelectedToInput(null);
+      setSelected(null)
     }
     else return
   }
@@ -69,25 +82,30 @@ const Modal = () => {
     else if (event.key == 'Enter' && selected == selectedToInput) {
       event.preventDefault();
       setSendCommand(true)
+      setSpaceAllowed(false)
     }
-    else if (event.key == ' ' && selected == selectedToInput) {
-      event.preventDefault();
-      setNextArg(true)
-    }
+    else if (event.key == 'Tab' && selected == selectedToInput) {
+        setNextArg(true)
+      }
     else if (event.key == 'Escape') {
       console.log('sending close')
       event.preventDefault();
       window.top.postMessage('close', "*");
-      setSelectedToInput(null)
+      setSelectedToInput(null);
+      setSelected(null)
+    }
+    else if (event.key == 'ArrowUp' || event.key == 'ArrowDown') {
+      event.preventDefault();
+      setKeyDown(event);
+      return
     }
     else {
-    setKeyDown(event);
     return
     }
   }
   return (
   <div style={{display: 'flex', flexDirection: 'column', height: '100%'}} ref={rootRef} id={"modalContainer"} onKeyDown={(event: React.KeyboardEvent) => handleKeyDown(event)} tabIndex={-1}>
-    <Inputbox selected={selectedToInput} nextArg={nextArg} sendCommand={sendCommand} airlockResponse={(res: any) => setAirlockResponse(res)} />
+    <Inputbox baseFocus={baseFocus} selected={selectedToInput} spaceAllowed={(space: Boolean) => setSpaceAllowed(space)} clearSelected={(clear: Boolean) => setClearSelected(clear)} nextArg={nextArg} sendCommand={sendCommand} airlockResponse={(res: any) => setAirlockResponse(res)} />
     <Body handleSelection={(i: String) => setSelected(i)} selected={selected} keyDown={keyDown} airlockResponse={airlockResponse} />
   </div>
   )

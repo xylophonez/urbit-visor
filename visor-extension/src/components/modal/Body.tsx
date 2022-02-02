@@ -14,7 +14,7 @@ interface BodyProps {
 const Body = (props: BodyProps) => {
   return (
     <div className="command-launcher-body">
-      <Menu handleSelection={props.handleSelection} keyDown={props.keyDown} />
+      <Menu selected={props.selected} handleSelection={props.handleSelection} keyDown={props.keyDown} />
       <Display selected={props.selected} airlockResponse={props.airlockResponse} />
     </div>
   );

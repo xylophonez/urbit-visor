@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 interface MenuOptionProps {
   handleSelection: (textContent: String) => void;
   keyDown: React.KeyboardEvent;
+  selected: String;
 }
 
 const options = ['bitcoin', 'poke', 'scry', 'subscribe', 'thread', 'terminal'];
@@ -39,9 +40,11 @@ const MenuOptions = (props: MenuOptionProps) => {
         <div
           className="command-launcher-menu-option"
           style={
-            index == clickedIndex
-              ? { ...listItemStyle, border: 'outset' }
-              : { ...listItemStyle, border: 'none' }
+            props.selected == ''
+              ? { ...listItemStyle, border: 'none' }
+              : index == clickedIndex
+                 ? { ...listItemStyle, border: 'outset' }
+                 : { ...listItemStyle, border: 'none' }
           }
           key={option}
         >

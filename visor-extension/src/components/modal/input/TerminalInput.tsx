@@ -57,6 +57,7 @@ const TerminalInput = (props: InputProps) => {
     [props.sendCommand])
 
     const handleHerm = useCallback((message: any) => {
+      console.log(message)
         if (
             message.data.app == "urbitVisorEvent" &&
             message.data.event.data &&
@@ -64,7 +65,7 @@ const TerminalInput = (props: InputProps) => {
         ) {
             const dojoLine = message.data.event.data.lin.join("");
             if (!(dojoLine.includes("dojo>") || dojoLine[0] === ";" || dojoLine[0] === ">")) {
-                setLines((previousState) => [...previousState, dojoLine]);
+                setLines((previousState) => [dojoLine, ...previousState]);
             }
             else return
         }

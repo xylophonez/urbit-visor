@@ -58,6 +58,7 @@ function appendLauncher() {
 	      if (modal.open) {
 	        console.log('closing modal on click')
 	        modal.close()
+                modal.firstElementChild.contentWindow.postMessage('closing', "*")
 	      }
 	      else {
 	        console.log('modal not open')
