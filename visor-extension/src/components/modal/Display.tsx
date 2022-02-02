@@ -1,6 +1,6 @@
 import React from 'react';
 import * as CSS from 'csstype';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import ReactJson from 'react-json-view';
 
 interface DisplayProps {
@@ -9,6 +9,13 @@ interface DisplayProps {
 }
 
 const Display = (props: DisplayProps) => {
+  const scrollable = useRef(null);
+
+  useLayoutEffect(() => {
+      if (scrollable.current.scrollTop > -1)
+          scrollable.current.scrollTop = scrollable.current.scrollHeight;
+  }, [props.airlockResponse]);
+
   // Define variable for content which will be held in the display area
   let displayContent;
 
@@ -47,7 +54,7 @@ const Display = (props: DisplayProps) => {
   }
 
   // Return the html to be rendered for Display with the content inside
-  return <div className="command-launcher-display">{displayContent}</div>;
+  return <div ref={scrollable} className="command-launcher-display">{displayContent}</div>;
 };
 
 // Display the airlock subscription response UI
