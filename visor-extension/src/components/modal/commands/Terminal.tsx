@@ -1,7 +1,7 @@
 import { Command } from "../types";
 
 export const Terminal: Command = {
-  command: 'terminal',
+  command: 'poke',
   title: 'Terminal',
   description: 'connect to dojo terminal',
   arguments: ['command']
