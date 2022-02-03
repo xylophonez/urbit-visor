@@ -18,24 +18,22 @@ const Input = (props: InputProps) => {
   const [currentFocus, setCurrentFocus] = useState(null)
 
   const selection = (window as any).getSelection()
-  useEffect(() => {console.log('refs changed')}, [inputRef])
-  useEffect(() => {inputRef.current = []}, [props.selected])
-  useEffect(() => {console.log('sendcommand changed')}, [props.sendCommand])
-  useEffect(() => {console.log('nextarg changed')}, [props.nextArg])
-/*
-  useEffect(() => {inputRef.current[0].focus(); setCurrentFocus(inputRef.current[0])}, [inputRef.current[0]])
-  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == inputRef.current[0]) {inputRef.current[1].focus(); setCurrentFocus(inputRef.current[1])}}, [props.nextArg])
-  useEffect(() => {if (!props.nextArg) {return} else if (currentFocus == inputRef.current[1]) {inputRef.current[2].focus(); setCurrentFocus(inputRef.current[2])}}, [props.nextArg])
-*/
+
+  useEffect(() => {const ref = inputRef; return () => {ref.current = []}}, [props.selected])
+
+  useEffect(() => {inputRef.current[0].focus(); setCurrentFocus(0)}, [inputRef])
+  useEffect(() => {if (!props.nextArg) {return} else {inputRef.current[currentFocus+1].focus(); setCurrentFocus(currentFocus+1)}}, [props.nextArg])
+
   useEffect(() => {
     console.log(inputRef.current)
     if (!props.sendCommand) return;
     else if (inputRef.current.every(el => (el?.innerHTML) ? true : false)) {
-      const arg = Object.fromEntries(props.selected.arguments.map((k, i) => [k, inputRef.current[i].innerHTML]))
+      const arg = props.selected.schema(inputRef.current)
       const data = {action: props.selected.command, argument: arg}
       Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => handleAirlockResponse(res))
       inputRef.current.forEach(input => {input.innerHTML = ''})
       inputRef.current[0].focus();
+      setCurrentFocus(0)
     }
     else {
       console.log('not sending poke')
@@ -75,7 +73,7 @@ const Input = (props: InputProps) => {
   }}>
   </style>
     <div>
-      {props.selected?.command}
+      {props.selected?.title}
     </div>
     <div>
       {

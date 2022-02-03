@@ -6,4 +6,5 @@ export interface Command {
   title: String;
   description: String;
   arguments: string[]
+  schema: (props: any[]) => {}
 }
