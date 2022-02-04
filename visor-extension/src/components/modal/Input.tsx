@@ -28,9 +28,15 @@ const Input = (props: InputProps) => {
     console.log(inputRef.current)
     if (!props.sendCommand) return;
     else if (inputRef.current.every(el => (el?.innerHTML) ? true : false)) {
-      const arg = props.selected.schema(inputRef.current)
-      const data = {action: props.selected.command, argument: arg}
-      Messaging.sendToBackground({action: "call_airlock", data: data}).then(res => handleAirlockResponse(res))
+      let args: any[];
+      if (!props.selected.schemaArgs) {args = inputRef.current}
+      else {args = props.selected.schemaArgs.map(arg => arg == 'default' ? inputRef.current : arg)};
+      console.log(args)
+      props.selected.schema.forEach((message, i) => {
+        Messaging.sendToBackground({action: "call_airlock", data: message(props.selected.schemaArgs ? args[i] : args)}).then(res => handleAirlockResponse(res));
+        console.log(message(props.selected.schemaArgs ? args[i] : args))
+      }
+      )
       inputRef.current.forEach(input => {input.innerHTML = ''})
       inputRef.current[0].focus();
       setCurrentFocus(0)

@@ -4,7 +4,6 @@ import { useEffect, useState, useRef } from "react";
 import Urbit from "@urbit/http-api";
 import PokeInput from "./input/PokeInput";
 import ScryInput from "./input/ScryInput";
-import BitcoinInput from "./input/BitcoinInput";
 import SubscribeInput from "./input/SubscribeInput";
 import SpiderInput from "./input/SpiderInput";
 import TerminalInput from "./input/TerminalInput";
@@ -25,13 +24,32 @@ interface InputProps {
 const Inputbox = (props: InputProps) => {
   const baseInput = useRef(null);
   useEffect(() => {if (!props.selected) baseInput.current.focus()}, [props.baseFocus])
+
+  let command;
+
+  switch (props.selected?.title) {
+    case 'poke':
+        command = (<PokeInput {...props} />);
+      break;
+    case 'scry':
+        command = (<ScryInput {...props} />);
+      break;
+    case 'subscribe':
+        command = (<SubscribeInput {...props} />);
+      break;
+    case 'thread':
+        command = (<SpiderInput {...props} />);
+      break;
+    case 'terminal':
+        command = (<TerminalInput {...props} />);
+      break;
+    default:
+      command = (<input ref={baseInput} type={'text'} style={inputStyle} />);
+  }
+
   return (
     <div style={divStyle} className="modal-input-box">
-      {
-      (props.selected)
-      ? <Input selected={props.selected} nextArg={props.nextArg} sendCommand={props.sendCommand} airlockResponse={props.airlockResponse} clearSelected={props.clearSelected} />
-      : <input ref={baseInput}></input>
-      }
+      {command}
     </div>
   );
 };

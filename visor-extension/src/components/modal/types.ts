@@ -5,6 +5,7 @@ export interface Command {
   icon?: SVG;
   title: String;
   description: String;
-  arguments: string[]
-  schema: (props: any[]) => {}
+  arguments: string[];
+  schema: ((props: any[]) => {})[]
+  schemaArgs?: any[];
 }
