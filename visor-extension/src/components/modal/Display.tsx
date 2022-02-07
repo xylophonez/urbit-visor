@@ -51,7 +51,7 @@ const Display = (props: DisplayProps) => {
   }
   // If no response, display empty
   else {
-    displayContent = <div></div>;
+    displayContent = <SelectionPreview {...props} />;
   }
 
   // Return the html to be rendered for Display with the content inside
@@ -74,5 +74,28 @@ const AirlockSubscriptionResponse = (props: DisplayProps) => {
     </div>
   );
 };
+
+const SelectionPreview = (props: DisplayProps) => {
+  let selectionPreviewContent;
+
+  if (props.selected) {
+    selectionPreviewContent = (
+      <div className="command-launcher-display-preview-container">
+        <div>{props.selected?.icon}</div>
+        <div>
+          <div>
+            {props.selected.title}
+          </div>
+          <div>
+            {props.selected.description}
+          </div>
+        </div>
+      </div>
+    )
+  }
+  return (
+    <div className="command-launcher-display-preview">{selectionPreviewContent}</div>
+  )
+}
 
 export default Display;

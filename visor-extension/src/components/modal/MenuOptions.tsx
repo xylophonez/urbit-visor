@@ -49,7 +49,7 @@ const MenuOptions = (props: MenuOptionProps) => {
           }
           key={index}
         >
-          {option.command}
+          {option.title}
         </div>
       ))}
     </div>
