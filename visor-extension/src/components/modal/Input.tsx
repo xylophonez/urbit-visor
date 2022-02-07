@@ -32,11 +32,16 @@ const Input = (props: InputProps) => {
       if (!props.selected.schemaArgs) {args = inputRef.current}
       else {args = props.selected.schemaArgs.map(arg => arg == 'default' ? inputRef.current : arg)};
       console.log(args)
-      props.selected.schema.forEach((message, i) => {
-        Messaging.sendToBackground({action: "call_airlock", data: message(props.selected.schemaArgs ? args[i] : args)}).then(res => handleAirlockResponse(res));
-        console.log(message(props.selected.schemaArgs ? args[i] : args))
-      }
-      )
+      const f = async () => {
+        for (const [i, message] of props.selected.schema.entries()) {
+        console.log(message)
+        const data = { action: props.selected.command, argument: message(props.selected.schemaArgs ? args[i] : args)}
+        const res = await Messaging.sendToBackground({action: "call_airlock", data: data})
+        handleAirlockResponse(res);
+        console.log(res)
+        //console.log(message(props.selected.schemaArgs ? args[i] : args))
+      }}
+      f()
       inputRef.current.forEach(input => {input.innerHTML = ''})
       inputRef.current[0].focus();
       setCurrentFocus(0)
