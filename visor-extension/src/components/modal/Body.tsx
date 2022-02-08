@@ -3,18 +3,20 @@ import * as CSS from 'csstype';
 import { useEffect, useState } from 'react';
 import Menu from './Menu';
 import Display from './Display';
+import { Command } from "./types";
 
 interface BodyProps {
-  handleSelection: (textContent: String) => void;
+  handleSelection: (command: Command) => void;
   keyDown: React.KeyboardEvent;
-  selected: String;
+  selected: Command;
   airlockResponse: any;
+  commands: Command[];
 }
 
 const Body = (props: BodyProps) => {
   return (
     <div className="command-launcher-body">
-      <Menu selected={props.selected} handleSelection={props.handleSelection} keyDown={props.keyDown} />
+      <Menu commands={props.commands} selected={props.selected} handleSelection={props.handleSelection} keyDown={props.keyDown} />
       <Display selected={props.selected} airlockResponse={props.airlockResponse} />
     </div>
   );

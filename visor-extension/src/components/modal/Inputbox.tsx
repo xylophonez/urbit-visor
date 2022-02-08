@@ -4,83 +4,52 @@ import { useEffect, useState, useRef } from "react";
 import Urbit from "@urbit/http-api";
 import PokeInput from "./input/PokeInput";
 import ScryInput from "./input/ScryInput";
-import BitcoinInput from "./input/BitcoinInput";
 import SubscribeInput from "./input/SubscribeInput";
 import SpiderInput from "./input/SpiderInput";
 import TerminalInput from "./input/TerminalInput";
+import { Command } from "./types";
+import Input from "./Input";
 
 
 interface InputProps {
-  selected: String;
+  selected: Command;
   baseFocus: Boolean;
   nextArg: Boolean;
   sendCommand: Boolean;
   airlockResponse: (response: any) => void;
   clearSelected: (clear: Boolean) => void;
-  spaceAllowed: (space: Boolean) => void;
 }
 
 
 const Inputbox = (props: InputProps) => {
   const baseInput = useRef(null);
   useEffect(() => {if (!props.selected) baseInput.current.focus()}, [props.baseFocus])
+
+  let command;
+
+  switch (props.selected?.title) {
+    case 'poke':
+        command = (<PokeInput {...props} />);
+      break;
+    case 'scry':
+        command = (<ScryInput {...props} />);
+      break;
+    case 'subscribe':
+        command = (<SubscribeInput {...props} />);
+      break;
+    case 'thread':
+        command = (<SpiderInput {...props} />);
+      break;
+    case 'terminal':
+        command = (<TerminalInput {...props} />);
+      break;
+    default:
+      command = (<input ref={baseInput} type={'text'} style={inputStyle} />);
+  }
+
   return (
     <div style={divStyle} className="modal-input-box">
-      {(() => {
-        switch (props.selected) {
-          case 'poke':
-            return (
-              <PokeInput
-                nextArg={props.nextArg}
-                sendCommand={props.sendCommand}
-                airlockResponse={props.airlockResponse}
-                clearSelected={props.clearSelected}
-              />
-            );
-            break;
-          case 'scry':
-            return (
-              <ScryInput
-                nextArg={props.nextArg}
-                sendCommand={props.sendCommand}
-                airlockResponse={props.airlockResponse}
-              />
-            );
-            break;
-          case 'bitcoin':
-            return <BitcoinInput nextArg={props.nextArg} sendCommand={props.sendCommand} />;
-            break;
-          case 'subscribe':
-            return (
-              <SubscribeInput
-                nextArg={props.nextArg}
-                sendCommand={props.sendCommand}
-                airlockResponse={props.airlockResponse}
-              />
-            );
-            break;
-          case 'thread':
-            return (
-              <SpiderInput
-                nextArg={props.nextArg}
-                sendCommand={props.sendCommand}
-                airlockResponse={props.airlockResponse}
-              />
-            );
-            break;
-          case 'terminal':
-            return (
-              <TerminalInput
-                nextArg={props.nextArg}
-                sendCommand={props.sendCommand}
-                airlockResponse={props.airlockResponse}
-              />
-            );
-            break;
-          default:
-            return <input ref={baseInput} type={'text'} style={inputStyle} />;
-        }
-      })()}
+      {command}
     </div>
   );
 };

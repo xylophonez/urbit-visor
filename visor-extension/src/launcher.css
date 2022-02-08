@@ -13,6 +13,15 @@
   overflow-x: hidden;
 }
 
+.command-launcher-display-preview-container {
+  height: 100%;
+  display: flex;
+}
+
+.icon {
+  width: 100px;
+}
+
 .airlock-subscription-display-line {
   color: black;
 }

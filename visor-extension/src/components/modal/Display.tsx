@@ -2,9 +2,10 @@ import React from 'react';
 import * as CSS from 'csstype';
 import { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import ReactJson from 'react-json-view';
+import { Command } from "./types";
 
 interface DisplayProps {
-  selected: String;
+  selected: Command;
   airlockResponse: any;
 }
 
@@ -50,7 +51,7 @@ const Display = (props: DisplayProps) => {
   }
   // If no response, display empty
   else {
-    displayContent = <div></div>;
+    displayContent = <SelectionPreview {...props} />;
   }
 
   // Return the html to be rendered for Display with the content inside
@@ -73,5 +74,31 @@ const AirlockSubscriptionResponse = (props: DisplayProps) => {
     </div>
   );
 };
+
+const SelectionPreview = (props: DisplayProps) => {
+  let selectionPreviewContent;
+  const Icon = props.selected?.icon
+
+  if (props.selected) {
+    selectionPreviewContent = (
+      <div className="command-launcher-display-preview-container">
+        {
+        props.selected.icon ? <Icon /> : <div></div>
+        }
+        <div>
+          <div>
+            {props.selected.title}
+          </div>
+          <div>
+            {props.selected.description}
+          </div>
+        </div>
+      </div>
+    )
+  }
+  return (
+    <div className="command-launcher-display-preview">{selectionPreviewContent}</div>
+  )
+}
 
 export default Display;

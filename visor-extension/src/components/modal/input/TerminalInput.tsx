@@ -4,16 +4,18 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { Messaging } from "../../../messaging";
 import Urbit from "@urbit/http-api";
 import { urbitVisor } from "@dcspark/uv-core";
+import Input from "../Input";
+import { Command } from "../types";
 
 interface InputProps {
   nextArg: Boolean;
   sendCommand: Boolean;
   airlockResponse: (response: any) => void;
+  clearSelected: (clear: Boolean) => void;
+  selected: Command;
 }
 
 const TerminalInput = (props: InputProps) => {
-  const terminalInput = useRef(null);
-  const [currentFocus, setCurrentFocus] = useState(null)
   const [subscribed, setSubscribed] = useState(null)
   const [lines, setLines] = useState([]);
 
@@ -21,7 +23,6 @@ const TerminalInput = (props: InputProps) => {
   const selection = (window as any).getSelection()
 
 
-  useEffect(() => {terminalInput.current.focus(); setCurrentFocus("terminal")}, [terminalInput])
   useEffect(() => {
     window.addEventListener('message', handleHerm);
       return () => {
@@ -41,20 +42,6 @@ const TerminalInput = (props: InputProps) => {
        }},
     [])
 
-  useEffect(() => {
-    if (!props.sendCommand) return;
-    else if (terminalInput.current.innerHTML) {
-      const arg1 = {app: 'herm', mark: 'belt', json: { txt: [terminalInput.current.innerHTML] }}
-      const data1 = {action: 'poke', argument: arg1}
-      const arg2: any = {app: 'herm', mark: 'belt', json: { ret: null }}
-      const data2 = {action: 'poke', argument: arg2}
-      Messaging.sendToBackground({action: "call_airlock", data: data1})
-      Messaging.sendToBackground({action: "call_airlock", data: data2})
-    }
-    else {
-      alert('please provide all arguments')
-    }},
-    [props.sendCommand])
 
     const handleHerm = useCallback((message: any) => {
       console.log(message)
@@ -65,7 +52,7 @@ const TerminalInput = (props: InputProps) => {
         ) {
             const dojoLine = message.data.event.data.lin.join("");
             if (!(dojoLine.includes("dojo>") || dojoLine[0] === ";" || dojoLine[0] === ">")) {
-                setLines((previousState) => [...previousState, dojoLine]);
+                setLines((previousState) => [dojoLine, ...previousState]);
             }
             else return
         }
@@ -74,44 +61,8 @@ const TerminalInput = (props: InputProps) => {
   useEffect(() => {props.airlockResponse(lines)}, [lines])
 
   return (
-  <div style={divStyle}> 
-  <style dangerouslySetInnerHTML={{
-  __html: [
-     '.div-input {',
-     '  display: inline-block;',
-     '  vertical-align: top;',
-     '  min-width: 1em;',
-     '  padding: 0px 5px 0px 5px;',
-     '  cursor: text;',
-     '}',
-     '.div-input:empty:before {',
-     '  content: attr(data-placeholder);',
-     '  color: #ccc;',
-     '}',
-     '.div-input br {',
-     '  display: none;',
-     '}',
-     '.div-input * {',
-     '  display: inline;',
-     '}'
-    ].join('\n')
-  }}>
-  </style>
-    <div>
-      terminal:
-    </div>
-    <div>
-      <div className="div-input" contentEditable="true" style={inputStyle} data-placeholder="command" ref={terminalInput}></div>
-    </div>
-  </div>
+  <Input {...props} />
   )
 };
-
-const divStyle: CSS.Properties = {
-  display: 'flex'
-}
-const inputStyle: CSS.Properties = {
-  width: 'fit-content'
-}
 
 export default TerminalInput;
