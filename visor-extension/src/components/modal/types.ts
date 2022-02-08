@@ -1,8 +1,8 @@
-export type SVG = HTMLElement & SVGElement;
+import React from "react";
 
 export interface Command {
   command: String;
-  icon?: SVG;
+  icon?: React.FunctionComponent;
   title: String;
   description: String;
   arguments: string[];

@@ -77,11 +77,14 @@ const AirlockSubscriptionResponse = (props: DisplayProps) => {
 
 const SelectionPreview = (props: DisplayProps) => {
   let selectionPreviewContent;
+  const Icon = props.selected?.icon
 
   if (props.selected) {
     selectionPreviewContent = (
       <div className="command-launcher-display-preview-container">
-        <div>{props.selected?.icon}</div>
+        {
+        props.selected.icon ? <Icon /> : <div></div>
+        }
         <div>
           <div>
             {props.selected.title}
