@@ -21,11 +21,11 @@ make sure you have an Urbit ship (personal server) running. Any Urbit ship works
 
 Learn more about setting up your own Urbit ship [with this getting started guide](https://urbit.org/getting-started).
 
-![image here getting +code from webterminal of a fakezod]()
+![image here getting +code from webterminal of a fakezod](assets/code.png)
 
 With your ship up and running, you simply need to acquire the `+code` password at the dojo/port/web terminal (by typing `+code` and copying the response), and use that + your ship's IP to add it inside of Urbit Visor.
 
-![image here adding ship to Visor]()
+![image here adding ship to Visor](assets/add-ship.png)
 
 Now that you have your ship added to Visor, you have access to the exact same unified API that every one of your users will. We are going to be treating the user's Urbit ship as a seamless dev ops free backend that is personalized to each user, without any extra work on the developer's side.
 
