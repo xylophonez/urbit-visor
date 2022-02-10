@@ -173,15 +173,15 @@ export default App;
 
 Save the `App.tsx` file and run your app. If your Urbit Visor has no ship connected, your app will prompt you to connect a ship.
 
-![]()
+![image here showing the visor connection prompt](assets/prompt.png)
 
 If a ship is connected, you will get a prompt to give permissions to your app. It's the first time we run it so of course you don't have any permission. Click on the Urbit Visor extension icon to grant permissions.
 
-![]()
+![image here showing permission prompt screen](assets/perms.png)
 
 Once you grant permissions, the app will start automatically. You should get something like this:
 
-![]()
+![image here showing initial screen](assets/welcome.png)
 
 Congratulations, you have successfully used UrbitVisor to fetch data from a running Urbit server.
 
@@ -1012,6 +1012,7 @@ function modifyPost() {
 ```
 
 And that's it, our Urbit Notes webapp is now complete!
+![image showing empty notebook](assets/notebook.png)
 
 ## Conclusion
 
