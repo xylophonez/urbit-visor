@@ -6,6 +6,8 @@ export interface Command {
   title: String;
   description: String;
   arguments: string[];
-  schema: ((props: any[]) => {})[]
+  schema?: ((props: any[]) => {})[];
   schemaArgs?: any[];
+  routingTarget?: string;
+  routingFill?: string;
 }
