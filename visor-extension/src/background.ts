@@ -239,10 +239,8 @@ function checkPerms(state: UrbitVisorState, callType: visorCallType, request: an
   else if (callType === "website") id = sender.origin;
   const extension = state.consumer_extensions.find(sumer => sumer.id === id);
   const name = extension ? extension.name : "";
-  fetchAllPerms(state.airlock.url)
-    .then(res => {
-      const existingPerms = res.bucket[id] || [];
-      if (request.action === "check_perms") sendResponse({ status: "ok", response: existingPerms });
+  const existingPerms = state.permissions[id] || [];
+  if (request.action === "check_perms") sendResponse({ status: "ok", response: existingPerms });
       else if (request.action === "perms") bulkRequest(state, id, name, existingPerms, request, sender, sendResponse)
       else if (!existingPerms || !existingPerms.includes(request.action)) {
         state.requestPerms({ key: id, name: name, permissions: [request.action], existing: existingPerms })
@@ -252,7 +250,6 @@ function checkPerms(state: UrbitVisorState, callType: visorCallType, request: an
         if (request.action == "poke" || request.action == "subscribe") pubsub(state, callType, request, sender, sendResponse);
         else reqres(state, request, sendResponse)
       }
-    })
 };
 
 function bulkRequest(state: UrbitVisorState, requester: string, name: string, existingPerms: any, request: any, sender: any, sendResponse: any) {
