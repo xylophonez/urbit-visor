@@ -23,11 +23,11 @@ Learn more about setting up your own Urbit ship [with this getting started guide
 
 ![image here getting +code from webterminal of a fakezod](assets/code.png)
 
-With your ship up and running, you simply need to acquire the `+code` password at the dojo/port/web terminal (by typing `+code` and copying the response), and use that + your ship's IP to add it inside of Urbit Visor.
+With your ship up and running, you simply need to acquire the `+code` password at the dojo/port/web terminal (by typing `+code` and copying the response), and use that + your ship's IP to add it inside of Urbit Visor. Feel free to follow [this youtube video](https://www.youtube.com/watch?v=CNE59jRG5Og) for a clear video demonstration of how to do this.
 
 ![image here adding ship to Visor](assets/add-ship.png)
 
-Now that you have your ship added to Visor, you have access to the exact same unified API that every one of your users will. We are going to be treating the user's Urbit ship as a seamless dev ops free backend that is personalized to each user, without any extra work on the developer's side.
+Now that you have your ship added to Visor, you have access to the exact same unified API that every one of your users will. We can now treat the user's Urbit ship as a seamless dev ops free backend (that is personalized to each user), without any extra work on the developer's side.
 
 With all of that basic setup out of the way, let's get developing.
 
@@ -35,9 +35,9 @@ With all of that basic setup out of the way, let's get developing.
 
 To reiterate, Urbit Visor is framework agnostic. You can use it in whatever project you desire as long as you can import javascript dependencies.
 
-Existing apps already exist using React and Svelte, but any other framework, or even vanilla JS should work fine. This guide will assume you are building a React app, but the general logic does not change much at all no matter what you're using.
+Existing apps already exist using React and Svelte, but any other framework, or even vanilla JS should work fine. This guide will assume you are building a React app, but the general logic does not change much no matter what you're using.
 
-To improve the developer experience, Urbit Visor exposes a few TypeScript types for type safety. In this guide we will be using TypeScript, so if you're not, just ignore the type annotations.
+To improve the developer experience, Urbit Visor exposes a few TypeScript types for type safety. In this guide we will be using TypeScript, but if you're not, feel free to ignore the type annotations.
 
 As mentioned earlier, we will be creating a simple note-taking Urbit web app which will be called `urbit-notes`. Let's create the base boilerplate for your project using `create-react-app`:
 
