@@ -1,16 +1,16 @@
 # Building Urbit Web Apps - Developer Guide
 
-Many developers who first hear about Urbit get excited for the amount of underlying potential which lays within. An always-on server which can act as a persistant-global data store, packed with native identity, p2p messaging, and a full computation stack.
+Many developers who first hear about Urbit get excited about the amount of underlying potential which lays within. An always-on server which can act as a persistant-global data store, packed with native identity, p2p messaging, and a full computation stack.
 
-However one of the key problems getting into the Urbit ecosystem as a developer is just how much one needs to learn to even dip their toe in. Having to understand what Arvo or vanes are, learning hoon, understanding how gall agents work, and more on a long laundry list of "essentials" to get you started.
+However one of the key problems of getting into the Urbit ecosystem as a developer is just how much one needs to learn to even dip their toe in. Having to understand what Arvo or vanes are, learning hoon, understanding how gall agents work, and more are on a long laundry list of "essentials" you need to get started.
 
-Though this has been the path of entry into the ecosystem up to this point, Urbit Visor was made precisely to provide an alternative option that simplifies the onboarding process for new devs by multiple orders of magnitude. It provides web developers all the power and convenience of Urbit while using the strengths and availability of the battle-tested web platform.
+Though this has been the path of entry into the ecosystem up to this point, Urbit Visor was made precisely to provide an alternative that simplifies the onboarding process for new devs by multiple orders of magnitude. It provides web developers all the power and convenience of Urbit while using the strengths and availability of the battle-tested web platform.
 
-In this guide we'll build a simple note-taking web app using React (with hooks, on the most recent style) and TypeScript. Urbit Visor works with any Javascript setup of your choice, so feel free to use your preferred stack once you finish and understand the basic concepts.
+In this guide we'll build a simple note-taking web app using React (with hooks, of the most recent style) and TypeScript. Urbit Visor works with any Javascript setup of your choice, so feel free to use your preferred stack once you finish and understand the basic concepts.
 
 This guide will teach you how to interact and use Urbit Visor inside of your app, not teach you how to use React or how to style your application with CSS. We expect basic JS/TS proficiency in this guide.
 
-You can find the final source code of the project that you will build in this guide at: https://github.com/dcspark/urbit-notes/webapp.
+You can find the final source code of the project that you will build in this guide at: https://github.com/dcspark/urbit-notes/.
 
 ## Setting Up Urbit Visor
 
